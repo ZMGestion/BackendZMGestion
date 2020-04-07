@@ -5,7 +5,7 @@ listen = ":1323"
 host = "35.208.182.242"
 port = "3306"
 user = "root"
-password = "Zimmerman1456"
+pass = "Zimmerman1456"
 schema = "ZMGestion"
 
 [app]
