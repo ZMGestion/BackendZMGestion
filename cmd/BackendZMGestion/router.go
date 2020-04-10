@@ -16,6 +16,8 @@ func InitRouter(h *db.DbHandler) *echo.Echo {
 	r.Use(middleware.Logger())
 	//r.Use(middleware.Gzip())
 
+	r.Static("/apidoc", "apidoc")
+
 	return r
 }
 

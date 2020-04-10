@@ -1,0 +1,16 @@
+{
+  "name": "ZMGestion",
+  "version": "0.1.0",
+  "description": "API de ZMGestion",
+  "title": "ZMGetsion",
+  "url": "xxx.dev/api",
+  "sampleUrl": false,
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2020-04-10T20:59:06.363Z",
+    "url": "http://apidocjs.com",
+    "version": "0.20.1"
+  },
+  "defaultVersion": "0.0.0"
+}
