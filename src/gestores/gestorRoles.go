@@ -2,7 +2,7 @@ package gestores
 
 import (
 	"BackendZMGestion/src/db"
-	"BackendZMGestion/src/models"
+	"BackendZMGestion/src/structs"
 	"encoding/json"
 )
 
@@ -12,13 +12,13 @@ type GestorRoles struct {
 }
 
 //Crear commented
-func (gr *GestorRoles) Crear(rol models.Roles) (*models.Roles, error) {
-	return &models.Roles{}, nil
+func (gr *GestorRoles) Crear(rol structs.Roles) (*structs.Roles, error) {
+	return &structs.Roles{}, nil
 }
 
 //Listar commented
-func (gr *GestorRoles) Listar() ([]*models.Roles, error) {
-	roles := []*models.Roles{}
+func (gr *GestorRoles) Listar() ([]*structs.Roles, error) {
+	roles := []*structs.Roles{}
 	out, err := gr.DbHandler.CallSP("zsp_roles_listar", nil)
 
 	if err != nil || out == nil {

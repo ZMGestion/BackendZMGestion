@@ -51,5 +51,57 @@ define({ "api": [
     "filename": "./src/controllers/rolesController.go",
     "groupTitle": "Roles",
     "name": "GetRolesListar"
+  },
+  {
+    "type": "POST",
+    "url": "/roles/dame",
+    "title": "",
+    "permission": [
+      {
+        "name": "Administradores"
+      }
+    ],
+    "description": "<p>Devuelve un rol a partir de un Id</p>",
+    "group": "Roles",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Rol",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Rol.IdRol",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": " {\n\t \"IdRol\":2\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n    \"Estado\": \"\",\n    \"Mensaje\": \"Ok\",\n    \"Objetos\": [\n        {\n            \"IdRol\": 2,\n            \"Rol\": \"Vendedores\",\n            \"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n            \"Observaciones\": \"\"\n        },\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/controllers/rolesController.go",
+    "groupTitle": "Roles",
+    "name": "PostRolesDame"
   }
 ] });
