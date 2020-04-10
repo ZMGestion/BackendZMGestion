@@ -4,6 +4,7 @@ import (
 	"BackendZMGestion/src/controllers"
 	"BackendZMGestion/src/db"
 	"BackendZMGestion/src/gestores"
+	"BackendZMGestion/src/models"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -16,13 +17,20 @@ func InitRouter(h *db.DbHandler) *echo.Echo {
 	r.Use(middleware.Logger())
 	//r.Use(middleware.Gzip())
 
+	r.Static("/apidoc", "apidoc")
+
 	return r
 }
 
 func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	gestorRoles := &gestores.GestorRoles{DbHandler: h}
-	controllerRoles := &controllers.RolesController{Gestor: gestorRoles}
+	serviceRoles := &models.RolesService{DbHandler: h}
+	controllerRoles := &controllers.RolesController{
+		Gestor:  gestorRoles,
+		Service: serviceRoles,
+	}
 
 	r.GET("/roles/listar", controllerRoles.Listar)
+	r.POST("/roles/dame", controllerRoles.Dame)
 
 }
