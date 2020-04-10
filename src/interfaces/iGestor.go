@@ -1,12 +1,8 @@
 package interfaces
 
-import (
-	"BackendZMGestion/models"
-)
-
 type IGestor interface {
-	crear(o IObjeto) models.Response
-	buscarAvanzado(o IObjeto) []IObjeto
-	modificar(o IObjeto) models.Response
-	borrar(o IObjeto) models.Response
+	Crear(o IObjeto) (*IObjeto, error)
+	BuscarAvanzado(o IObjeto) ([]*IObjeto, error)
+	Modificar(o IObjeto) (*IObjeto, error)
+	Borrar(o IObjeto) (*IObjeto, error)
 }
