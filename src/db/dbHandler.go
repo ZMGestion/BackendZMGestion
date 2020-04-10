@@ -17,7 +17,7 @@ type DbHandler struct {
 // InitDb inicia la conexion con la base de datos
 func InitDb(user string, password string, host string, port string, schema string) (*DbHandler, error) {
 
-	cadena := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, schema)
+	cadena := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", user, password, host, port, schema)
 
 	conn, err := sql.Open("mysql", cadena)
 	if err != nil {

@@ -1,6 +1,7 @@
 package interfaces
 
 type IObjeto interface {
-	toMap() map[string]interface{}
-	fromMap(m map[string]interface{})
+	Dame() (*IObjeto, error)
+	DarAlta() (string, error)
+	DarBaja() (string, error)
 }
