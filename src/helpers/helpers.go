@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strconv"
@@ -23,4 +24,23 @@ func GetModelName(clase interface{}) string {
 	}
 
 	return className
+}
+
+func GenerateJSONFromModels(elements ...interface{}) map[string]interface{} {
+	res := make(map[string]interface{})
+	for _, el := range elements {
+		if name := GetModelName(el); name != "" {
+			res[name] = el
+		}
+	}
+	return res
+}
+
+func GenerateMapFromContext(c echo.Context) (map[string]interface{}, error) {
+	var jsonMap map[string]interface{}
+	err := json.NewDecoder(c.Request().Body).Decode(&jsonMap)
+	if err != nil {
+		return nil, err
+	}
+	return jsonMap, nil
 }
