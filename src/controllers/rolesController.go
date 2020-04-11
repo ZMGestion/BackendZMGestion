@@ -2,14 +2,17 @@ package controllers
 
 import (
 	"BackendZMGestion/src/gestores"
+	"BackendZMGestion/src/helpers"
 	"BackendZMGestion/src/interfaces"
 	"BackendZMGestion/src/models"
 	"BackendZMGestion/src/structs"
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/mitchellh/mapstructure"
 )
 
+//RolesController contiene los metodos para los endpoints de la API referidos a Roles.
 type RolesController struct {
 	Service *models.RolesService
 	Gestor  *gestores.GestorRoles
@@ -56,7 +59,7 @@ func (rc *RolesController) Listar(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Estado:    "OK",
+		Estado:    "Ok",
 		Mensaje:   "Ok",
 		Respuesta: roles,
 	}
@@ -94,22 +97,28 @@ func (rc *RolesController) Dame(c echo.Context) error {
 
 	rol := structs.Roles{}
 
-	if err := c.Bind(&rol); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+	mapstructure.Decode(jsonMap["Roles"], &rol)
+
+	//_ = c.Request().Header.Get("Authorization")
 
 	rc.Service.Rol = &rol
-	err := rc.Service.Dame()
+	err = rc.Service.Dame()
 
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		return echo.NewHTTPError(http.StatusBadRequest, rc.Service.Error.Error)
+	}
+
+	if rc.Service.Rol == nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Not found")
 	}
 
 	response := interfaces.Response{
-		Estado:    "OK",
-		Mensaje:   "Ok",
-		Respuesta: rc.Service.Rol,
+		Estado:  "OK",
+		Mensaje: "Ok",
 	}
+
+	response.AddModels(rc.Service.Rol)
 
 	return c.JSON(http.StatusOK, response)
 }

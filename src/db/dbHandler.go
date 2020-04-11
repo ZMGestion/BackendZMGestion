@@ -58,6 +58,7 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 	}
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, errors.New(called + " " + err.Error())
 	}
 
