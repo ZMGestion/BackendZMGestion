@@ -6,11 +6,12 @@ import (
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 type RolesService struct {
 	Rol       *structs.Roles
-	Error     *structs.Errores
 	DbHandler *db.DbHandler
 }
 
@@ -23,19 +24,20 @@ func (s *RolesService) Dame() error {
 
 	if err != nil {
 		s.Rol = nil
-		/*
-			errores := structs.Errores{}
-
-			errJSON := json.Unmarshal(*out, &errores)
-			if errJSON != nil {
-				s.Error = &structs.Errores{Error: "Error desconocido."}
-			}
-			s.Error = &errores
-		*/
 		return err
 	}
 
-	err = json.Unmarshal(*out, &s.Rol)
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err == nil {
+		if response["Roles"] != nil {
+			err = mapstructure.Decode(response["Roles"], &s.Rol)
+		} else {
+			s.Rol = nil
+		}
+	}
 
 	return err
 }

@@ -101,21 +101,20 @@ func (rc *RolesController) Dame(c echo.Context) error {
 	mapstructure.Decode(jsonMap["Roles"], &rol)
 
 	//_ = c.Request().Header.Get("Authorization")
-
 	rc.Service.Rol = &rol
 	err = rc.Service.Dame()
 
-	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, rc.Service.Error.Error)
-	}
-
-	if rc.Service.Rol == nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Not found")
+	if err != nil || rc.Service.Rol == nil {
+		response := interfaces.Response{
+			Estado:  "ERROR",
+			Mensaje: helpers.GetError(err),
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, response)
 	}
 
 	response := interfaces.Response{
 		Estado:  "OK",
-		Mensaje: "Ok",
+		Mensaje: "",
 	}
 
 	response.AddModels(rc.Service.Rol)

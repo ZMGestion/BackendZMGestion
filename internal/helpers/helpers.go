@@ -3,6 +3,7 @@ package helpers
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"reflect"
 	"strconv"
 	"strings"
@@ -43,4 +44,21 @@ func GenerateMapFromContext(c echo.Context) (map[string]interface{}, error) {
 		return nil, err
 	}
 	return jsonMap, nil
+}
+
+//GetError genera un error HTTP que puede ser mostrado.
+func GetError(err error) string {
+	//Se deberia recibir tambien el codigo de lenguaje
+	errorsFile, _ := ioutil.ReadFile("errores_ES.json")
+	var errorsMap map[string]string
+	_ = json.Unmarshal([]byte(errorsFile), &errorsMap)
+	errorMsg := errorsMap["ERROR_DEFAULT"]
+	if err != nil {
+		if err.Error()[0:5] == "ERROR_" {
+			if _, ok := errorsMap[err.Error()]; ok {
+				errorMsg = errorsMap[err.Error()]
+			}
+		}
+	}
+	return errorMsg
 }
