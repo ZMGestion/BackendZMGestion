@@ -48,7 +48,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./src/controllers/rolesController.go",
+    "filename": "./internal/controllers/rolesController.go",
     "groupTitle": "Roles",
     "name": "GetRolesListar"
   },
@@ -100,7 +100,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./src/controllers/rolesController.go",
+    "filename": "./internal/controllers/rolesController.go",
     "groupTitle": "Roles",
     "name": "PostRolesDame"
   }

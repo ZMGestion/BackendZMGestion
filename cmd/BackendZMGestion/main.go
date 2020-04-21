@@ -1,7 +1,7 @@
 package main
 
 import (
-	"BackendZMGestion/src/db"
+	"BackendZMGestion/internal/db"
 
 	_ "github.com/go-sql-driver/mysql"
 )

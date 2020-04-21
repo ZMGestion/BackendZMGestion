@@ -1,10 +1,10 @@
 package main
 
 import (
-	"BackendZMGestion/src/controllers"
-	"BackendZMGestion/src/db"
-	"BackendZMGestion/src/gestores"
-	"BackendZMGestion/src/models"
+	"BackendZMGestion/internal/controllers"
+	"BackendZMGestion/internal/db"
+	"BackendZMGestion/internal/gestores"
+	"BackendZMGestion/internal/models"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
