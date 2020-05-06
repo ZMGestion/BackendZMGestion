@@ -11,33 +11,33 @@ import (
 )
 
 type RolesService struct {
-	Rol       *structs.Roles
+	Rol       *structs.Roles //Es lo que se recibe de request
 	DbHandler *db.DbHandler
 }
 
-func (s *RolesService) Dame() error {
+func (s *RolesService) Dame() (*structs.Roles, error) {
 	out, err := s.DbHandler.CallSP("zsp_rol_dame", helpers.GenerateJSONFromModels(s.Rol))
 
 	if out == nil {
-		return errors.New("Not found")
+		return nil, errors.New("Not found")
 	}
 
 	if err != nil {
-		s.Rol = nil
-		return err
+		return nil, err
 	}
 
 	var response map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)
 
+	var rol structs.Roles
 	if err == nil {
 		if response["Roles"] != nil {
-			err = mapstructure.Decode(response["Roles"], &s.Rol)
+			err = mapstructure.Decode(response["Roles"], &rol)
 		} else {
-			s.Rol = nil
+			return nil, nil
 		}
 	}
 
-	return err
+	return &rol, err
 }

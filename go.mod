@@ -9,6 +9,6 @@ require (
 	github.com/labstack/echo/v4 v4.1.16
 	github.com/mitchellh/mapstructure v1.2.2
 	github.com/stretchr/testify v1.5.1 // indirect
-	golang.org/x/crypto v0.0.0-20200403201458-baeed622b8d8 // indirect
+	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
 )

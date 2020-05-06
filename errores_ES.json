@@ -1,5 +1,5 @@
 {
-    "ERROR_DEFAULT": "Ha ocurrido un error mientras se procesaba su peticion.",
+    "ERROR_DEFAULT": "Ha ocurrido un error mientras se procesaba su petición.",
     "ERROR_BORRAR_ROL_USUARIO": "No se puede borrar el rol. Existen usuarios asociados.",
     "ERROR_BORRAR_USUARIO_ADAM": "No se puede borrar el superusuario.",
     "ERROR_BORRAR_USUARIO_COMPROBANTE": "No puede borrarse el usuario porque tiene un comprobante asociado.",

@@ -32,5 +32,6 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 
 	r.GET("/roles/listar", controllerRoles.Listar)
 	r.POST("/roles/dame", controllerRoles.Dame)
+	r.POST("/roles/crear", controllerRoles.Crear)
 
 }

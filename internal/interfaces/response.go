@@ -1,13 +1,12 @@
 package interfaces
 
 import (
-	"BackendZMGestion/internal/enums"
 	"BackendZMGestion/internal/helpers"
+	"BackendZMGestion/internal/models"
 )
 
 type Response struct {
-	Estado    enums.Status
-	Mensaje   string
+	Error     *models.Errores
 	Respuesta interface{}
 }
 

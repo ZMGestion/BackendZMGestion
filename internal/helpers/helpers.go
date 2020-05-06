@@ -54,7 +54,8 @@ func GetError(err error) string {
 	_ = json.Unmarshal([]byte(errorsFile), &errorsMap)
 	errorMsg := errorsMap["ERROR_DEFAULT"]
 	if err != nil {
-		if err.Error()[0:5] == "ERROR_" {
+		txt := err.Error()
+		if txt[0:6] == "ERROR_" {
 			if _, ok := errorsMap[err.Error()]; ok {
 				errorMsg = errorsMap[err.Error()]
 			}
