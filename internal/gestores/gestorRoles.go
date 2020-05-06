@@ -4,6 +4,8 @@ import (
 	"BackendZMGestion/internal/db"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 //GestorRoles commented
@@ -12,8 +14,36 @@ type GestorRoles struct {
 }
 
 //Crear commented
-func (gr *GestorRoles) Crear(rol structs.Roles) (*structs.Roles, error) {
-	return &structs.Roles{}, nil
+func (gr *GestorRoles) Crear(rol structs.Roles, token string) (*structs.Roles, error) {
+
+	usuario := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Roles":           rol,
+		"UsuariosEjecuta": usuario,
+	}
+
+	out, err := gr.DbHandler.CallSP("zsp_rol_crear", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err == nil {
+		if response["Roles"] != nil {
+			err = mapstructure.Decode(response["Roles"], &rol)
+		} else {
+			return nil, nil
+		}
+	}
+
+	return &rol, err
 }
 
 //Listar commented

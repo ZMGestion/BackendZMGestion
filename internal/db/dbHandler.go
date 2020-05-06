@@ -40,9 +40,11 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 
 	startTime := time.Now()
 
+	fmt.Println("INPUT:")
+	fmt.Println(string(input))
+
 	if objeto != nil {
 		query := fmt.Sprintf("CALL %s (?)", sp)
-
 		err = h.Conn.QueryRow(query, string(input)).Scan(&output)
 	} else {
 		query := fmt.Sprintf("CALL %s ()", sp)
@@ -51,6 +53,7 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 	}
 
 	called := fmt.Sprintf("CALL %s ('%s'); (%s)", sp, string(input), time.Since(startTime))
+	fmt.Println(called)
 
 	//env.Logger.Log("[mysql] " + called)
 
@@ -64,15 +67,19 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 	}
 	var respuestaMySQL structs.ResponseMySQL
 
+	fmt.Println("*OUTPUT:")
+	fmt.Println(string(*output))
+
 	err = json.Unmarshal(*output, &respuestaMySQL)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if respuestaMySQL.Error != "" {
-		return nil, errors.New(respuestaMySQL.Error)
+	if respuestaMySQL.Error != nil {
+		return nil, errors.New(*(respuestaMySQL.Error))
 	}
+
 	b, err := json.Marshal(respuestaMySQL.Respuesta)
 
 	if err != nil {
