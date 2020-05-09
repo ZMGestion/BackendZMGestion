@@ -34,6 +34,7 @@ func GenerateJSONFromModels(elements ...interface{}) map[string]interface{} {
 			res[name] = el
 		}
 	}
+	
 	return res
 }
 

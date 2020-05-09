@@ -67,9 +67,6 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 	}
 	var respuestaMySQL structs.ResponseMySQL
 
-	fmt.Println("*OUTPUT:")
-	fmt.Println(string(*output))
-
 	err = json.Unmarshal(*output, &respuestaMySQL)
 
 	if err != nil {
@@ -86,7 +83,6 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 		return nil, err
 
 	}
-
 	return &b, nil
 
 }
