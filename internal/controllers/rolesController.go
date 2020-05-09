@@ -40,6 +40,17 @@ func (rc *RolesController) Crear(c echo.Context) error {
 	rol := structs.Roles{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
+	if err != nil {
+		objError := models.Errores{
+			Codigo:  "ERROR_DEFAULT",
+			Mensaje: helpers.GetError(err),
+		}
+		response := interfaces.Response{
+			Error:     &objError,
+			Respuesta: nil,
+		}
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, response)
+	}
 	mapstructure.Decode(jsonMap["Roles"], &rol)
 
 	token := c.Request().Header.Get("Authorization")
@@ -47,9 +58,6 @@ func (rc *RolesController) Crear(c echo.Context) error {
 	result, err := rc.Gestor.Crear(rol, token)
 
 	if err != nil || result == nil {
-		if err != nil {
-			fmt.Println(err.Error())
-		}
 		objError := models.Errores{
 			Codigo:  "ERROR_DEFAULT",
 			Mensaje: helpers.GetError(err),
@@ -102,18 +110,64 @@ func (rc *RolesController) Crear(c echo.Context) error {
 }
 */
 
+/**
+ * @api {POST} /roles/listar
+ * @apiPermission Administradores
+ * @apiDescription Devuelve una lista de roles
+ * @apiGroup Roles
+ * @apiSuccessExample {json} Success-Response:
+ {
+    "Error": null,
+    "Respuesta": [
+		{
+			"Roles":{
+				"IdRol": 1,
+				"Rol": "Administradores",
+				"FechaAlta": "2020-04-09 15:01:35.000000",
+				"Observaciones": ""
+			}
+		},
+		{
+			"Roles":{
+				"IdRol": 2,
+				"Rol": "Vendedores",
+				"FechaAlta": "2020-04-09 15:01:35.000000",
+				"Observaciones": ""
+			}
+		}
+
+    ]
+}
+*/
 //Listar Lista los roles
 func (rc *RolesController) Listar(c echo.Context) error {
-	roles, err := rc.Gestor.Listar()
 
-	if err != nil {
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	result, err := rc.Gestor.Listar()
+
+	if err != nil || result == nil {
+
+		objError := models.Errores{
+			Codigo:  "ERROR_DEFAULT",
+			Mensaje: helpers.GetError(err),
+		}
+		response := interfaces.Response{
+			Error:     &objError,
+			Respuesta: nil,
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, response)
 	}
 
 	response := interfaces.Response{
-		Error:     nil,
-		Respuesta: roles,
+		Error: nil,
 	}
+
+	var respuesta []map[string]interface{}
+	for _, el := range result {
+		objeto := make(map[string]interface{})
+		objeto["Roles"] = el
+		respuesta = append(respuesta, objeto)
+	}
+	response.Respuesta = respuesta
 
 	return c.JSON(http.StatusOK, response)
 }
