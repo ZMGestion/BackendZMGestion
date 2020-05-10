@@ -34,7 +34,7 @@ func GenerateJSONFromModels(elements ...interface{}) map[string]interface{} {
 			res[name] = el
 		}
 	}
-	
+
 	return res
 }
 
@@ -48,19 +48,21 @@ func GenerateMapFromContext(c echo.Context) (map[string]interface{}, error) {
 }
 
 //GetError genera un error HTTP que puede ser mostrado.
-func GetError(err error) string {
+func GetError(err error) (string, string) {
 	//Se deberia recibir tambien el codigo de lenguaje
 	errorsFile, _ := ioutil.ReadFile("errores_ES.json")
 	var errorsMap map[string]string
 	_ = json.Unmarshal([]byte(errorsFile), &errorsMap)
-	errorMsg := errorsMap["ERROR_DEFAULT"]
+	errorCode := "ERROR_DEFAULT"
+	errorMsg := errorsMap[errorCode]
 	if err != nil {
 		txt := err.Error()
 		if txt[0:6] == "ERROR_" {
 			if _, ok := errorsMap[err.Error()]; ok {
+				errorCode = err.Error()
 				errorMsg = errorsMap[err.Error()]
 			}
 		}
 	}
-	return errorMsg
+	return errorCode, errorMsg
 }

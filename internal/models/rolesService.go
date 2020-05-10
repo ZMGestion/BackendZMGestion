@@ -6,6 +6,7 @@ import (
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -19,7 +20,7 @@ func (s *RolesService) Dame() (*structs.Roles, error) {
 	out, err := s.DbHandler.CallSP("zsp_rol_dame", helpers.GenerateJSONFromModels(s.Rol))
 
 	if out == nil {
-		return nil, errors.New("Not found")
+		return nil, errors.New("ERROR_DEFAULT")
 	}
 
 	if err != nil {
@@ -40,4 +41,59 @@ func (s *RolesService) Dame() (*structs.Roles, error) {
 	}
 
 	return &rol, err
+}
+
+//ListarPermisos commented
+func (s *RolesService) ListarPermisos() ([]*structs.Permisos, error) {
+	out, err := s.DbHandler.CallSP("zsp_rol_listar_permisos", helpers.GenerateJSONFromModels(s.Rol))
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(string(*out))
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	var permisos []*structs.Permisos
+	for _, el := range response {
+		var permiso structs.Permisos
+		if el["Permisos"] != nil {
+			err = mapstructure.Decode(el["Permisos"], &permiso)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			return nil, nil
+		}
+		permisos = append(permisos, &permiso)
+	}
+
+	return permisos, nil
+}
+
+//AsignarPermisos commented
+func (s *RolesService) AsignarPermisos(pPermisos []structs.Permisos, token string) error {
+
+	usuario := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Roles":           s.Rol,
+		"Permisos":        pPermisos,
+		"UsuariosEjecuta": usuario,
+	}
+
+	_, err := s.DbHandler.CallSP("zsp_rol_asignar_permisos", params)
+
+	return err
 }
