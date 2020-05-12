@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // URLParamInt retorna un parámetro de la url como int
@@ -65,4 +66,16 @@ func GetError(err error) (string, string) {
 		}
 	}
 	return errorCode, errorMsg
+}
+
+func Hash(password string) (*string, error) {
+	b, err := bcrypt.GenerateFromPassword([]byte(password), 30)
+
+	if err != nil {
+		return nil, err
+	}
+
+	hash := string(b)
+
+	return &hash, nil
 }

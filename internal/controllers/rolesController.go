@@ -19,7 +19,7 @@ type RolesController struct {
 }
 
 /**
- * @api {POST} /roles/dame
+ * @api {POST} /roles/dame Dame Rol
  * @apiPermission Administradores
  * @apiDescription Devuelve un rol a partir de un Id
  * @apiGroup Roles
@@ -34,14 +34,14 @@ type RolesController struct {
  * @apiSuccessExample {json} Success-Response:
  {
     "Error": null,
-    "Respuesta": [
-        {
+    "Respuesta": {
+		"Roles": {
             "IdRol": 2,
             "Rol": "Vendedores",
             "FechaAlta": "2020-04-09 15:01:35.000000",
             "Descripcion": "Este rol es para los vendedores"
         }
-    ]
+	}
 }
 * @apiErrorExample {json} Error-Response:
  {
@@ -86,7 +86,7 @@ func (rc *RolesController) Dame(c echo.Context) error {
 }
 
 /**
- * @api {GET} /roles/crear
+ * @api {GET} /roles/crear Crear Rol
  * @apiPermission Administradores
  * @apiDescription Permite crear un rol
  * @apiGroup Roles
@@ -104,10 +104,12 @@ func (rc *RolesController) Dame(c echo.Context) error {
  {
     "Error": null,
     "Respuesta": {
-		"IdRol": 7,
-		"Rol": "Encargados",
-		"FechaAlta": "2020-04-09 15:01:35.000000",
-		"Descripcion": ""
+		"Roles" : {
+			"IdRol": 7,
+			"Rol": "Encargados",
+			"FechaAlta": "2020-04-09 15:01:35.000000",
+			"Descripcion": ""
+		}
 	}
 }
 * @apiErrorExample {json} Error-Response:
@@ -152,7 +154,7 @@ func (rc *RolesController) Crear(c echo.Context) error {
 }
 
 /**
- * @api {POST} /roles/listar
+ * @api {POST} /roles/listar Listar Roles
  * @apiPermission Administradores
  * @apiDescription Devuelve una lista de roles
  * @apiGroup Roles
@@ -217,11 +219,12 @@ func (rc *RolesController) Listar(c echo.Context) error {
 }
 
 /**
- * @api {POST} /roles/borrar
+ * @api {POST} /roles/borrar Borrar Rol
  * @apiPermission Administradores
  * @apiDescription Borra un rol a partir de su Id
  * @apiGroup Roles
  * @apiHeader {String} Authorization
+ * @apiParam {Object} Roles
  * @apiParam {int} Roles.IdRol
  * @apiParamExample {json} Request-Example:
  {
@@ -270,7 +273,7 @@ func (rc *RolesController) Borrar(c echo.Context) error {
 }
 
 /**
- * @api {GET} /roles/modificar
+ * @api {GET} /roles/modificar Modificar Rol
  * @apiPermission Administradores
  * @apiDescription Permite modificar un rol
  * @apiGroup Roles
@@ -339,8 +342,9 @@ func (rc *RolesController) Modificar(c echo.Context) error {
 }
 
 /**
- * @api {POST} /roles/listarPermisos
+ * @api {POST} /roles/listarPermisos Listar Permisos
  * @apiPermission Administradores
+ * @apiName Listar Permisos
  * @apiDescription Devuelve una lista de permisos para un determinado rol
  * @apiGroup Roles
  * @apiSuccessExample {json} Success-Response:
@@ -410,7 +414,7 @@ func (rc *RolesController) ListarPermisos(c echo.Context) error {
 }
 
 /**
- * @api {POST} /roles/asignarPermisos
+ * @api {POST} /roles/asignarPermisos Asignar Permisos
  * @apiPermission Administradores
  * @apiDescription Permite asignar los permisos a un determinado rol
  * @apiGroup Roles
