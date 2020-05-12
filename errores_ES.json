@@ -18,7 +18,7 @@
     "ERROR_FECHAINICIO_ANTERIOR": "La fecha de incio debe ser anterior a la fecha actual.",
     "ERROR_FECHANACIMIENTO_ANTERIOR": "La fecha de nacimiento debe ser anterior a la fecha actual.",
     "ERROR_INDICAR_ROL": "Debe indicar un rol.",
-    "ERROR_INDICAR_USUARIO": "Debe indicar un usuario.",
+    "ERROR_INGRESAR_USUARIO": "Debe ingresar un usuario.",					
     "ERROR_INGRESAR_APELLIDO": "Debe ingresar el apellido.",
     "ERROR_INGRESAR_CANTIDADHIJOS": "Debe ingresar la cantidad de hijos.",
     "ERROR_INGRESAR_DOCUMENTO": "Debe ingresar el documento",
@@ -40,7 +40,7 @@
     "ERROR_INGRESE_USUARIOEMAIL": "Debe ingresar un nombre de usuario o correo electronico.",
     "ERROR_LOGIN_INCORRECTO": "El nombre de usuario o contrasena ingresados no son correctos.",
     "ERROR_PASSWORD_INCORRECTA": "La contraseña ingresada no es correcta.",
-    "ERROR_PASSOWRDS_IGUALES": "Las contraseñas ingresadas son iguales.",
+    "ERROR_PASSWORDS_IGUALES": "Las contraseñas ingresadas son iguales.",					
     "ERROR_LOGIN_BLOQUEADO": "El usuario ha sido bloqueado. Por favor contáctese con un administrador."
 }
 
