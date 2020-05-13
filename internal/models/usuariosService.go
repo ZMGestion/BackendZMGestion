@@ -2,6 +2,7 @@ package models
 
 import (
 	"BackendZMGestion/internal/db"
+	"BackendZMGestion/internal/helpers"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
@@ -39,15 +40,19 @@ func (s *UsuariosService) Dame(token string) (*structs.Usuarios, error) {
 
 	err = json.Unmarshal(*out, &response)
 
-	var usuario structs.Usuarios
-	if err == nil {
-		if response["Usuarios"] != nil {
-			err = mapstructure.Decode(response["Usuarios"], &usuario)
-		} else {
-			return nil, nil
-		}
+	if err != nil {
+		return nil, nil
 	}
-	return &usuario, err
+	var usuario structs.Usuarios
+	if response["Usuarios"] != nil {
+		err = mapstructure.Decode(response["Usuarios"], &usuario)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &usuario, nil
 }
 
 //Dame por token
@@ -75,15 +80,19 @@ func (s *UsuariosService) DamePorToken(token string) (*structs.Usuarios, error) 
 
 	err = json.Unmarshal(*out, &response)
 
-	var usuario structs.Usuarios
-	if err == nil {
-		if response["Usuarios"] != nil {
-			err = mapstructure.Decode(response["Usuarios"], &usuario)
-		} else {
-			return nil, nil
-		}
+	if err != nil {
+		return nil, nil
 	}
-	return &usuario, err
+	var usuario structs.Usuarios
+	if response["Usuarios"] != nil {
+		err = mapstructure.Decode(response["Usuarios"], &usuario)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &usuario, nil
 }
 
 //Dar alta
@@ -111,15 +120,19 @@ func (s *UsuariosService) DarAlta(token string) (*structs.Usuarios, error) {
 
 	err = json.Unmarshal(*out, &response)
 
-	var usuario structs.Usuarios
-	if err == nil {
-		if response["Usuarios"] != nil {
-			err = mapstructure.Decode(response["Usuarios"], &usuario)
-		} else {
-			return nil, nil
-		}
+	if err != nil {
+		return nil, nil
 	}
-	return &usuario, err
+	var usuario structs.Usuarios
+	if response["Usuarios"] != nil {
+		err = mapstructure.Decode(response["Usuarios"], &usuario)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &usuario, nil
 }
 
 //Dar alta
@@ -147,15 +160,19 @@ func (s *UsuariosService) DarBaja(token string) (*structs.Usuarios, error) {
 
 	err = json.Unmarshal(*out, &response)
 
-	var usuario structs.Usuarios
-	if err == nil {
-		if response["Usuarios"] != nil {
-			err = mapstructure.Decode(response["Usuarios"], &usuario)
-		} else {
-			return nil, nil
-		}
+	if err != nil {
+		return nil, nil
 	}
-	return &usuario, err
+	var usuario structs.Usuarios
+	if response["Usuarios"] != nil {
+		err = mapstructure.Decode(response["Usuarios"], &usuario)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &usuario, nil
 }
 
 func (s *UsuariosService) RestablecerPassword(token string) error {
@@ -169,6 +186,57 @@ func (s *UsuariosService) RestablecerPassword(token string) error {
 	}
 
 	_, err := s.DbHandler.CallSP("zsp_usuario_restablecer_pass", params)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func (s *UsuariosService) IniciarSesion() (*structs.Usuarios, error) {
+
+	out, err := s.DbHandler.CallSP("zsp_sesion_iniciar", helpers.GenerateJSONFromModels(s.Usuario))
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, nil
+	}
+	var usuario structs.Usuarios
+	if response["Usuarios"] != nil {
+		err = mapstructure.Decode(response["Usuarios"], &usuario)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &usuario, nil
+}
+
+func (s *UsuariosService) CerrarSesion(token string) error {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"Usuarios":        s.Usuario,
+	}
+
+	_, err := s.DbHandler.CallSP("zsp_sesion_cerrar", params)
 
 	if err != nil {
 		return err

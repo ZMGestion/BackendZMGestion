@@ -20,6 +20,7 @@ type config struct {
 	}
 	App struct {
 		Mode string
+		Key  string
 	}
 }
 

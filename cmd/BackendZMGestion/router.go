@@ -47,4 +47,6 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/usuarios/buscar", controllerUsuarios.Buscar)
 	r.POST("/usuarios/restablecerPassword", controllerUsuarios.RestablecerPassword)
 	r.POST("/usuarios/modificarPassword", controllerUsuarios.ModificarPassword)
+	r.POST("/usuarios/iniciarSesion", controllerUsuarios.IniciarSesion)
+	r.POST("/usuarios/cerrarSesion", controllerUsuarios.CerrarSesion)
 }
