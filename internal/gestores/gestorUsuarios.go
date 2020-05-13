@@ -78,6 +78,47 @@ func (gu *GestorUsuarios) Modificar(usuario structs.Usuarios, token string) (*st
 	return &usuario, err
 }
 
+//ModificarPassword Usuario
+func (gu *GestorUsuarios) ModificarPassword(passActual string, passNueva string, token string) (*structs.Usuarios, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	usuarioActual := structs.Usuarios{
+		Password: passActual,
+	}
+
+	usuarioNuevo := structs.Usuarios{
+		Password: passNueva,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosActual":  usuarioActual,
+		"UsuariosNuevo":   usuarioNuevo,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gu.DbHandler.CallSP("zsp_usuario_modificar_pass", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err == nil {
+		if response["Usuarios"] != nil {
+			err = mapstructure.Decode(response["Usuarios"], &usuarioNuevo)
+		} else {
+			return nil, nil
+		}
+	}
+
+	return &usuarioNuevo, err
+}
+
 //Borrar Usuario
 func (gu *GestorUsuarios) Borrar(usuario structs.Usuarios, token string) error {
 	usuarioEjecuta := structs.Usuarios{
