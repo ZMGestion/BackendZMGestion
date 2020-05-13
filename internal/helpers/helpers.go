@@ -1,15 +1,20 @@
 package helpers
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // URLParamInt retorna un parámetro de la url como int
@@ -68,14 +73,39 @@ func GetError(err error) (string, string) {
 	return errorCode, errorMsg
 }
 
-func Hash(password string) (*string, error) {
-	b, err := bcrypt.GenerateFromPassword([]byte(password), 12)
+func Hash(password string) *string {
+
+	hash := sha256.New()
+	hash.Write([]byte(password))
+
+	passwordHash := hex.EncodeToString(hash.Sum(nil))
+
+	fmt.Println(passwordHash)
+
+	return &passwordHash
+}
+
+func CreateToken(user string) (*string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user": user,
+		"exp":  time.Now().Add(time.Hour * time.Duration(1)).Unix(),
+		"iat":  time.Now().Unix(),
+	})
+	tokenString, err := token.SignedString([]byte(os.Getenv("app-key")))
 
 	if err != nil {
 		return nil, err
 	}
 
-	hash := string(b)
+	return &tokenString, nil
+}
 
-	return &hash, nil
+func GetToken(token string) (*string, error) {
+
+	split := strings.SplitN(token, " ", 2)
+
+	if split[0] != "JWT" {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+	return &split[1], nil
 }

@@ -7,6 +7,7 @@ import (
 	"BackendZMGestion/internal/interfaces"
 	"BackendZMGestion/internal/models"
 	"BackendZMGestion/internal/structs"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -76,12 +77,18 @@ func (uc *UsuariosController) Dame(c echo.Context) error {
 
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
 	usuariosService := models.UsuariosService{
 		DbHandler: uc.DbHandler,
 		Usuario:   &usuario,
 	}
-	result, err := usuariosService.Dame(token)
+	result, err := usuariosService.Dame(*token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -245,20 +252,21 @@ func (uc *UsuariosController) Crear(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
-
-	hash, err := helpers.Hash(usuario.Password)
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
 
 	if err != nil {
-		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
+
+	hash := helpers.Hash(usuario.Password)
 
 	usuario.Password = *hash
 
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	result, err := gestorUsuarios.Crear(usuario, token)
+	result, err := gestorUsuarios.Crear(usuario, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -360,12 +368,17 @@ func (uc *UsuariosController) Modificar(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	result, err := gestorUsuarios.Modificar(usuario, token)
+	result, err := gestorUsuarios.Modificar(usuario, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -419,12 +432,17 @@ func (uc *UsuariosController) Borrar(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	err = gestorUsuarios.Borrar(usuario, token)
+	err = gestorUsuarios.Borrar(usuario, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -496,14 +514,19 @@ func (uc *UsuariosController) DarAlta(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	usuarioService := models.UsuariosService{
 		DbHandler: uc.DbHandler,
 		Usuario:   &usuario,
 	}
 
-	result, err := usuarioService.DarAlta(token)
+	result, err := usuarioService.DarAlta(*token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -576,14 +599,19 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	usuarioService := models.UsuariosService{
 		DbHandler: uc.DbHandler,
 		Usuario:   &usuario,
 	}
 
-	result, err := usuarioService.DarBaja(token)
+	result, err := usuarioService.DarBaja(*token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -677,12 +705,17 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	result, err := gestorUsuarios.Buscar(usuario, token)
+	result, err := gestorUsuarios.Buscar(usuario, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -698,7 +731,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 
 /**
  * @api {POST} /usuarios/restablecerPassword Restablecer contraseña
- * @apiDescription Permite restablecer la contraseña un usuario
+ * @apiDescription Permite restablecer la contraseña de un usuario
  * @apiGroup Usuarios
  * @apiHeader {String} Authorization
  * @apiParam {Object} Usuarios
@@ -738,9 +771,14 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
 
-	hash, err := helpers.Hash(usuario.Password)
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	hash := helpers.Hash(usuario.Password)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -753,7 +791,7 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 		DbHandler: uc.DbHandler,
 		Usuario:   &usuario,
 	}
-	err = usuarioService.RestablecerPassword(token)
+	err = usuarioService.RestablecerPassword(*token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -767,6 +805,57 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+/**
+ * @api {POST} /usuarios/modificarPassword Modificar contraseña
+ * @apiDescription Permite modificar la contraseña de un usuario
+ * @apiGroup Usuarios
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} UsuariosActual
+ * @apiParam {string} UsuariosActual.Password
+ * @apiParam {Object} UsuariosNuevo
+ * @apiParam {string} UsuariosNuevo.Password
+  * @apiParamExample {json} Request-Example:
+{
+	"UsuariosActual":{
+		"Password":"Nueva Pass"
+	},
+	"UsuariosNuevo":{
+		"Password":"Hola123"
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "Error": null,
+    "Respuesta": {
+        "Usuarios": {
+            "IdUsuario": 9,
+            "IdRol": 1,
+            "IdUbicacion": 1,
+            "IdTipoDocumento": 1,
+            "Documento": "42664256",
+            "Nombres": "Chloe",
+            "Apellidos": "Choua",
+            "EstadoCivil": "S",
+            "Telefono": "+54(381)4451337",
+            "Email": "chloechoua@gmail.com",
+            "CantidadHijos": 0,
+            "Usuario": "cchoua",
+            "FechaNacimiento": "2000-05-17",
+            "FechaInicio": "2020-01-01",
+            "FechaAlta": "2020-05-13 20:25:19.000000",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "Error": {
+        "Codigo": "ERROR_PASSWORD_INCORRECTA",
+        "Mensaje": "La contraseña ingresada no es correcta."
+    },
+    "Respuesta": null
+}
+*/
 //ModificarPassword Modifica la password de un usuario
 func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
 
@@ -790,15 +879,20 @@ func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
 
-	hashActual, err := helpers.Hash(usuarioActual.Password)
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	hashActual := helpers.Hash(usuarioActual.Password)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
-	hashNuevo, err := helpers.Hash(usuarioActual.Password)
+	hashNuevo := helpers.Hash(usuarioNuevo.Password)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -808,7 +902,106 @@ func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
 		DbHandler: uc.DbHandler,
 	}
 
-	result, err := gestorUsuarios.ModificarPassword(*hashActual, *hashNuevo, token)
+	result, err := gestorUsuarios.ModificarPassword(*hashActual, *hashNuevo, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+	result.Password = ""
+
+	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /usuarios/iniciarSesion Iniciar Sesion
+ * @apiDescription Permite a un usuario iniciar sesion
+ * @apiGroup Usuarios
+ * @apiParam {Object} Usuarios
+ * @apiParam {string} [Usuarios.Email]
+ * @apiParam {string} [Usuarios.Usuario]
+ * @apiParam {string} Usuarios.Password
+
+  * @apiParamExample {json} Request-Example:
+{
+	 "Usuarios": {
+			"Usuario": "lchoua",
+			"Password":"LoikCapo",
+        }
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+    "Error": null,
+    "Respuesta": {
+        "Usuarios": {
+            "IdUsuario": 5,
+            "IdRol": 1,
+            "IdUbicacion": 1,
+            "IdTipoDocumento": 1,
+            "Documento": "39477073",
+            "Nombres": "Nicolas",
+            "Apellidos": "Bachs",
+            "EstadoCivil": "S",
+            "Telefono": "+543814491954",
+            "Email": "nicolas.bachs@gmail.com",
+            "CantidadHijos": 0,
+            "Usuario": "nbachs",
+            "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk0MTI5MzIsImlhdCI6MTU4OTQwOTMzMiwidXNlciI6Im5iYWNocyJ9.IX4fpwOpjp8-TjPMVKqT1NmZ0gQG0shyrLfLq6ETi-M",
+            "FechaNacimiento": "1995-12-27",
+            "FechaInicio": "2019-11-22",
+            "FechaAlta": "2020-05-08 00:49:18.000000",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "Error": {
+        "Codigo": "ERROR_LOGIN_INCORRECTO",
+        "Mensaje": "El nombre de usuario o contrasena ingresados no son correctos."
+    },
+    "Respuesta": null
+}
+*/
+//Iniciar Sesion Permite a un usuario iniciar sesion
+func (uc *UsuariosController) IniciarSesion(c echo.Context) error {
+
+	usuario := structs.Usuarios{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
+
+	hash := helpers.Hash(usuario.Password)
+
+	usuario.Password = *hash
+
+	token, err := helpers.CreateToken(usuario.Usuario + usuario.Email)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	if token == nil {
+		return interfaces.GenerarRespuestaError(errors.New("ERROR_DEFAULT"), http.StatusUnprocessableEntity)
+	}
+
+	usuario.Token = *token
+
+	usuariosService := models.UsuariosService{
+		DbHandler: uc.DbHandler,
+		Usuario:   &usuario,
+	}
+
+	result, err := usuariosService.IniciarSesion()
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -819,6 +1012,71 @@ func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
 	}
 
 	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /usuarios/cerrarSesion Cerrar Sesion
+ * @apiDescription Permite a un usuario cerrar la sesion de otro usuario
+ * @apiGroup Usuarios
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Usuarios
+ * @apiParam {int} Usuarios.IdUsuario
+
+  * @apiParamExample {json} Request-Example:
+{
+	"Usuarios":{
+        "IdUsuario": 1
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "Error": null
+    "Respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "Error": {
+        "Codigo": "ERROR_NOEXISTE_USUARIO",
+        "Mensaje": "El usuario indicado no existe."
+    },
+    "Respuesta": null
+}
+*/
+//RestablecerPassword Reestablece la password de un usuario
+func (uc *UsuariosController) CerrarSesion(c echo.Context) error {
+
+	usuario := structs.Usuarios{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	usuarioService := models.UsuariosService{
+		DbHandler: uc.DbHandler,
+		Usuario:   &usuario,
+	}
+	err = usuarioService.CerrarSesion(*token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: nil,
+	}
 
 	return c.JSON(http.StatusOK, response)
 }

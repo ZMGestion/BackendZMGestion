@@ -1181,9 +1181,92 @@
   },
   {
     "type": "POST",
+    "url": "/usuarios/modificarPassword",
+    "title": "Modificar contraseña",
+    "description": "<p>Permite modificar la contraseña de un usuario</p>",
+    "group": "Usuarios",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "UsuariosActual",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "UsuariosActual.Password",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "UsuariosNuevo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "UsuariosNuevo.Password",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"UsuariosActual\":{\n\t\t\"Password\":\"Nueva Pass\"\n\t},\n\t\"UsuariosNuevo\":{\n\t\t\"Password\":\"Hola123\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Error\": null,\n    \"Respuesta\": {\n        \"Usuarios\": {\n            \"IdUsuario\": 9,\n            \"IdRol\": 1,\n            \"IdUbicacion\": 1,\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"42664256\",\n            \"Nombres\": \"Chloe\",\n            \"Apellidos\": \"Choua\",\n            \"EstadoCivil\": \"S\",\n            \"Telefono\": \"+54(381)4451337\",\n            \"Email\": \"chloechoua@gmail.com\",\n            \"CantidadHijos\": 0,\n            \"Usuario\": \"cchoua\",\n            \"FechaNacimiento\": \"2000-05-17\",\n            \"FechaInicio\": \"2020-01-01\",\n            \"FechaAlta\": \"2020-05-13 20:25:19.000000\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"Error\": {\n        \"Codigo\": \"ERROR_PASSWORD_INCORRECTA\",\n        \"Mensaje\": \"La contraseña ingresada no es correcta.\"\n    },\n    \"Respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/usuariosController.go",
+    "groupTitle": "Usuarios",
+    "name": "PostUsuariosModificarpassword"
+  },
+  {
+    "type": "POST",
     "url": "/usuarios/restablecerPassword",
     "title": "Restablecer contraseña",
-    "description": "<p>Permite restablecer la contraseña un usuario</p>",
+    "description": "<p>Permite restablecer la contraseña de un usuario</p>",
     "group": "Usuarios",
     "header": {
       "fields": {

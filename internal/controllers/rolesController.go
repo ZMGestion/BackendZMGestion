@@ -132,13 +132,18 @@ func (rc *RolesController) Crear(c echo.Context) error {
 
 	mapstructure.Decode(jsonMap["Roles"], &rol)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	gestorRoles := gestores.GestorRoles{
 		DbHandler: rc.DbHandler,
 	}
 
-	result, err := gestorRoles.Crear(rol, token)
+	result, err := gestorRoles.Crear(rol, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -256,9 +261,14 @@ func (rc *RolesController) Borrar(c echo.Context) error {
 		DbHandler: rc.DbHandler,
 	}
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
 
-	err = gestorRoles.Borrar(rol, token)
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	err = gestorRoles.Borrar(rol, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -320,13 +330,18 @@ func (rc *RolesController) Modificar(c echo.Context) error {
 
 	mapstructure.Decode(jsonMap["Roles"], &rol)
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
 
 	gestorRoles := gestores.GestorRoles{
 		DbHandler: rc.DbHandler,
 	}
 
-	result, err := gestorRoles.Modificar(rol, token)
+	result, err := gestorRoles.Modificar(rol, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -469,9 +484,14 @@ func (rc *RolesController) AsignarPermisos(c echo.Context) error {
 		Rol:       &rol,
 	}
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
 
-	err = rolesService.AsignarPermisos(permisos, token)
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	err = rolesService.AsignarPermisos(permisos, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
