@@ -69,7 +69,7 @@ func GetError(err error) (string, string) {
 }
 
 func Hash(password string) (*string, error) {
-	b, err := bcrypt.GenerateFromPassword([]byte(password), 30)
+	b, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 
 	if err != nil {
 		return nil, err

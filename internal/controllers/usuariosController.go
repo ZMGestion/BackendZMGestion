@@ -726,8 +726,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
     "Respuesta": null
 }
 */
-//Dame Devuelve un usuario a partir de un Token
-
+//RestablecerPassword Reestablece la password de un usuario
 func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 
 	usuario := structs.Usuarios{}
@@ -764,6 +763,62 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 		Error:     nil,
 		Respuesta: nil,
 	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+//ModificarPassword Modifica la password de un usuario
+func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	var usuarioActual, usuarioNuevo structs.Usuarios
+
+	err = mapstructure.Decode(jsonMap["UsuariosActual"], &usuarioActual)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	err = mapstructure.Decode(jsonMap["UsuariosNuevo"], &usuarioNuevo)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	token := c.Request().Header.Get("Authorization")
+
+	hashActual, err := helpers.Hash(usuarioActual.Password)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	hashNuevo, err := helpers.Hash(usuarioActual.Password)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	gestorUsuarios := gestores.GestorUsuarios{
+		DbHandler: uc.DbHandler,
+	}
+
+	result, err := gestorUsuarios.ModificarPassword(*hashActual, *hashNuevo, token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+
+	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }
