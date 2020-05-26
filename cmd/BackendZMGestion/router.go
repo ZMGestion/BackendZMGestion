@@ -10,8 +10,10 @@ import (
 
 func InitRouter(h *db.DbHandler) *echo.Echo {
 	r := echo.New()
+
 	initRoutes(r, h)
 
+	r.Use(middleware.CORS())
 	r.Use(middleware.Logger())
 	//r.Use(middleware.Gzip())
 
