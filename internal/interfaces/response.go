@@ -8,8 +8,8 @@ import (
 )
 
 type Response struct {
-	Error     *models.Errores
-	Respuesta interface{}
+	Error     *models.Errores `json:"error"`
+	Respuesta interface{}     `json:"respuesta"`
 }
 
 func (r *Response) AddModels(elements ...interface{}) *Response {
