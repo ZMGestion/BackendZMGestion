@@ -661,6 +661,75 @@
   },
   {
     "type": "POST",
+    "url": "/usuarios/cerrarSesion",
+    "title": "Cerrar Sesion",
+    "description": "<p>Permite a un usuario cerrar la sesion de otro usuario</p>",
+    "group": "Usuarios",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Usuarios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Usuarios.IdUsuario",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"Usuarios\":{\n        \"IdUsuario\": 1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Error\": null\n    \"Respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"Error\": {\n        \"Codigo\": \"ERROR_NOEXISTE_USUARIO\",\n        \"Mensaje\": \"El usuario indicado no existe.\"\n    },\n    \"Respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/usuariosController.go",
+    "groupTitle": "Usuarios",
+    "name": "PostUsuariosCerrarsesion"
+  },
+  {
+    "type": "POST",
     "url": "/usuarios/crear",
     "title": "Crear Usuario",
     "description": "<p>Permite crear un usuario</p>",
@@ -1011,6 +1080,76 @@
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
     "name": "PostUsuariosDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/usuarios/iniciarSesion",
+    "title": "Iniciar Sesion",
+    "description": "<p>Permite a un usuario iniciar sesion</p>",
+    "group": "Usuarios",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Usuarios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Usuarios.Email",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Usuarios.Usuario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Usuarios.Password",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Usuarios\": {\n\t\t\t\"Usuario\": \"lchoua\",\n\t\t\t\"Password\":\"LoikCapo\",\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Error\": null,\n    \"Respuesta\": {\n        \"Usuarios\": {\n            \"IdUsuario\": 5,\n            \"IdRol\": 1,\n            \"IdUbicacion\": 1,\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"39477073\",\n            \"Nombres\": \"Nicolas\",\n            \"Apellidos\": \"Bachs\",\n            \"EstadoCivil\": \"S\",\n            \"Telefono\": \"+543814491954\",\n            \"Email\": \"nicolas.bachs@gmail.com\",\n            \"CantidadHijos\": 0,\n            \"Usuario\": \"nbachs\",\n            \"Token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODk0MTI5MzIsImlhdCI6MTU4OTQwOTMzMiwidXNlciI6Im5iYWNocyJ9.IX4fpwOpjp8-TjPMVKqT1NmZ0gQG0shyrLfLq6ETi-M\",\n            \"FechaNacimiento\": \"1995-12-27\",\n            \"FechaInicio\": \"2019-11-22\",\n            \"FechaAlta\": \"2020-05-08 00:49:18.000000\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"Error\": {\n        \"Codigo\": \"ERROR_LOGIN_INCORRECTO\",\n        \"Mensaje\": \"El nombre de usuario o contrasena ingresados no son correctos.\"\n    },\n    \"Respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/usuariosController.go",
+    "groupTitle": "Usuarios",
+    "name": "PostUsuariosIniciarsesion"
   },
   {
     "type": "POST",
