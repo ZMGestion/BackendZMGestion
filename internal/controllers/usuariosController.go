@@ -145,12 +145,19 @@ func (uc *UsuariosController) DamePorToken(c echo.Context) error {
 
 	usuario := structs.Usuarios{}
 
-	token := c.Request().Header.Get("Authorization")
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
 	usuariosService := models.UsuariosService{
 		DbHandler: uc.DbHandler,
 		Usuario:   &usuario,
 	}
-	result, err := usuariosService.DamePorToken(token)
+
+	result, err := usuariosService.DamePorToken(*token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
