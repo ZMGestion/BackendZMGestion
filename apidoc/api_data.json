@@ -202,6 +202,84 @@
   },
   {
     "type": "GET",
+    "url": "/paises",
+    "title": "Listar Paises",
+    "description": "<p>Devuelve una lista de paises</p>",
+    "group": "Paises",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 1,\n\t\t\t\t\"Rol\": \"Administradores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 2,\n\t\t\t\t\"Rol\": \"Vendedores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t}\n\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/paisesController.go",
+    "groupTitle": "Paises",
+    "name": "GetPaises"
+  },
+  {
+    "type": "POST",
+    "url": "/provincias",
+    "title": "Listar Provincias",
+    "description": "<p>Devuelve la lista de provincias de un país</p>",
+    "group": "Provincias",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Paises",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Paises.IdPais",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 1,\n\t\t\t\t\"Rol\": \"Administradores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 2,\n\t\t\t\t\"Rol\": \"Vendedores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t}\n\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/provinciasController.go",
+    "groupTitle": "Provincias",
+    "name": "PostProvincias"
+  },
+  {
+    "type": "GET",
     "url": "/roles/listar",
     "title": "Listar Roles",
     "permission": [

@@ -26,7 +26,11 @@ func (gu *GestorUbicaciones) Crear(ubicacion structs.Ubicaciones, domicilio stru
 
 	out, err := gu.DbHandler.CallSP("zsp_ubicacion_crear", params)
 
-	if err != nil || out == nil {
+	if out == nil {
+		return nil, errors.New("Not found")
+	}
+
+	if err != nil {
 		return nil, err
 	}
 
@@ -78,7 +82,11 @@ func (gu *GestorUbicaciones) Modificar(ubicacion structs.Ubicaciones, domicilio 
 
 	out, err := gu.DbHandler.CallSP("zsp_ubicacion_modificar", params)
 
-	if err != nil || out == nil {
+	if out == nil {
+		return nil, errors.New("Not found")
+	}
+
+	if err != nil {
 		return nil, err
 	}
 
