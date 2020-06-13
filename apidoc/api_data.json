@@ -653,6 +653,429 @@
   },
   {
     "type": "GET",
+    "url": "/ubicaciones",
+    "title": "Listar Ubicaciones",
+    "name": "Listar_Ubicaciones",
+    "description": "<p>Devuelve una lista con la ubicación y su dirección.</p>",
+    "group": "Ubicaciones",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"Domicilios\": {\n                \"IdDomicilio\": 1,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"Av. Manuel Belgrano 1456\",\n                \"CodigoPostal\": \"4000\",\n                \"FechaAlta\": \"2020-06-13 13:52:16.000000\",\n                \"Observaciones\": \"Domicilio de la casa central\"\n            },\n            \"Ubicaciones\": {\n                \"IdUbicacion\": 1,\n                \"IdDomicilio\": 1,\n                \"Ubicacion\": \"Casa Central Tucumán\",\n                \"FechaAlta\": \"2020-06-13 13:52:17.000000\",\n                \"Estado\": \"A\"\n            }\n        },\n        {\n            \"Domicilios\": {\n                \"IdDomicilio\": 2,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"Ildefonso de Muñecas 374\",\n                \"CodigoPostal\": \"4000\",\n                \"FechaAlta\": \"2020-06-13 13:52:16.000000\",\n                \"Observaciones\": \"Domicilio sucursal Muñecas\"\n            },\n            \"Ubicaciones\": {\n                \"IdUbicacion\": 2,\n                \"IdDomicilio\": 2,\n                \"Ubicacion\": \"Sucursal Muñecas\",\n                \"FechaAlta\": \"2020-06-13 13:52:17.000000\",\n                \"Estado\": \"A\"\n            }\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/borar",
+    "title": "Borrar Ubicación",
+    "description": "<p>Permite borrar una ubicación existente</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"Ubicaciones\":{\n\t\t\"IdUbicacion\":5\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_SIN_PERMISOS\",\n        \"mensaje\": \"No cuenta con los permisos para ejecutar esta accion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesBorar"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/crear",
+    "title": "Crear Ubicación",
+    "description": "<p>Permite crear una ubicación</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.Ubicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.Observaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Domicilios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdCiudad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdProvincia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdPais",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Domicilios.Domicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Domicilios.CodigoPostal",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Ubicaciones\":{\n        \"Ubicacion\": \"Prueba\"\n    },\n    \"Domicilios\":{\n        \"IdCiudad\":1,\n        \"IdProvincia\":1,\n        \"IdPais\":\"AR\",\n        \"Domicilio\":\"Domicilio de prueba\",\n        \"CodigoPostal\":\"PRUEBA\",\n        \"Observaciones\":\"\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Ubicaciones\": {\n            \"IdUbicacion\": 5,\n            \"IdDomicilio\": 19,\n            \"Ubicacion\": \"Prueba\",\n            \"FechaAlta\": \"2020-06-13 13:38:59.000000\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_EXISTE_UBICACION\",\n        \"mensaje\": \"La ubicacion ingresada ya existe.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/darAlta",
+    "title": "Dar alta Ubicación",
+    "description": "<p>Permite dar de alta una ubicación</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Ubicaciones\":{\n        \"IdUbicacion\": 8\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Ubicaciones\": {\n            \"IdUbicacion\": 8,\n            \"IdDomicilio\": 8,\n            \"Ubicacion\": \"Modificar prueba\",\n            \"FechaAlta\": \"2020-06-13 15:43:20.000000\",\n            \"FechaBaja\": \"2020-06-13 15:42:10.000000\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_UBICACION_ESTA_ALTA\",\n        \"mensaje\": \"La ubicación no existe o ya está en estado de 'Alta'.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/darBaja",
+    "title": "Dar baja Ubicación",
+    "description": "<p>Permite dar de baja una ubicación</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Ubicaciones\": {\n            \"IdUbicacion\":8,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Ubicaciones\": {\n            \"IdUbicacion\": 8,\n            \"IdDomicilio\": 8,\n            \"Ubicacion\": \"Modificar prueba\",\n            \"FechaAlta\": \"2020-06-13 14:55:33.000000\",\n            \"FechaBaja\": \"2020-06-13 15:42:10.000000\",\n            \"Estado\": \"B\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_UBICACION_ESTA_BAJA\",\n        \"mensaje\": \"La ubicación no existe o ya está en estado de 'Baja'.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/modificar",
+    "title": "Modificar Ubicación",
+    "description": "<p>Permite modificar una ubicación existente</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Ubicaciones\":{\n        \"IdUbicacion\": 8,\n        \"Ubicacion\":\"Modificar prueba\"\n    },\n    \"Domicilios\":{\n        \"IdDomicilio\":8,\n        \"IdCiudad\":1,\n        \"IdProvincia\":1,\n        \"IdPais\":\"AR\",\n        \"Domicilio\":\"Domicilio de prueba\",\n        \"CodigoPostal\":\"PRUEBA\",\n        \"Observaciones\":\"\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_SIN_PERMISOS\",\n        \"mensaje\": \"No cuenta con los permisos para ejecutar esta accion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesModificar"
+  },
+  {
+    "type": "GET",
     "url": "/usuarios/damePorToken",
     "title": "Dame Usuario por Token",
     "description": "<p>Devuelve un usuario a partir de un Token</p>",
