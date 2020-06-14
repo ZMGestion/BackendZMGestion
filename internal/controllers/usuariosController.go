@@ -34,8 +34,8 @@ type UsuariosController struct {
  }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 1,
             "IdRol": 1,
@@ -56,11 +56,11 @@ type UsuariosController struct {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Dame Devuelve un usuario a partir de un Id
@@ -110,8 +110,8 @@ func (uc *UsuariosController) Dame(c echo.Context) error {
  * @apiHeader {String} Authorization
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 1,
             "IdRol": 1,
@@ -132,11 +132,11 @@ func (uc *UsuariosController) Dame(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Dame Devuelve un usuario a partir de un Token
@@ -214,8 +214,8 @@ func (uc *UsuariosController) DamePorToken(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 6,
             "IdRol": 1,
@@ -239,14 +239,14 @@ func (uc *UsuariosController) DamePorToken(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
-//Dame Devuelve un usuario a partir de un Token
+//Crear
 
 func (uc *UsuariosController) Crear(c echo.Context) error {
 
@@ -332,8 +332,8 @@ func (uc *UsuariosController) Crear(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 6,
             "IdRol": 1,
@@ -357,11 +357,11 @@ func (uc *UsuariosController) Crear(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (uc *UsuariosController) Modificar(c echo.Context) error {
@@ -416,16 +416,16 @@ func (uc *UsuariosController) Modificar(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": null
+    "error": null,
+    "respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (uc *UsuariosController) Borrar(c echo.Context) error {
@@ -479,8 +479,8 @@ func (uc *UsuariosController) Borrar(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 8,
             "IdRol": 1,
@@ -503,11 +503,11 @@ func (uc *UsuariosController) Borrar(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (uc *UsuariosController) DarAlta(c echo.Context) error {
@@ -564,8 +564,8 @@ func (uc *UsuariosController) DarAlta(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 8,
             "IdRol": 1,
@@ -588,11 +588,11 @@ func (uc *UsuariosController) DarAlta(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (uc *UsuariosController) DarBaja(c echo.Context) error {
@@ -657,8 +657,8 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": [
+    "error": null,
+    "respuesta": [
         {
             "Roles": {
                 "IdRol": 1,
@@ -692,11 +692,11 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Dame Devuelve un usuario a partir de un Token
@@ -754,16 +754,16 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null
-    "Respuesta": null
+    "error": null
+    "respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_USUARIO_ESTA_BAJA",
-        "Mensaje": "El usuario no existe o ya está dado de baja."
+    "error": {
+        "codigo": "ERROR_USUARIO_ESTA_BAJA",
+        "mensaje": "El usuario no existe o ya está dado de baja."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //RestablecerPassword Reestablece la password de un usuario
@@ -832,8 +832,8 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 9,
             "IdRol": 1,
@@ -856,11 +856,11 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_PASSWORD_INCORRECTA",
-        "Mensaje": "La contraseña ingresada no es correcta."
+    "error": {
+        "codigo": "ERROR_PASSWORD_INCORRECTA",
+        "mensaje": "La contraseña ingresada no es correcta."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //ModificarPassword Modifica la password de un usuario
@@ -943,8 +943,8 @@ func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
         "Usuarios": {
             "IdUsuario": 5,
             "IdRol": 1,
@@ -968,11 +968,11 @@ func (uc *UsuariosController) ModificarPassword(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_LOGIN_INCORRECTO",
-        "Mensaje": "El nombre de usuario o contrasena ingresados no son correctos."
+    "error": {
+        "codigo": "ERROR_LOGIN_INCORRECTO",
+        "mensaje": "El nombre de usuario o contrasena ingresados no son correctos."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Iniciar Sesion Permite a un usuario iniciar sesion
@@ -1039,16 +1039,16 @@ func (uc *UsuariosController) IniciarSesion(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "Error": null
-    "Respuesta": null
+    "error": null
+    "respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
-    "Error": {
-        "Codigo": "ERROR_NOEXISTE_USUARIO",
-        "Mensaje": "El usuario indicado no existe."
+    "error": {
+        "codigo": "ERROR_NOEXISTE_USUARIO",
+        "mensaje": "El usuario indicado no existe."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //RestablecerPassword Reestablece la password de un usuario

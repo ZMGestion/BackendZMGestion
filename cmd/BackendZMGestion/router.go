@@ -51,4 +51,32 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/usuarios/modificarPassword", controllerUsuarios.ModificarPassword)
 	r.POST("/usuarios/iniciarSesion", controllerUsuarios.IniciarSesion)
 	r.POST("/usuarios/cerrarSesion", controllerUsuarios.CerrarSesion)
+
+	controllerDomicilios := &controllers.DomiciliosController{
+		DbHandler: h,
+	}
+
+	r.POST("/domicilios/crear", controllerDomicilios.Crear)
+	r.POST("/domicilios/borrar", controllerDomicilios.Borrar)
+
+	controllerUbicaciones := &controllers.UbicacionesController{
+		DbHandler: h,
+	}
+	r.GET("/ubicaciones", controllerUbicaciones.Listar)
+	r.POST("/ubicaciones/crear", controllerUbicaciones.Crear)
+	r.POST("/ubicaciones/borrar", controllerUbicaciones.Borrar)
+	r.POST("/ubicaciones/modificar", controllerUbicaciones.Modificar)
+	r.POST("/ubicaciones/darAlta", controllerUbicaciones.DarAlta)
+	r.POST("/ubicaciones/darBaja", controllerUbicaciones.DarBaja)
+
+	controllerPaises := &controllers.PaisesController{
+		DbHandler: h,
+	}
+	r.GET("/paises", controllerPaises.Listar)
+
+	controllerProvincias := &controllers.ProvinciasController{
+		DbHanlder: h,
+	}
+	r.POST("/provincias", controllerProvincias.Listar)
+
 }

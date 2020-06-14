@@ -33,8 +33,8 @@ type RolesController struct {
  }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
 		"Roles": {
             "IdRol": 2,
             "Rol": "Vendedores",
@@ -45,11 +45,11 @@ type RolesController struct {
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_NOEXISTE_ROL",
-        "Mensaje": "No existe el rol."
+    "error": {
+        "codigo": "ERROR_NOEXISTE_ROL",
+        "mensaje": "No existe el rol."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Dame Devuelve un rol a partir de un Id
@@ -86,7 +86,7 @@ func (rc *RolesController) Dame(c echo.Context) error {
 }
 
 /**
- * @api {GET} /roles/crear Crear Rol
+ * @api {POST} /roles/crear Crear Rol
  * @apiPermission Administradores
  * @apiDescription Permite crear un rol
  * @apiGroup Roles
@@ -102,8 +102,8 @@ func (rc *RolesController) Dame(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
 		"Roles" : {
 			"IdRol": 7,
 			"Rol": "Encargados",
@@ -114,11 +114,11 @@ func (rc *RolesController) Dame(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_EXISTE_NOMBREROL",
-        "Mensaje": "El nombre de rol ya existe."
+    "error": {
+        "codigo": "ERROR_EXISTE_NOMBREROL",
+        "mensaje": "El nombre de rol ya existe."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (rc *RolesController) Crear(c echo.Context) error {
@@ -159,14 +159,14 @@ func (rc *RolesController) Crear(c echo.Context) error {
 }
 
 /**
- * @api {POST} /roles/listar Listar Roles
+ * @api {GET} /roles/listar Listar Roles
  * @apiPermission Administradores
  * @apiDescription Devuelve una lista de roles
  * @apiGroup Roles
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": [
+    "error": null,
+    "respuesta": [
 		{
 			"Roles":{
 				"IdRol": 1,
@@ -188,11 +188,11 @@ func (rc *RolesController) Crear(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Listar Lista los roles
@@ -239,8 +239,8 @@ func (rc *RolesController) Listar(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": null
+    "error": null,
+    "respuesta": null
 }
 */
 //Borrar Devuelve un rol a partir de un Id
@@ -283,7 +283,7 @@ func (rc *RolesController) Borrar(c echo.Context) error {
 }
 
 /**
- * @api {GET} /roles/modificar Modificar Rol
+ * @api {POST} /roles/modificar Modificar Rol
  * @apiPermission Administradores
  * @apiDescription Permite modificar un rol
  * @apiGroup Roles
@@ -302,8 +302,8 @@ func (rc *RolesController) Borrar(c echo.Context) error {
  }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": {
+    "error": null,
+    "respuesta": {
 		"IdRol": 7,
 		"Rol": "Los encargados",
 		"FechaAlta": "2020-04-09 15:01:35.000000",
@@ -312,11 +312,11 @@ func (rc *RolesController) Borrar(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_EXISTE_NOMBREROL",
-        "Mensaje": "El nombre de rol ya existe."
+    "error": {
+        "codigo": "ERROR_EXISTE_NOMBREROL",
+        "mensaje": "El nombre de rol ya existe."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 func (rc *RolesController) Modificar(c echo.Context) error {
@@ -362,10 +362,12 @@ func (rc *RolesController) Modificar(c echo.Context) error {
  * @apiName Listar Permisos
  * @apiDescription Devuelve una lista de permisos para un determinado rol
  * @apiGroup Roles
+ * @apiParam {Object} Roles
+ * @apiParam {int} IdRol
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": [
+    "error": null,
+    "respuesta": [
 		{
             "Permisos": {
                 "IdPermiso": 1,
@@ -382,11 +384,11 @@ func (rc *RolesController) Modificar(c echo.Context) error {
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Listar Lista los permisos para un rol
@@ -452,16 +454,16 @@ func (rc *RolesController) ListarPermisos(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
  {
-    "Error": null,
-    "Respuesta": null
+    "error": null,
+    "respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
  {
-    "Error": {
-        "Codigo": "ERROR_DEFAULT",
-        "Mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
-    "Respuesta": null
+    "respuesta": null
 }
 */
 //Listar Lista los permisos para un rol
