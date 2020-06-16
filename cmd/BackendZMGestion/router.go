@@ -26,7 +26,6 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	controllerRoles := &controllers.RolesController{
 		DbHandler: h,
 	}
-
 	r.GET("/roles/listar", controllerRoles.Listar)
 	r.POST("/roles/dame", controllerRoles.Dame)
 	r.POST("/roles/crear", controllerRoles.Crear)
@@ -38,7 +37,6 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	controllerUsuarios := &controllers.UsuariosController{
 		DbHandler: h,
 	}
-
 	r.POST("/usuarios/dame", controllerUsuarios.Dame)
 	r.GET("/usuarios/damePorToken", controllerUsuarios.DamePorToken)
 	r.POST("/usuarios/crear", controllerUsuarios.Crear)
@@ -51,11 +49,11 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/usuarios/modificarPassword", controllerUsuarios.ModificarPassword)
 	r.POST("/usuarios/iniciarSesion", controllerUsuarios.IniciarSesion)
 	r.POST("/usuarios/cerrarSesion", controllerUsuarios.CerrarSesion)
+	r.GET("/usuarios/tiposDocumento", controllerUsuarios.ListarTiposDocumento)
 
 	controllerDomicilios := &controllers.DomiciliosController{
 		DbHandler: h,
 	}
-
 	r.POST("/domicilios/crear", controllerDomicilios.Crear)
 	r.POST("/domicilios/borrar", controllerDomicilios.Borrar)
 

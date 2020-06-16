@@ -5,6 +5,7 @@ import (
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -196,5 +197,40 @@ func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, token string) ([]inte
 	}
 
 	return respuesta, nil
+}
 
+func (gu *GestorUsuarios) ListarTiposDocumento() ([]*structs.TiposDocumento, error) {
+	out, err := gu.DbHandler.CallSP("zsp_tiposDocumento_listar", nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	var tiposDocumento []*structs.TiposDocumento
+	for _, el := range response {
+		var tipoDocumento structs.TiposDocumento
+		if el["TiposDocumento"] != nil {
+			err = mapstructure.Decode(el["TiposDocumento"], &tipoDocumento)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			return nil, nil
+		}
+		tiposDocumento = append(tiposDocumento, &tipoDocumento)
+	}
+
+	return tiposDocumento, nil
 }

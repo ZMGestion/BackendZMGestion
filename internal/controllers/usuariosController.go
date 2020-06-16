@@ -1087,3 +1087,66 @@ func (uc *UsuariosController) CerrarSesion(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {GET} /usuarios/tiposDocumento Listar Tipos Documento
+ * @apiDescription Devuelve una lista de tipos documento
+ * @apiGroup Usuarios
+ * @apiSuccessExample {json} Success-Response:
+ {
+    "error": null,
+    "respuesta": [
+		{
+
+			"TiposDocumento":{
+				"IdTipoDocumento": 1,
+				"TipoDocumento": "DNI",
+				"Descripcion": "Documento Nacional de Identidad"
+			}
+		},
+		{
+			"TiposDocumento":{
+				"IdTipoDocumento": 2,
+				"TipoDocumento": "Pasaporte",
+				"Descripcion": "Pasaporte"
+			}
+		}
+
+    ]
+}
+* @apiErrorExample {json} Error-Response:
+ {
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//Listar Lista los tipos de documento
+func (uc *UsuariosController) ListarTiposDocumento(c echo.Context) error {
+
+	gestorUsuarios := gestores.GestorUsuarios{
+		DbHandler: uc.DbHandler,
+	}
+
+	result, err := gestorUsuarios.ListarTiposDocumento()
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+
+	var respuesta []map[string]interface{}
+	for _, el := range result {
+		objeto := make(map[string]interface{})
+		objeto["TiposDocumento"] = el
+		respuesta = append(respuesta, objeto)
+	}
+	response.Respuesta = respuesta
+
+	return c.JSON(http.StatusOK, response)
+}
