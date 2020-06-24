@@ -77,4 +77,10 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	}
 	r.POST("/provincias", controllerProvincias.Listar)
 
+	controllerClientes := &controllers.ClientesController{
+		DbHanlder: h,
+	}
+
+	r.POST("/clientes/crear", controllerClientes.Crear)
+
 }
