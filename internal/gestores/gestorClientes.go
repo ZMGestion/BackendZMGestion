@@ -45,3 +45,34 @@ func (gc *GestorClientes) Crear(cliente structs.Clientes, domicilio structs.Domi
 
 	return &cliente, err
 }
+
+func (gc *GestorClientes) Modificar(cliente structs.Clientes, token string) (*structs.Clientes, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Clientes":        cliente,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gc.DbHandler.CallSP("zsp_cliente_modificar", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err == nil {
+		if response["Clientes"] != nil {
+			err = mapstructure.Decode(response["Clientes"], &cliente)
+		} else {
+			return nil, nil
+		}
+	}
+
+	return &cliente, err
+}

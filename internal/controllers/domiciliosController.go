@@ -31,19 +31,34 @@ type DomiciliosController struct {
  * @apiParam {string} Domicilios.Observaciones
  * @apiParam {Object} Clientes
  * @apiParam {int} Clientes.IdCliente
-
-
   * @apiParamExample {json} Request-Example:
 {
-    "error": {
-        "codigo": "ERROR_NOEXISTE_CLIENTE",
-        "mensaje": "No existe el cliente ingresado."
-    },
-    "respuesta": null
+	"Clientes":{
+		"IdCliente":1
+	},
+	"Domicilios":{
+		"Domicilio":"El Tipal Lote 13",
+		"IdCiudad":1,
+		"IdProvincia":1,
+		"IdPais":"AR",
+		"CodigoPostal":"4107"
+	}
 }
  * @apiSuccessExample {json} Success-Response:
 {
-
+    "error": null,
+    "respuesta": {
+        "Domicilios": {
+            "IdDomicilio": 13,
+            "IdCiudad": 1,
+            "IdProvincia": 1,
+            "IdPais": "AR",
+            "Domicilio": "El Tipal Lote 13",
+            "CodigoPostal": "4107",
+            "FechaAlta": "2020-06-24 23:12:34.000000",
+            "Observaciones": ""
+        }
+    }
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -102,10 +117,7 @@ func (dc *DomiciliosController) Crear(c echo.Context) error {
  * @apiParam {int} Domicilios.IdDomicilio
  * @apiParam {Object} Clientes
  * @apiParam {int} Clientes.IdCliente
-
-
-
-  * @apiParamExample {json} Request-Example:
+ * @apiParamExample {json} Request-Example:
 {
 	 "Domicilios":{
 		 "IdDomicilio":1

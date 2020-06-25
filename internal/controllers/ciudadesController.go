@@ -12,35 +12,33 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-type ProvinciasController struct {
+type CiudadesController struct {
 	DbHanlder *db.DbHandler
 }
 
 /**
- * @api {POST} /provincias Listar Provincias
- * @apiDescription Devuelve la lista de provincias de un país
- * @apiGroup Provincias
- * @apiParam {Object} Paises
- * @apiParam {int} Paises.IdPais
+ * @api {POST} /ciudades Listar Ciudades
+ * @apiDescription Devuelve la lista de ciudades de una provincia
+ * @apiGroup Ciudades
+ * @apiParam {Object} Provincias
+ * @apiParam {int} Provincias.IdProvincia
+ * @apiParam {int} Provincias.IdCiudad
  * @apiParamExample {json} Request-Example:
 {
-    "Paises":{
-        "IdPais":"AR"
+    "Provincias":{
+        "IdPais":"AR",
+        "IdProvincia":1
     }
 }
  * @apiSuccessExample {json} Success-Response:
- {
+{
     "error": null,
     "respuesta": [
         {
-            "IdPais": "",
-            "IdProvincia": 2,
-            "Provincia": "Salta"
-        },
-        {
-            "IdPais": "",
+            "IdCiudad": 1,
             "IdProvincia": 1,
-            "Provincia": "Tucumán"
+            "IdPais": "AR",
+            "Ciudad": "San Miguel de Tucumán"
         }
     ]
 }
@@ -54,8 +52,8 @@ type ProvinciasController struct {
 }
 */
 //Listar Lista los roles
-func (pc *ProvinciasController) Listar(c echo.Context) error {
-	pais := structs.Paises{}
+func (cc *CiudadesController) Listar(c echo.Context) error {
+	provincia := structs.Provincias{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -63,14 +61,14 @@ func (pc *ProvinciasController) Listar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 
-	mapstructure.Decode(jsonMap["Paises"], &pais)
+	mapstructure.Decode(jsonMap["Provincias"], &provincia)
 
-	paisesService := models.PaisesService{
-		DbHandler: pc.DbHanlder,
-		Paises:    &pais,
+	provinciasService := models.ProvinciasService{
+		DbHandler:  cc.DbHanlder,
+		Provincias: &provincia,
 	}
 
-	result, err := paisesService.ListarProvincias()
+	result, err := provinciasService.ListarCiudades()
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
