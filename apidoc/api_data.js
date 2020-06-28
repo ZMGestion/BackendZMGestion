@@ -238,6 +238,276 @@ define({ "api": [
   },
   {
     "type": "POST",
+    "url": "/clientes/darAlta",
+    "title": "Dar de Alta Cliente",
+    "description": "<p>Permite dar de alta un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/darBaja",
+    "title": "Dar de Baja Cliente",
+    "description": "<p>Permite dar de baja un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/modificar",
+    "title": "Modificar Cliente",
+    "description": "<p>Permite modificar un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.IdPais",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdTipoDocumento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Documento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Nombres",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Apellidos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.RazonSocial",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Email",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Telefono",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.FechaNacimiento",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"IdTipoDocumento\": 1,\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"FechaNacimiento\":\"1998-05-27\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"1998-05-27\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"Choua\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesModificar"
+  },
+  {
+    "type": "POST",
     "url": "/domicilios/borar",
     "title": "Borrar Domicilio",
     "description": "<p>Permite borrar un domicilio de un cliente</p>",
@@ -1466,180 +1736,6 @@ define({ "api": [
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
     "name": "GetUsuariosTiposdocumento"
-  },
-  {
-    "type": "POST",
-    "url": "/clientes/modificar",
-    "title": "Crear Usuario",
-    "description": "<p>Permite crear un usuario</p>",
-    "group": "Usuarios",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "Clientes",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.IdPais",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Clientes.IdTipoDocumento",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Documento",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Nombres",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Apellidos",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.RazonSocial",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Tipo",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Email",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.Telefono",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Clientes.FechaNacimiento",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "Domicilios",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Domicilios.Domicilio",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Domicilios.CodigoPostal",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Domicilios.IdPais",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Domicilios.IdProvincia",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Domicilios.IdCiudad",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{  \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"IdTipoDocumento\": 1,\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"FechaNacimiento\":\"1998-05-27\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    },\n    \"Domicilios\":{\n        \"IdCiudad\":1,\n        \"IdProvincia\":1,\n        \"IdPais\":\"AR\",\n        \"Domicilio\":\"Domicilio\",\n        \"CodigoPostal\":\"4000\"\n    }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"1998-05-27\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"3815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"Choua\"\n        }\n    }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/clientesController.go",
-    "groupTitle": "Usuarios",
-    "name": "PostClientesModificar"
   },
   {
     "type": "POST",
