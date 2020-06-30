@@ -2,6 +2,7 @@ package models
 
 import (
 	"BackendZMGestion/internal/db"
+	"BackendZMGestion/internal/helpers"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
@@ -90,4 +91,41 @@ func (cs *ClientesService) DarBaja(token string) (*structs.Clientes, error) {
 		return nil, nil
 	}
 	return &clientes, nil
+}
+
+func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
+	out, err := cs.DbHanlder.CallSP("zsp_cliente_listar_domicilios", helpers.GenerateJSONFromModels(cs.Clientes))
+
+	if out == nil {
+		return nil, errors.New("Not found")
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var domicilios []*structs.Domicilios
+	for _, el := range response {
+		var domicilio structs.Domicilios
+		if el["Domicilios"] != nil {
+			err = mapstructure.Decode(el["Domicilios"], &domicilio)
+			if err != nil {
+				return nil, err
+			}
+
+		} else {
+			return nil, nil
+		}
+		domicilios = append(domicilios, &domicilio)
+	}
+
+	return domicilios, nil
 }

@@ -634,7 +634,7 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 }
 
 /**
- * @api {POST} /usuarios/buscar Buscar Usuarios
+ * @api {POST} /usuarios Buscar Usuarios
  * @apiDescription Permite buscar un usuario
  * @apiGroup Usuarios
  * @apiHeader {String} Authorization
