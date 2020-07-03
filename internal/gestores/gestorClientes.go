@@ -4,7 +4,6 @@ import (
 	"BackendZMGestion/internal/db"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
-	"fmt"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -123,7 +122,6 @@ func (gc *GestorClientes) Buscar(cliente structs.Clientes, token string) ([]*str
 	err = json.Unmarshal(*out, &response)
 
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 	var clientes []*structs.Clientes

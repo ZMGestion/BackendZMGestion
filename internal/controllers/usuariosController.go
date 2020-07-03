@@ -699,7 +699,6 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
     "respuesta": null
 }
 */
-//Dame Devuelve un usuario a partir de un Token
 
 func (uc *UsuariosController) Buscar(c echo.Context) error {
 

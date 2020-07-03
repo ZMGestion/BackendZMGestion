@@ -1488,6 +1488,151 @@ define({ "api": [
   },
   {
     "type": "POST",
+    "url": "/telas",
+    "title": "Buscar Telas",
+    "description": "<p>Permite buscar una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Telas.Tela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Telas.Estado",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su peticion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelas"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/borar",
+    "title": "Borrar Tela",
+    "description": "<p>Permite borrar una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":2,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasBorar"
+  },
+  {
+    "type": "POST",
     "url": "/telas/crear",
     "title": "Crear Tela",
     "description": "<p>Permite crear una tela</p>",
@@ -1578,8 +1723,77 @@ define({ "api": [
   },
   {
     "type": "POST",
+    "url": "/telas/dame",
+    "title": "Dame Tela",
+    "description": "<p>Permite instanciar una tela a partir de su Id</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":5\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su peticion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasDame"
+  },
+  {
+    "type": "POST",
     "url": "/telas/darAlta",
-    "title": "Dar alta tela",
+    "title": "Dar alta Tela",
     "description": "<p>Permite dar de alta una tela</p>",
     "group": "Telas",
     "header": {
@@ -1648,7 +1862,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/telas/darBaja",
-    "title": "Dar baja tela",
+    "title": "Dar baja Tela",
     "description": "<p>Permite dar de baja una tela</p>",
     "group": "Telas",
     "header": {
@@ -1796,6 +2010,158 @@ define({ "api": [
     "filename": "internal/controllers/telasController.go",
     "groupTitle": "Telas",
     "name": "PostTelasModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/precios",
+    "title": "Listar Precios Tela",
+    "description": "<p>Permite listar el historico de precios de una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":[\n\t\t\t{\"IdPrecio\": 14, \"Precio\": 1.2, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 19:57:18.000000\"…},\n\t\t\t{\"IdPrecio\": 16, \"Precio\": 1.21, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:15:10.000000\"…},\n\t\t\t{\"IdPrecio\": 17, \"Precio\": 1.22, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:19:15.000000\"…},\n\t\t\t{\"IdPrecio\": 18, \"Precio\": 1.23, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 22:29:53.000000\"…}\n\t\t]\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasPrecios"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/precios/modificar",
+    "title": "Modificar Precio Tela",
+    "description": "<p>Permite modificar el precio de una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Precios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Precios.IdPrecio",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"Telas\": {\n\t\t\"IdTela\":3,\n\t},\n\t\"Precios\":{\n\t\t\"Precio\":1.21\n\t}\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":{\n\t\t\t\"IdPrecio\": 17,\n\t\t\t\"Precio\": 1.22,\n\t\t\t\"Tipo\": \"\",\n\t\t\t\"IdReferencia\": 0,\n\t\t\t\"FechaAlta\": \"2020-07-03 20:19:15.000000\"\n\t\t},\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 5,\n\t\t\t\"Tela\": \"Prueba5\",\n\t\t\t\"FechaAlta\": \"2020-07-03 19:57:18.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasPreciosModificar"
   },
   {
     "type": "GET",

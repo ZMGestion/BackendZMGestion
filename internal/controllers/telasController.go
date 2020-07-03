@@ -177,7 +177,7 @@ func (tc *TelasController) Modificar(c echo.Context) error {
 }
 
 /**
- * @api {POST} /telas/darAlta Dar alta tela
+ * @api {POST} /telas/darAlta Dar alta Tela
  * @apiDescription Permite dar de alta una tela
  * @apiGroup Telas
  * @apiHeader {String} Authorization
@@ -253,7 +253,7 @@ func (tc *TelasController) DarAlta(c echo.Context) error {
 }
 
 /**
- * @api {POST} /telas/darBaja Dar baja tela
+ * @api {POST} /telas/darBaja Dar baja Tela
  * @apiDescription Permite dar de baja una tela
  * @apiGroup Telas
  * @apiHeader {String} Authorization
@@ -324,6 +324,381 @@ func (tc *TelasController) DarBaja(c echo.Context) error {
 	}
 
 	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /telas/borar Borrar Tela
+ * @apiDescription Permite borrar una tela
+ * @apiGroup Telas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Telas
+ * @apiParam {int} Telas.IdTela
+
+
+  * @apiParamExample {json} Request-Example:
+{
+	 "Telas": {
+            "IdTela":2,
+        }
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (tc *TelasController) Borrar(c echo.Context) error {
+
+	tela := structs.Telas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Telas"], &tela)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorTelas := gestores.GestorTelas{
+		DbHandler: tc.DbHandler,
+	}
+	err = gestorTelas.Borrar(tela, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /telas/precios/modificar Modificar Precio Tela
+ * @apiDescription Permite modificar el precio de una tela
+ * @apiGroup Telas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Telas
+ * @apiParam {int} Telas.IdTela
+ * @apiParam {Object} Precios
+ * @apiParam {int} Precios.IdPrecio
+ * @apiParamExample {json} Request-Example:
+{
+	"Telas": {
+		"IdTela":3,
+	},
+	"Precios":{
+		"Precio":1.21
+	}
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Precios":{
+			"IdPrecio": 17,
+			"Precio": 1.22,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-03 20:19:15.000000"
+		},
+		"Telas":{
+			"IdTela": 5,
+			"Tela": "Prueba5",
+			"FechaAlta": "2020-07-03 19:57:18.000000",
+			"FechaBaja": "",
+			"Observaciones": "",
+			"Estado": "A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (tc *TelasController) ModificarPrecio(c echo.Context) error {
+
+	tela := structs.Telas{}
+	precio := structs.Precios{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Telas"], &tela)
+	mapstructure.Decode(jsonMap["Precios"], &precio)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	telasService := models.TelasService{
+		DbHanlder: tc.DbHandler,
+		Tela:      &tela,
+	}
+
+	result, err := telasService.ModificarPrecio(precio, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /telas/precios Listar Precios Tela
+ * @apiDescription Permite listar el historico de precios de una tela
+ * @apiGroup Telas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Telas
+ * @apiParam {int} Telas.IdTela
+
+
+  * @apiParamExample {json} Request-Example:
+{
+	 "Telas": {
+            "IdTela":3,
+        }
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Precios":[
+			{"IdPrecio": 14, "Precio": 1.2, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 19:57:18.000000"…},
+			{"IdPrecio": 16, "Precio": 1.21, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:15:10.000000"…},
+			{"IdPrecio": 17, "Precio": 1.22, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:19:15.000000"…},
+			{"IdPrecio": 18, "Precio": 1.23, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 22:29:53.000000"…}
+		]
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (tc *TelasController) ListarPrecios(c echo.Context) error {
+
+	tela := structs.Telas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Telas"], &tela)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	telasService := models.TelasService{
+		DbHanlder: tc.DbHandler,
+		Tela:      &tela,
+	}
+
+	result, err := telasService.ListarPrecios(*token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+
+	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /telas Buscar Telas
+ * @apiDescription Permite buscar una tela
+ * @apiGroup Telas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Telas
+ * @apiParam {string} Telas.Tela
+ * @apiParam {string} Telas.Estado
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Telas":{
+		"IdTela":1
+        "Tela": "Prueba13"
+    }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+        "Telas": {
+            "IdTela": 4,
+            "Tela": "Prueba5",
+            "FechaAlta": "2020-06-30 23:39:57.000000",
+            "FechaBaja": "",
+            "Observaciones": "",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su peticion."
+    },
+    "respuesta": null
+}
+*/
+//Buscar
+func (tc *TelasController) Buscar(c echo.Context) error {
+
+	telas := structs.Telas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Telas"], &telas)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorTelas := gestores.GestorTelas{
+		DbHandler: tc.DbHandler,
+	}
+	result, err := gestorTelas.Buscar(telas, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+
+	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /telas/dame Dame Tela
+ * @apiDescription Permite instanciar una tela a partir de su Id
+ * @apiGroup Telas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Telas
+ * @apiParam {int} Telas.IdTela
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Telas":{
+		"IdTela":5
+    }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+        "Telas": {
+            "IdTela": 4,
+            "Tela": "Prueba5",
+            "FechaAlta": "2020-06-30 23:39:57.000000",
+            "FechaBaja": "",
+            "Observaciones": "",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su peticion."
+    },
+    "respuesta": null
+}
+*/
+func (tc *TelasController) Dame(c echo.Context) error {
+
+	tela := structs.Telas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Telas"], &tela)
+
+	//headerToken := c.Request().Header.Get("Authorization")
+	//token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	telasService := models.TelasService{
+		DbHanlder: tc.DbHandler,
+		Tela:      &tela,
+	}
+
+	result, err := telasService.Dame()
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
 
 	return c.JSON(http.StatusOK, response)
 }
