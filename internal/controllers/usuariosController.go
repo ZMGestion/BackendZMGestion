@@ -95,10 +95,9 @@ func (uc *UsuariosController) Dame(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }

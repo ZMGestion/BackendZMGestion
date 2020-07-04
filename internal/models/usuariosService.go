@@ -15,7 +15,7 @@ type UsuariosService struct {
 	DbHandler *db.DbHandler
 }
 
-func (s *UsuariosService) Dame(token string) (*structs.Usuarios, error) {
+func (s *UsuariosService) Dame(token string) (interface{}, error) {
 
 	usuariosEjecuta := structs.Usuarios{
 		Token: token,
@@ -43,16 +43,33 @@ func (s *UsuariosService) Dame(token string) (*structs.Usuarios, error) {
 	if err != nil {
 		return nil, nil
 	}
-	var usuario structs.Usuarios
-	if response["Usuarios"] != nil {
+
+	var objetos interface{}
+	if response["Usuarios"] != nil && response["Roles"] != nil && response["Ubicaciones"] != nil {
+		var usuario structs.Usuarios
 		err = mapstructure.Decode(response["Usuarios"], &usuario)
+		if err != nil {
+			return nil, err
+		}
+		var roles structs.Roles
+		err = mapstructure.Decode(response["Roles"], &roles)
+		if err != nil {
+			return nil, err
+		}
+		var ubicaciones structs.Ubicaciones
+		err = mapstructure.Decode(response["Ubicaciones"], &ubicaciones)
+		if err != nil {
+			return nil, err
+		}
+		objetos = map[string]interface{}{
+			"Usuarios":    usuario,
+			"Roles":       roles,
+			"Ubicaciones": ubicaciones,
+		}
 	} else {
 		return nil, nil
 	}
-	if err != nil {
-		return nil, nil
-	}
-	return &usuario, nil
+	return objetos, nil
 }
 
 //Dame por token
