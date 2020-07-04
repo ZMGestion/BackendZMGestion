@@ -1,10 +1,73 @@
 [
   {
     "type": "POST",
-    "url": "/domicilios/borar",
-    "title": "Borrar Domicilio",
-    "description": "<p>Permite borrar un domicilio de un cliente</p>",
-    "group": "Domicilios",
+    "url": "/ciudades",
+    "title": "Listar Ciudades",
+    "description": "<p>Devuelve la lista de ciudades de una provincia</p>",
+    "group": "Ciudades",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Provincias",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Provincias.IdProvincia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Provincias.IdCiudad",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Provincias\":{\n        \"IdPais\":\"AR\",\n        \"IdProvincia\":1\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"IdCiudad\": 1,\n            \"IdProvincia\": 1,\n            \"IdPais\": \"AR\",\n            \"Ciudad\": \"San Miguel de Tucumán\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ciudadesController.go",
+    "groupTitle": "Ciudades",
+    "name": "PostCiudades"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes",
+    "title": "Buscar Clienter",
+    "description": "<p>Permite buscar clientes</p>",
+    "group": "Clientes",
     "header": {
       "fields": {
         "Header": [
@@ -25,16 +88,120 @@
             "group": "Parameter",
             "type": "Object",
             "optional": false,
-            "field": "Domicilios",
+            "field": "Clientes",
             "description": ""
           },
           {
             "group": "Parameter",
-            "type": "int",
+            "type": "string",
             "optional": false,
-            "field": "Domicilios.IdDomicilio",
+            "field": "Clientes.IdPais",
             "description": ""
           },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Documento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Nombres",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Apellidos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.RazonSocial",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Email",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Telefono",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": [\n            {\n                \"IdCliente\": 3,\n                \"IdPais\": \"AR\",\n                \"IdTipoDocumento\": 1,\n                \"Documento\": \"41144069\",\n                \"Tipo\": \"F\",\n                \"FechaNacimiento\": \"1998-05-27\",\n                \"Nombres\": \"Loik\",\n                \"Apellidos\": \"Choua\",\n                \"RazonSocial\": \"\",\n                \"Email\": \"loikchoua4@gmail.com\",\n                \"Telefono\": \"+543815483777\",\n                \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n                \"FechaBaja\": \"\",\n                \"Estado\": \"A\"\n            }\n        ]\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientes"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/borrar",
+    "title": "Borrar Cliente",
+    "description": "<p>Permite borrar un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
           {
             "group": "Parameter",
             "type": "Object",
@@ -54,7 +221,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t \"Domicilios\":{\n\t\t \"IdDomicilio\":1\n\t },\n\t \"Cliente\":{\n\t\t \"IdCliente\":1\n\t }\n }",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
           "type": "json"
         }
       ]
@@ -63,7 +230,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"B\"\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -78,16 +245,384 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "internal/controllers/domiciliosController.go",
-    "groupTitle": "Domicilios",
-    "name": "PostDomiciliosBorar"
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesBorrar"
   },
   {
     "type": "POST",
-    "url": "/domicilios/crear",
-    "title": "Crear Domicilio",
+    "url": "/clientes/crear",
+    "title": "Crear Cliente",
+    "description": "<p>Permite crear un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.IdPais",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdTipoDocumento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Documento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Nombres",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Apellidos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.RazonSocial",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Email",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Telefono",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.FechaNacimiento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Domicilios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Domicilios.Domicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Domicilios.CodigoPostal",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Domicilios.IdPais",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdProvincia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdCiudad",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{  \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"IdTipoDocumento\": 1,\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"FechaNacimiento\":\"1998-05-27\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    },\n    \"Domicilios\":{\n        \"IdCiudad\":1,\n        \"IdProvincia\":1,\n        \"IdPais\":\"AR\",\n        \"Domicilio\":\"Domicilio\",\n        \"CodigoPostal\":\"4000\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"1998-05-27\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"3815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"Choua\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/darAlta",
+    "title": "Dar alta Cliente",
+    "description": "<p>Permite dar de alta un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/darBaja",
+    "title": "Dar baja Cliente",
+    "description": "<p>Permite dar de baja un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"B\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/domicilios",
+    "title": "Listar Domicilios",
+    "description": "<p>Permite listar los domicilios de un cliente</p>",
+    "group": "Clientes",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"Clientes\":{\n\t\t\"IdCliente\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Domicilios\": [\n            {\n                \"IdDomicilio\": 14,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"El Tipal Lote 13\",\n                \"CodigoPostal\": \"El Tipal Lote 13\",\n                \"FechaAlta\": \"2020-06-28 23:04:26.000000\",\n                \"Observaciones\": \"\"\n            },\n            {\n                \"IdDomicilio\": 15,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"El Tipal Lote 14\",\n                \"CodigoPostal\": \"El Tipal Lote 14\",\n                \"FechaAlta\": \"2020-06-28 23:04:49.000000\",\n                \"Observaciones\": \"\"\n            }\n        ]\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDomicilios"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/domicilios/agregar",
+    "title": "Agregar Domicilio",
     "description": "<p>Permite crear un domicilio para un cliente</p>",
-    "group": "Domicilios",
+    "group": "Clientes",
     "header": {
       "fields": {
         "Header": [
@@ -172,7 +707,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_NOEXISTE_CLIENTE\",\n        \"mensaje\": \"No existe el cliente ingresado.\"\n    },\n    \"respuesta\": null\n}",
+          "content": "{\n\t\"Clientes\":{\n\t\t\"IdCliente\":1\n\t},\n\t\"Domicilios\":{\n\t\t\"Domicilio\":\"El Tipal Lote 13\",\n\t\t\"IdCiudad\":1,\n\t\t\"IdProvincia\":1,\n\t\t\"IdPais\":\"AR\",\n\t\t\"CodigoPostal\":\"4107\"\n\t}\n}",
           "type": "json"
         }
       ]
@@ -181,7 +716,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n\n}",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Domicilios\": {\n            \"IdDomicilio\": 14,\n            \"IdCiudad\": 1,\n            \"IdProvincia\": 1,\n            \"IdPais\": \"AR\",\n            \"Domicilio\": \"El Tipal Lote 13\",\n            \"CodigoPostal\": \"4107\",\n            \"FechaAlta\": \"2020-06-28 23:04:26.000000\",\n            \"Observaciones\": \"\"\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -196,9 +731,666 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "internal/controllers/domiciliosController.go",
-    "groupTitle": "Domicilios",
-    "name": "PostDomiciliosCrear"
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDomiciliosAgregar"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/domicilios/quitar",
+    "title": "Quitar Domicilio",
+    "description": "<p>Permite borrar un domicilio de un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Domicilios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Domicilios.IdDomicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Domicilios\":{\n\t\t \"IdDomicilio\":1\n\t },\n\t \"Clientes\":{\n\t\t \"IdCliente\":1\n\t }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDomiciliosQuitar"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/modificar",
+    "title": "Modificar Cliente",
+    "description": "<p>Permite modificar un cliente</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.IdPais",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdTipoDocumento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Documento",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Nombres",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Apellidos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.RazonSocial",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Email",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.Telefono",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Clientes.FechaNacimiento",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"IdTipoDocumento\": 1,\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"FechaNacimiento\":\"1998-05-27\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"1998-05-27\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"Choua\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto",
+    "title": "Buscar Grupos de Producto",
+    "description": "<p>Permite buscar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Estado",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":[\n\t\t\t{\n\t\t\t\t\"IdGrupoProducto\": 2,\n\t\t\t\t\"Grupo\": \"Grupo de prueba 2\",\n\t\t\t\t\"FechaAlta\": \"2020-07-04 16:38:50.000000\",\n\t\t\t\t\"FechaBaja\": \"\",\n\t\t\t\t\"Descripcion\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\t\"Descripcion\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t]\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproducto"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/borrar",
+    "title": "Borrar Grupo de Producto",
+    "description": "<p>Permite borrar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n\t\t\"IdGrupoProducto\":3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/crear",
+    "title": "Crear Grupo de Producto",
+    "description": "<p>Permite crear un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Descripcion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n        \"Grupo\":\"Grupo1\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 3,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 21:39:47.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/darAlta",
+    "title": "Dar alta GrupoProducto",
+    "description": "<p>Permite dar de alta un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"GruposProducto\": {\n            \"IdGrupoProducto\":4,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/darBaja",
+    "title": "Dar baja GrupoProducto",
+    "description": "<p>Permite dar de baja un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"GruposProducto\": {\n            \"IdGrupoProducto\":4,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"B\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/modificar",
+    "title": "Modificar Grupo de Producto",
+    "description": "<p>Permite modificar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Descripcion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n\t\t\"IdGrupoProducto\":3,\n        \"Grupo\":\"Grupo1Modificado\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 3,\n\t\t\t\"Grupo\": \"Grupo1Modificado\",\n\t\t\t\"FechaAlta\": \"2020-07-04 21:39:47.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoModificar"
   },
   {
     "type": "GET",
@@ -253,13 +1445,20 @@
             "description": ""
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Paises\":{\n        \"IdPais\":\"AR\"\n    }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 1,\n\t\t\t\t\"Rol\": \"Administradores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Roles\":{\n\t\t\t\t\"IdRol\": 2,\n\t\t\t\t\"Rol\": \"Vendedores\",\n\t\t\t\t\"FechaAlta\": \"2020-04-09 15:01:35.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t}\n\t\t}\n\n    ]\n}",
+          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"IdPais\": \"\",\n            \"IdProvincia\": 2,\n            \"Provincia\": \"Salta\"\n        },\n        {\n            \"IdPais\": \"\",\n            \"IdProvincia\": 1,\n            \"Provincia\": \"Tucumán\"\n        }\n    ]\n}",
           "type": "json"
         }
       ]
@@ -280,7 +1479,7 @@
   },
   {
     "type": "GET",
-    "url": "/roles/listar",
+    "url": "/roles",
     "title": "Listar Roles",
     "permission": [
       {
@@ -310,7 +1509,7 @@
     "version": "0.0.0",
     "filename": "internal/controllers/rolesController.go",
     "groupTitle": "Roles",
-    "name": "GetRolesListar"
+    "name": "GetRoles"
   },
   {
     "type": "POST",
@@ -728,6 +1927,683 @@
     "filename": "internal/controllers/rolesController.go",
     "groupTitle": "Roles",
     "name": "PostRolesModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/telas",
+    "title": "Buscar Telas",
+    "description": "<p>Permite buscar una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Telas.Tela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Telas.Estado",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su peticion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelas"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/borar",
+    "title": "Borrar Tela",
+    "description": "<p>Permite borrar una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":2\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasBorar"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/crear",
+    "title": "Crear Tela",
+    "description": "<p>Permite crear una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.Tela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.Observaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Precios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Precios.Precio",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n        \"Tela\": \"Prueba3\"\n    },\n    \"Precios\":{\n        \"Precio\":1.20\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_EXISTE_UBICACION\",\n        \"mensaje\": \"La ubicacion ingresada ya existe.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/dame",
+    "title": "Dame Tela",
+    "description": "<p>Permite instanciar una tela a partir de su Id</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":5\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su peticion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasDame"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/darAlta",
+    "title": "Dar alta Tela",
+    "description": "<p>Permite dar de alta una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 1,\n\t\t\t\"Tela\": \"Prueba65\",\n\t\t\t\"FechaAlta\": \"2020-06-29 22:56:45.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-03 12:16:53.000000\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/darBaja",
+    "title": "Dar baja Tela",
+    "description": "<p>Permite dar de baja una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 1,\n\t\t\t\"Tela\": \"Prueba65\",\n\t\t\t\"FechaAlta\": \"2020-06-29 22:56:45.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-03 12:16:53.000000\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/modificar",
+    "title": "Modificar Tela",
+    "description": "<p>Permite modificar una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.Tela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su peticion.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/precios",
+    "title": "Listar Precios Tela",
+    "description": "<p>Permite listar el historico de precios de una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":[\n\t\t\t{\"IdPrecio\": 14, \"Precio\": 1.2, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 19:57:18.000000\"…},\n\t\t\t{\"IdPrecio\": 16, \"Precio\": 1.21, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:15:10.000000\"…},\n\t\t\t{\"IdPrecio\": 17, \"Precio\": 1.22, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:19:15.000000\"…},\n\t\t\t{\"IdPrecio\": 18, \"Precio\": 1.23, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 22:29:53.000000\"…}\n\t\t]\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasPrecios"
+  },
+  {
+    "type": "POST",
+    "url": "/telas/precios/modificar",
+    "title": "Modificar Precio Tela",
+    "description": "<p>Permite modificar el precio de una tela</p>",
+    "group": "Telas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Telas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Telas.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Precios",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Precios.IdPrecio",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"Telas\": {\n\t\t\"IdTela\":3\n\t},\n\t\"Precios\":{\n\t\t\"Precio\":1.21\n\t}\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":{\n\t\t\t\"IdPrecio\": 17,\n\t\t\t\"Precio\": 1.22,\n\t\t\t\"Tipo\": \"\",\n\t\t\t\"IdReferencia\": 0,\n\t\t\t\"FechaAlta\": \"2020-07-03 20:19:15.000000\"\n\t\t},\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 5,\n\t\t\t\"Tela\": \"Prueba5\",\n\t\t\t\"FechaAlta\": \"2020-07-03 19:57:18.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/telasController.go",
+    "groupTitle": "Telas",
+    "name": "PostTelasPreciosModificar"
   },
   {
     "type": "GET",
@@ -1195,49 +3071,16 @@
     "name": "GetUsuariosDameportoken"
   },
   {
-    "type": "POST",
-    "url": "/usuarios/borar",
-    "title": "Borrar Usuario",
-    "description": "<p>Permite borrar un usuario</p>",
+    "type": "GET",
+    "url": "/usuarios/tiposDocumento",
+    "title": "Listar Tipos Documento",
+    "description": "<p>Devuelve una lista de tipos documento</p>",
     "group": "Usuarios",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "Usuarios",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n\t \"Usuarios\": {\n            \"IdUsuario\":6,\n        }\n }",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n\t\t{\n\n\t\t\t\"TiposDocumento\":{\n\t\t\t\t\"IdTipoDocumento\": 1,\n\t\t\t\t\"TipoDocumento\": \"DNI\",\n\t\t\t\t\"Descripcion\": \"Documento Nacional de Identidad\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"TiposDocumento\":{\n\t\t\t\t\"IdTipoDocumento\": 2,\n\t\t\t\t\"TipoDocumento\": \"Pasaporte\",\n\t\t\t\t\"Descripcion\": \"Pasaporte\"\n\t\t\t}\n\t\t}\n\n    ]\n}",
           "type": "json"
         }
       ]
@@ -1246,7 +3089,7 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
           "type": "json"
         }
       ]
@@ -1254,11 +3097,11 @@
     "version": "0.0.0",
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
-    "name": "PostUsuariosBorar"
+    "name": "GetUsuariosTiposdocumento"
   },
   {
     "type": "POST",
-    "url": "/usuarios/buscar",
+    "url": "/usuarios",
     "title": "Buscar Usuarios",
     "description": "<p>Permite buscar un usuario</p>",
     "group": "Usuarios",
@@ -1379,7 +3222,69 @@
     "version": "0.0.0",
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
-    "name": "PostUsuariosBuscar"
+    "name": "PostUsuarios"
+  },
+  {
+    "type": "POST",
+    "url": "/usuarios/borrar",
+    "title": "Borrar Usuario",
+    "description": "<p>Permite borrar un usuario</p>",
+    "group": "Usuarios",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Usuarios",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Usuarios\": {\n            \"IdUsuario\":6,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/usuariosController.go",
+    "groupTitle": "Usuarios",
+    "name": "PostUsuariosBorrar"
   },
   {
     "type": "POST",

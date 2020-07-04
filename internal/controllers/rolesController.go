@@ -159,7 +159,7 @@ func (rc *RolesController) Crear(c echo.Context) error {
 }
 
 /**
- * @api {GET} /roles/listar Listar Roles
+ * @api {GET} /roles Listar Roles
  * @apiPermission Administradores
  * @apiDescription Devuelve una lista de roles
  * @apiGroup Roles
@@ -466,7 +466,6 @@ func (rc *RolesController) ListarPermisos(c echo.Context) error {
     "respuesta": null
 }
 */
-//Listar Lista los permisos para un rol
 func (rc *RolesController) AsignarPermisos(c echo.Context) error {
 
 	rol := structs.Roles{}
