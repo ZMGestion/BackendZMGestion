@@ -951,6 +951,448 @@
     "name": "PostClientesModificar"
   },
   {
+    "type": "POST",
+    "url": "/gruposProducto",
+    "title": "Buscar Grupos de Producto",
+    "description": "<p>Permite buscar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Estado",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":[\n\t\t\t{\n\t\t\t\t\"IdGrupoProducto\": 2,\n\t\t\t\t\"Grupo\": \"Grupo de prueba 2\",\n\t\t\t\t\"FechaAlta\": \"2020-07-04 16:38:50.000000\",\n\t\t\t\t\"FechaBaja\": \"\",\n\t\t\t\t\"Descripcion\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\t\"Descripcion\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t]\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproducto"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/borrar",
+    "title": "Borrar Grupo de Producto",
+    "description": "<p>Permite borrar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n\t\t\"IdGrupoProducto\":3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/crear",
+    "title": "Crear Grupo de Producto",
+    "description": "<p>Permite crear un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Descripcion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n        \"Grupo\":\"Grupo1\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 3,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 21:39:47.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/darAlta",
+    "title": "Dar alta GrupoProducto",
+    "description": "<p>Permite dar de alta un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"GruposProducto\": {\n            \"IdGrupoProducto\":4,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/darBaja",
+    "title": "Dar baja GrupoProducto",
+    "description": "<p>Permite dar de baja un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"GruposProducto\": {\n            \"IdGrupoProducto\":4,\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"Grupo\": \"Grupo1\",\n\t\t\t\"FechaAlta\": \"2020-07-04 22:15:38.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-04 22:15:44.000000\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"B\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/gruposProducto/modificar",
+    "title": "Modificar Grupo de Producto",
+    "description": "<p>Permite modificar un grupo de producto</p>",
+    "group": "GruposProducto",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "GruposProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "GruposProducto.IdGrupoProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Grupo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "GruposProducto.Descripcion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"GruposProducto\":{\n\t\t\"IdGrupoProducto\":3,\n        \"Grupo\":\"Grupo1Modificado\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"GruposProducto\":{\n\t\t\t\"IdGrupoProducto\": 3,\n\t\t\t\"Grupo\": \"Grupo1Modificado\",\n\t\t\t\"FechaAlta\": \"2020-07-04 21:39:47.000000\",\n\t\t\t\"FechaBaja\": \"\",\n\t\t\t\"Descripcion\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/gruposProductoController.go",
+    "groupTitle": "GruposProducto",
+    "name": "PostGruposproductoModificar"
+  },
+  {
     "type": "GET",
     "url": "/paises",
     "title": "Listar Paises",
@@ -1534,7 +1976,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -1603,7 +2045,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t \"Telas\": {\n            \"IdTela\":2,\n        }\n }",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":2\n        }\n }",
           "type": "json"
         }
       ]
@@ -1831,7 +2273,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3,\n        }\n }",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
           "type": "json"
         }
       ]
@@ -1900,7 +2342,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3,\n        }\n }",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
           "type": "json"
         }
       ]
@@ -1983,7 +2425,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -2052,7 +2494,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3,\n        }\n }",
+          "content": "{\n\t \"Telas\": {\n            \"IdTela\":3\n        }\n }",
           "type": "json"
         }
       ]
@@ -2135,7 +2577,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t\"Telas\": {\n\t\t\"IdTela\":3,\n\t},\n\t\"Precios\":{\n\t\t\"Precio\":1.21\n\t}\n }",
+          "content": "{\n\t\"Telas\": {\n\t\t\"IdTela\":3\n\t},\n\t\"Precios\":{\n\t\t\"Precio\":1.21\n\t}\n }",
           "type": "json"
         }
       ]
@@ -2784,7 +3226,7 @@
   },
   {
     "type": "POST",
-    "url": "/usuarios/borar",
+    "url": "/usuarios/borrar",
     "title": "Borrar Usuario",
     "description": "<p>Permite borrar un usuario</p>",
     "group": "Usuarios",
@@ -2842,7 +3284,7 @@
     "version": "0.0.0",
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
-    "name": "PostUsuariosBorar"
+    "name": "PostUsuariosBorrar"
   },
   {
     "type": "POST",

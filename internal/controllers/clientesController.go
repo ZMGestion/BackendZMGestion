@@ -293,7 +293,7 @@ func (cc *ClientesController) DarAlta(c echo.Context) error {
 
 	clientesService := models.ClientesService{
 		DbHanlder: cc.DbHanlder,
-		Clientes:  &cliente,
+		Cliente:   &cliente,
 	}
 	result, err := clientesService.DarAlta(*token)
 
@@ -374,7 +374,7 @@ func (cc *ClientesController) DarBaja(c echo.Context) error {
 
 	clientesService := models.ClientesService{
 		DbHanlder: cc.DbHanlder,
-		Clientes:  &cliente,
+		Cliente:   &cliente,
 	}
 	result, err := clientesService.DarBaja(*token)
 
@@ -537,7 +537,7 @@ func (cc *ClientesController) ListarDomicilios(c echo.Context) error {
 
 	clientesService := models.ClientesService{
 		DbHanlder: cc.DbHanlder,
-		Clientes:  &clientes,
+		Cliente:   &clientes,
 	}
 	result, err := clientesService.ListarDomicilios()
 

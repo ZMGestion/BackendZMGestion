@@ -12,7 +12,7 @@ import (
 
 type ClientesService struct {
 	DbHanlder *db.DbHandler
-	Clientes  *structs.Clientes
+	Cliente   *structs.Clientes
 }
 
 func (cs *ClientesService) DarAlta(token string) (*structs.Clientes, error) {
@@ -22,7 +22,7 @@ func (cs *ClientesService) DarAlta(token string) (*structs.Clientes, error) {
 
 	params := map[string]interface{}{
 		"UsuariosEjecuta": usuarioEjecuta,
-		"Clientes":        cs.Clientes,
+		"Clientes":        cs.Cliente,
 	}
 
 	out, err := cs.DbHanlder.CallSP("zsp_cliente_dar_alta", params)
@@ -61,7 +61,7 @@ func (cs *ClientesService) DarBaja(token string) (*structs.Clientes, error) {
 
 	params := map[string]interface{}{
 		"UsuariosEjecuta": usuarioEjecuta,
-		"Clientes":        cs.Clientes,
+		"Clientes":        cs.Cliente,
 	}
 
 	out, err := cs.DbHanlder.CallSP("zsp_cliente_dar_baja", params)
@@ -94,7 +94,7 @@ func (cs *ClientesService) DarBaja(token string) (*structs.Clientes, error) {
 }
 
 func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
-	out, err := cs.DbHanlder.CallSP("zsp_cliente_listar_domicilios", helpers.GenerateJSONFromModels(cs.Clientes))
+	out, err := cs.DbHanlder.CallSP("zsp_cliente_listar_domicilios", helpers.GenerateJSONFromModels(cs.Cliente))
 
 	if out == nil {
 		return nil, errors.New("Not found")

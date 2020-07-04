@@ -401,7 +401,7 @@ func (uc *UsuariosController) Modificar(c echo.Context) error {
 }
 
 /**
- * @api {POST} /usuarios/borar Borrar Usuario
+ * @api {POST} /usuarios/borrar Borrar Usuario
  * @apiDescription Permite borrar un usuario
  * @apiGroup Usuarios
  * @apiHeader {String} Authorization
@@ -411,7 +411,7 @@ func (uc *UsuariosController) Modificar(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Usuarios": {
-            "IdUsuario":6,
+            "IdUsuario":6
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -474,7 +474,7 @@ func (uc *UsuariosController) Borrar(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Usuarios": {
-            "IdUsuario":6,
+            "IdUsuario":6
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -559,7 +559,7 @@ func (uc *UsuariosController) DarAlta(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Usuarios": {
-            "IdUsuario":6,
+            "IdUsuario":6
         }
  }
  * @apiSuccessExample {json} Success-Response:

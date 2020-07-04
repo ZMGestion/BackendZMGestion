@@ -112,7 +112,7 @@ func (tc *TelasController) Crear(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
     "Telas":{
-		"IdTela":1
+		"IdTela":1,
         "Tela": "Prueba13"
     }
 }
@@ -188,7 +188,7 @@ func (tc *TelasController) Modificar(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Telas": {
-            "IdTela":3,
+            "IdTela":3
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -264,7 +264,7 @@ func (tc *TelasController) DarAlta(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Telas": {
-            "IdTela":3,
+            "IdTela":3
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -340,7 +340,7 @@ func (tc *TelasController) DarBaja(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Telas": {
-            "IdTela":2,
+            "IdTela":2
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -404,7 +404,7 @@ func (tc *TelasController) Borrar(c echo.Context) error {
  * @apiParamExample {json} Request-Example:
 {
 	"Telas": {
-		"IdTela":3,
+		"IdTela":3
 	},
 	"Precios":{
 		"Precio":1.21
@@ -491,7 +491,7 @@ func (tc *TelasController) ModificarPrecio(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Telas": {
-            "IdTela":3,
+            "IdTela":3
         }
  }
  * @apiSuccessExample {json} Success-Response:
@@ -565,7 +565,7 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
     "Telas":{
-		"IdTela":1
+		"IdTela":1,
         "Tela": "Prueba13"
     }
 }
