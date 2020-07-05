@@ -5,7 +5,6 @@ import (
 	"BackendZMGestion/internal/helpers"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
-	"errors"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -18,12 +17,12 @@ type ProvinciasService struct {
 func (ps *ProvinciasService) ListarCiudades() ([]*structs.Ciudades, error) {
 	out, err := ps.DbHandler.CallSP("zsp_ciudades_listar", helpers.GenerateJSONFromModels(ps.Provincias))
 
-	if out == nil {
-		return nil, errors.New("Not found")
-	}
-
 	if err != nil {
 		return nil, err
+	}
+
+	if out == nil {
+		return nil, nil
 	}
 
 	var response []map[string]interface{}

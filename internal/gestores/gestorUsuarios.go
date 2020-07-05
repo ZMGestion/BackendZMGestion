@@ -155,7 +155,7 @@ func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, token string) ([]inte
 	}
 
 	if out == nil {
-		return nil, errors.New("ERROR_DEFAULT")
+		return nil, nil
 	}
 
 	var response []map[string]interface{}

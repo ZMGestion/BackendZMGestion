@@ -111,6 +111,10 @@ func (gt *GestorTelas) Buscar(tela structs.Telas, token string) ([]*structs.Tela
 		return nil, err
 	}
 
+	if out == nil {
+		return nil, nil
+	}
+
 	var response []map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)

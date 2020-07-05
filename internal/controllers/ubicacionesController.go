@@ -314,11 +314,7 @@ func (uc *UbicacionesController) Listar(c echo.Context) error {
 
 	result, err := gestorUbicaciones.Listar()
 
-	if err != nil || result == nil {
-		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
-	}
-
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

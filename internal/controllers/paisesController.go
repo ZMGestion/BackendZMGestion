@@ -58,7 +58,7 @@ func (pc *PaisesController) Listar(c echo.Context) error {
 
 	result, err := gestorPaises.Listar()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

@@ -47,14 +47,13 @@ func (s *RolesService) Dame() (*structs.Roles, error) {
 func (s *RolesService) ListarPermisos() ([]*structs.Permisos, error) {
 	out, err := s.DbHandler.CallSP("zsp_rol_listar_permisos", helpers.GenerateJSONFromModels(s.Rol))
 
-	if out == nil {
-		return nil, errors.New("ERROR_DEFAULT")
-	}
-
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(string(*out))
+
+	if out == nil {
+		return nil, nil
+	}
 	var response []map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)

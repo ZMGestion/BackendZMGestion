@@ -70,7 +70,7 @@ func (cc *CiudadesController) Listar(c echo.Context) error {
 
 	result, err := provinciasService.ListarCiudades()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

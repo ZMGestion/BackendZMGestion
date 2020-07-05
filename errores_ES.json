@@ -53,7 +53,6 @@
     "ERROR_BORRAR_DOMICILIO_UBICACION": "No puede borrars el domicilio pues es utilizado por una ubicación.",					
     "ERROR_INGRESAR_UBICACION": "Debe ingresar la ubicación.",					
     "ERROR_EXISTE_UBICACION": "La ubicacion ingresada ya existe.",					
-    "ERROR_NOEXISTE_UBICACION": "La ubicacion indicada no existe",					
     "ERROR_UBICACION_ESTA_ALTA": "La ubicación no existe o ya está en estado de 'Alta'.",					
     "ERROR_UBICACION_ESTA_BAJA": "La ubicación no existe o ya está en estado de 'Baja'.",					
     "ERROR_EXISTE_UBICACION_CIUDAD": "Ya existe el domicilio ingresado",					

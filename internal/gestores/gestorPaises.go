@@ -4,7 +4,6 @@ import (
 	"BackendZMGestion/internal/db"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
-	"errors"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -16,14 +15,13 @@ type GestorPaises struct {
 func (gp *GestorPaises) Listar() ([]*structs.Paises, error) {
 	out, err := gp.DbHandler.CallSP("zsp_paises_listar", nil)
 
-	if out == nil {
-		return nil, errors.New("Not found")
-	}
-
 	if err != nil {
 		return nil, err
 	}
 
+	if out == nil {
+		return nil, nil
+	}
 	var response []map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)
