@@ -1603,6 +1603,75 @@
   },
   {
     "type": "POST",
+    "url": "/productos/dame",
+    "title": "Dame Producto",
+    "description": "<p>Permite instanciar un producto a partir de su Id</p>",
+    "group": "Productos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Productos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Productos.IdProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Productos\": {\n            \"IdProducto\":6\n        }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":{\n\t\t\t\"IdPrecio\": 30,\n\t\t\t\"Precio\": 13,\n\t\t\t\"Tipo\": \"\",\n\t\t\t\"IdReferencia\": 0,\n\t\t\t\"FechaAlta\": \"2020-07-06 22:47:21.000000\"\n\t\t},\n\t\t\"Productos\":{\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"IdCategoriaProducto\": 1,\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"IdTipoProducto\": \"P\",\n\t\t\t\"Producto\": \"Silla de prueba 4\",\n\t\t\t\"LongitudTela\": 12,\n\t\t\t\"FechaAlta\": \"2020-07-05 22:51:36.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-06 21:22:39.000000\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/productosController.go",
+    "groupTitle": "Productos",
+    "name": "PostProductosDame"
+  },
+  {
+    "type": "POST",
     "url": "/productos/darAlta",
     "title": "Dar alta Producto",
     "description": "<p>Permite dar de alta un producto</p>",
@@ -2663,7 +2732,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":[\n\t\t{\n\t\t\t\"Precios\":{\n\t\t\t\t\"IdPrecio\": 29,\n\t\t\t\t\"Precio\": 1.2,\n\t\t\t\t\"Tipo\": \"\",\n\t\t\t\t\"IdReferencia\": 0,\n\t\t\t\t\"FechaAlta\": \"\"\n\t\t\t},\n\t\t\t\"Telas\":{\n\t\t\t\t\"IdTela\": 5,\n\t\t\t\t\"Tela\": \"Prueba5\",\n\t\t\t\t\"FechaAlta\": \"2020-07-03 19:57:18.000000\",\n\t\t\t\t\"FechaBaja\": \"\",\n\t\t\t\t\"Observaciones\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t}\n\t]\n}",
           "type": "json"
         }
       ]

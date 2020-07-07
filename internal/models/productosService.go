@@ -164,3 +164,53 @@ func (ps *ProductosService) ListarPrecios(token string) ([]*structs.Precios, err
 	return precios, nil
 
 }
+
+func (ps *ProductosService) Dame(token string) (interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"Productos":       ps.Producto,
+	}
+
+	out, err := ps.DbHandler.CallSP("zsp_producto_dame", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	var producto structs.Productos
+	var precio structs.Precios
+	if response["Productos"] != nil && response["Precios"] != nil {
+		err = mapstructure.Decode(response["Productos"], &producto)
+		if err != nil {
+			return nil, err
+		}
+		err = mapstructure.Decode(response["Precios"], &precio)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	respuesta := map[string]interface{}{
+		"Productos": producto,
+		"Precios":   precio,
+	}
+
+	return respuesta, nil
+}

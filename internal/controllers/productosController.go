@@ -727,3 +727,89 @@ func (pc *ProductosController) ListarPrecios(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /productos/dame Dame Producto
+ * @apiDescription Permite instanciar un producto a partir de su Id
+ * @apiGroup Productos
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Productos
+ * @apiParam {int} Productos.IdProducto
+
+
+  * @apiParamExample {json} Request-Example:
+{
+	 "Productos": {
+            "IdProducto":6
+        }
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Precios":{
+			"IdPrecio": 30,
+			"Precio": 13,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-06 22:47:21.000000"
+		},
+		"Productos":{
+			"IdProducto": 5,
+			"IdCategoriaProducto": 1,
+			"IdGrupoProducto": 5,
+			"IdTipoProducto": "P",
+			"Producto": "Silla de prueba 4",
+			"LongitudTela": 12,
+			"FechaAlta": "2020-07-05 22:51:36.000000",
+			"FechaBaja": "2020-07-06 21:22:39.000000",
+			"Observaciones": "",
+			"Estado": "A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (pc *ProductosController) Dame(c echo.Context) error {
+
+	producto := structs.Productos{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Productos"], &producto)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	productosService := models.ProductosService{
+		Producto:  &producto,
+		DbHandler: pc.DbHandler,
+	}
+
+	result, err := productosService.Dame(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
