@@ -23,10 +23,10 @@ type TelasController struct {
  * @apiGroup Telas
  * @apiHeader {String} Authorization
  * @apiParam {Object} Telas
- * @apiParam {int} Telas.Tela
- * @apiParam {int} Telas.Observaciones
+ * @apiParam {string} Telas.Tela
+ * @apiParam {string} Telas.Observaciones
  * @apiParam {Object} Precios
- * @apiParam {int} Precios.Precio
+ * @apiParam {double} Precios.Precio
 
   * @apiParamExample {json} Request-Example:
 {
@@ -54,8 +54,8 @@ type TelasController struct {
 * @apiErrorExample {json} Error-Response:
 {
     "error": {
-        "codigo": "ERROR_EXISTE_UBICACION",
-        "mensaje": "La ubicacion ingresada ya existe."
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
     },
     "respuesta": null
 }
@@ -571,17 +571,26 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "error": null,
-    "respuesta": {
-        "Telas": {
-            "IdTela": 4,
-            "Tela": "Prueba5",
-            "FechaAlta": "2020-06-30 23:39:57.000000",
-            "FechaBaja": "",
-            "Observaciones": "",
-            "Estado": "A"
-        }
-    }
+	"error": null,
+	"respuesta":[
+		{
+			"Precios":{
+				"IdPrecio": 29,
+				"Precio": 1.2,
+				"Tipo": "",
+				"IdReferencia": 0,
+				"FechaAlta": ""
+			},
+			"Telas":{
+				"IdTela": 5,
+				"Tela": "Prueba5",
+				"FechaAlta": "2020-07-03 19:57:18.000000",
+				"FechaBaja": "",
+				"Observaciones": "",
+				"Estado": "A"
+			}
+		}
+	]
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -621,10 +630,9 @@ func (tc *TelasController) Buscar(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }

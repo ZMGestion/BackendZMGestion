@@ -4,7 +4,6 @@ import (
 	"BackendZMGestion/internal/db"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
-	"errors"
 	"fmt"
 
 	"github.com/mitchellh/mapstructure"
@@ -52,14 +51,14 @@ func (gr *GestorRoles) Crear(rol structs.Roles, token string) (*structs.Roles, e
 func (gr *GestorRoles) Listar() ([]*structs.Roles, error) {
 	out, err := gr.DbHandler.CallSP("zsp_roles_listar", nil)
 
-	if out == nil {
-		return nil, errors.New("Not found")
-	}
-
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(string(*out))
+
+	if out == nil {
+		return nil, nil
+	}
+
 	var response []map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)

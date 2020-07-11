@@ -722,7 +722,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 	}
 	result, err := gestorUsuarios.Buscar(usuario, *token)
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

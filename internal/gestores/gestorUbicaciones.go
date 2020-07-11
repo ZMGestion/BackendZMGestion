@@ -108,12 +108,12 @@ func (gu *GestorUbicaciones) Modificar(ubicacion structs.Ubicaciones, domicilio 
 func (gu *GestorUbicaciones) Listar() ([]interface{}, error) {
 	out, err := gu.DbHandler.CallSP("zsp_ubicaciones_listar", nil)
 
-	if out == nil {
-		return nil, errors.New("Not found")
-	}
-
 	if err != nil {
 		return nil, err
+	}
+
+	if out == nil {
+		return nil, nil
 	}
 
 	var response []map[string]interface{}

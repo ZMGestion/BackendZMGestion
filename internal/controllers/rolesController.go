@@ -204,7 +204,7 @@ func (rc *RolesController) Listar(c echo.Context) error {
 
 	result, err := gestorRoles.Listar()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
@@ -411,7 +411,7 @@ func (rc *RolesController) ListarPermisos(c echo.Context) error {
 
 	result, err := rolesService.ListarPermisos()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

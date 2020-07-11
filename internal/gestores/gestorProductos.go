@@ -8,22 +8,22 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-type GestorTelas struct {
+type GestorProductos struct {
 	DbHandler *db.DbHandler
 }
 
-func (gt *GestorTelas) Crear(tela structs.Telas, precio structs.Precios, token string) (*structs.Telas, error) {
+func (gp *GestorProductos) Crear(producto structs.Productos, precio structs.Precios, token string) (*structs.Productos, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
 	params := map[string]interface{}{
-		"Telas":           tela,
+		"Productos":       producto,
 		"Precios":         precio,
 		"UsuariosEjecuta": usuarioEjecuta,
 	}
 
-	out, err := gt.DbHandler.CallSP("zsp_tela_crear", params)
+	out, err := gp.DbHandler.CallSP("zsp_producto_crear", params)
 
 	if err != nil || out == nil {
 		return nil, err
@@ -34,27 +34,27 @@ func (gt *GestorTelas) Crear(tela structs.Telas, precio structs.Precios, token s
 	err = json.Unmarshal(*out, &response)
 
 	if err == nil {
-		if response["Telas"] != nil {
-			err = mapstructure.Decode(response["Telas"], &tela)
+		if response["Productos"] != nil {
+			err = mapstructure.Decode(response["Productos"], &producto)
 		} else {
 			return nil, nil
 		}
 	}
 
-	return &tela, err
+	return &producto, err
 }
 
-func (gt *GestorTelas) Modificar(tela structs.Telas, token string) (*structs.Telas, error) {
+func (gp *GestorProductos) Modificar(producto structs.Productos, token string) (*structs.Productos, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
 	params := map[string]interface{}{
-		"Telas":           tela,
+		"Productos":       producto,
 		"UsuariosEjecuta": usuarioEjecuta,
 	}
 
-	out, err := gt.DbHandler.CallSP("zsp_tela_modificar", params)
+	out, err := gp.DbHandler.CallSP("zsp_producto_modificar", params)
 
 	if err != nil || out == nil {
 		return nil, err
@@ -65,54 +65,49 @@ func (gt *GestorTelas) Modificar(tela structs.Telas, token string) (*structs.Tel
 	err = json.Unmarshal(*out, &response)
 
 	if err == nil {
-		if response["Telas"] != nil {
-			err = mapstructure.Decode(response["Telas"], &tela)
+		if response["Productos"] != nil {
+			err = mapstructure.Decode(response["Productos"], &producto)
 		} else {
 			return nil, nil
 		}
 	}
 
-	return &tela, err
+	return &producto, err
 }
 
-//Borrar Tela
-func (gt *GestorTelas) Borrar(telas structs.Telas, token string) error {
+func (gp *GestorProductos) Borrar(producto structs.Productos, token string) (*structs.Productos, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
 	params := map[string]interface{}{
-		"Telas":           telas,
+		"Productos":       producto,
 		"UsuariosEjecuta": usuarioEjecuta,
 	}
 
-	_, err := gt.DbHandler.CallSP("zsp_tela_borrar", params)
-
-	if err != nil {
-		return err
-	}
-	return nil
-
-}
-
-func (gt *GestorTelas) Buscar(tela structs.Telas, token string) ([]interface{}, error) {
-	usuarioEjecuta := structs.Usuarios{
-		Token: token,
-	}
-
-	params := map[string]interface{}{
-		"Telas":           tela,
-		"UsuariosEjecuta": usuarioEjecuta,
-	}
-
-	out, err := gt.DbHandler.CallSP("zsp_telas_buscar", params)
+	_, err := gp.DbHandler.CallSP("zsp_producto_borrar", params)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if out == nil {
-		return nil, nil
+	return nil, err
+}
+
+func (gp *GestorProductos) Buscar(producto structs.Productos, token string) ([]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Productos":       producto,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gp.DbHandler.CallSP("zsp_productos_buscar", params)
+
+	if err != nil {
+		return nil, err
 	}
 
 	var response []map[string]interface{}
@@ -121,9 +116,9 @@ func (gt *GestorTelas) Buscar(tela structs.Telas, token string) ([]interface{}, 
 	var respuesta []interface{}
 	if err == nil {
 		for _, el := range response {
-			if el["Telas"] != nil && el["Precios"] != nil {
-				var tela structs.Telas
-				err = mapstructure.Decode(el["Telas"], &tela)
+			if el["Productos"] != nil && el["Precios"] != nil {
+				var producto structs.Productos
+				err = mapstructure.Decode(el["Productos"], &producto)
 				if err != nil {
 					return nil, err
 				}
@@ -133,8 +128,8 @@ func (gt *GestorTelas) Buscar(tela structs.Telas, token string) ([]interface{}, 
 					return nil, err
 				}
 				objeto := map[string]interface{}{
-					"Telas":   tela,
-					"Precios": precio,
+					"Productos": producto,
+					"Precios":   precio,
 				}
 				respuesta = append(respuesta, objeto)
 			}
@@ -143,5 +138,5 @@ func (gt *GestorTelas) Buscar(tela structs.Telas, token string) ([]interface{}, 
 		return nil, err
 	}
 
-	return respuesta, nil
+	return respuesta, err
 }

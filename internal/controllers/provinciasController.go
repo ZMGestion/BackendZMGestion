@@ -72,7 +72,7 @@ func (pc *ProvinciasController) Listar(c echo.Context) error {
 
 	result, err := paisesService.ListarProvincias()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 

@@ -2,21 +2,22 @@ package controllers
 
 import (
 	"BackendZMGestion/internal/db"
-	"BackendZMGestion/internal/gestores"
+	"BackendZMGestion/internal/helpers"
 	"BackendZMGestion/internal/interfaces"
+	"BackendZMGestion/internal/models"
 	"net/http"
 
 	"github.com/labstack/echo"
 )
 
-type PaisesController struct {
+type ProductosFinalesController struct {
 	DbHandler *db.DbHandler
 }
 
 /**
- * @api {GET} /paises Listar Paises
- * @apiDescription Devuelve una lista de paises
- * @apiGroup Paises
+ * @api {GET} /productosFinales/lustres Listar Lustres
+ * @apiDescription Devuelve una lista de lustres
+ * @apiGroup ProductosFinales
  * @apiSuccessExample {json} Success-Response:
  {
     "error": null,
@@ -49,13 +50,20 @@ type PaisesController struct {
     "respuesta": null
 }
 */
-func (pc *PaisesController) Listar(c echo.Context) error {
+func (lc *ProductosFinalesController) ListarLustres(c echo.Context) error {
 
-	gestorPaises := gestores.GestorPaises{
-		DbHandler: pc.DbHandler,
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 
-	result, err := gestorPaises.Listar()
+	productosFinalesService := models.ProductosFinalesService{
+		DbHandler: lc.DbHandler,
+	}
+
+	result, err := productosFinalesService.ListarLustres(*token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)

@@ -716,7 +716,7 @@ func (cc *ClientesController) QuitarDomicilio(c echo.Context) error {
 }
 
 /**
- * @api {POST} /clientes Buscar Clienter
+ * @api {POST} /clientes Buscar Clientes
  * @apiDescription Permite buscar clientes
  * @apiGroup Clientes
  * @apiHeader {String} Authorization
