@@ -214,3 +214,81 @@ func (ps *ProductosService) Dame(token string) (interface{}, error) {
 
 	return respuesta, nil
 }
+
+func (ps *ProductosService) ListarCategorias(token string) ([]*structs.CategoriasProducto, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := ps.DbHandler.CallSP("zsp_categoriasProducto_listar", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, err
+	}
+	var categorias []*structs.CategoriasProducto
+	for _, el := range response {
+		if el["CategoriasProducto"] != nil {
+			var categoria structs.CategoriasProducto
+			err = mapstructure.Decode(el["CategoriasProducto"], &categoria)
+			if err != nil {
+				return nil, err
+			}
+			categorias = append(categorias, &categoria)
+		}
+	}
+	return categorias, nil
+}
+
+func (ps *ProductosService) ListarTiposProducto(token string) ([]*structs.TiposProducto, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := ps.DbHandler.CallSP("zsp_tiposProducto_listar", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, err
+	}
+	var tiposProducto []*structs.TiposProducto
+	for _, el := range response {
+		if el["TiposProducto"] != nil {
+			var tipoProducto structs.TiposProducto
+			err = mapstructure.Decode(el["TiposProducto"], &tipoProducto)
+			if err != nil {
+				return nil, err
+			}
+			tiposProducto = append(tiposProducto, &tipoProducto)
+		}
+	}
+	return tiposProducto, nil
+}

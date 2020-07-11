@@ -123,6 +123,13 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/productos/darBaja", controllerProductos.DarBaja)
 	r.POST("/productos/darAlta", controllerProductos.DarAlta)
 	r.POST("/productos/precios", controllerProductos.ListarPrecios)
+	r.GET("/productos/tiposProducto", controllerProductos.ListarTiposProducto)
+	r.GET("/productos/categoriasProducto", controllerProductos.ListarCategoriasProducto)
 	r.POST("/productos/precios/modificar", controllerProductos.ModificarPrecio)
+
+	controllerProductosFinales := &controllers.ProductosFinalesController{
+		DbHandler: h,
+	}
+	r.GET("/productosFinales/lustres", controllerProductosFinales.ListarLustres)
 
 }
