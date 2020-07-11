@@ -702,6 +702,7 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 func (uc *UsuariosController) Buscar(c echo.Context) error {
 
 	usuario := structs.Usuarios{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -709,6 +710,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -720,7 +722,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	result, err := gestorUsuarios.Buscar(usuario, *token)
+	result, err := gestorUsuarios.Buscar(usuario, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)

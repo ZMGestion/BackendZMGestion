@@ -140,13 +140,14 @@ func (gu *GestorUsuarios) Borrar(usuario structs.Usuarios, token string) error {
 
 }
 
-func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, token string) ([]interface{}, error) {
+func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, paginacion structs.Paginaciones, token string) ([]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 	params := map[string]interface{}{
 		"Usuarios":        usuario,
 		"UsuariosEjecuta": usuarioEjecuta,
+		"Paginaciones":    paginacion,
 	}
 	out, err := gu.DbHandler.CallSP("zsp_usuarios_buscar", params)
 
