@@ -97,7 +97,7 @@ func (gc *GestorClientes) Borrar(cliente structs.Clientes, token string) error {
 }
 
 // Buscar
-func (gc *GestorClientes) Buscar(cliente structs.Clientes, token string) ([]*structs.Clientes, error) {
+func (gc *GestorClientes) Buscar(cliente structs.Clientes, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -105,6 +105,7 @@ func (gc *GestorClientes) Buscar(cliente structs.Clientes, token string) ([]*str
 	params := map[string]interface{}{
 		"Clientes":        cliente,
 		"UsuariosEjecuta": usuarioEjecuta,
+		"Paginaciones":    paginacion,
 	}
 
 	out, err := gc.DbHandler.CallSP("zsp_clientes_buscar", params)
@@ -116,27 +117,35 @@ func (gc *GestorClientes) Buscar(cliente structs.Clientes, token string) ([]*str
 	if out == nil {
 		return nil, nil
 	}
+	var respuestaBusqueda structs.RespuestaBusqueda
 
-	var response []map[string]interface{}
-
-	err = json.Unmarshal(*out, &response)
+	err = json.Unmarshal(*out, &respuestaBusqueda)
 
 	if err != nil {
 		return nil, err
-	}
-	var clientes []*structs.Clientes
-	for _, el := range response {
-		var cliente structs.Clientes
-		if el["Clientes"] != nil {
-			err = mapstructure.Decode(el["Clientes"], &cliente)
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			return nil, nil
-		}
-		clientes = append(clientes, &cliente)
+
 	}
 
-	return clientes, nil
+	// var response []map[string]interface{}
+
+	// err = json.Unmarshal(*out, &response)
+
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// var clientes []*structs.Clientes
+	// for _, el := range response {
+	// 	var cliente structs.Clientes
+	// 	if el["Clientes"] != nil {
+	// 		err = mapstructure.Decode(el["Clientes"], &cliente)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 	} else {
+	// 		return nil, nil
+	// 	}
+	// 	clientes = append(clientes, &cliente)
+	// }
+
+	return &respuestaBusqueda, nil
 }

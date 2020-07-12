@@ -425,69 +425,57 @@ func (pc *ProductosController) DarBaja(c echo.Context) error {
 }
 
 /**
- * @api {POST} /productos/darBaja Dar baja Producto
- * @apiDescription Permite dar de baja un producto
+ * @api {POST} /productos Buscar Producto
+ * @apiDescription Permite buscar un producto
  * @apiGroup Productos
  * @apiHeader {String} Authorization
  * @apiParam {Object} Productos
- * @apiParam {int} Productos.IdCategoriaProducto
- * @apiParam {int} Productos.IdGrupoProducto
- * @apiParam {string} Productos.IdTipoProducto
- * @apiParam {string} Productos.Producto
- * @apiParam {string} Productos.Estado
-
-
-  * @apiParamExample {json} Request-Example:
+ * @apiParam {int} [Productos.IdCategoriaProducto]
+ * @apiParam {int} [Productos.IdGrupoProducto]
+ * @apiParam {string} [Productos.IdTipoProducto]
+ * @apiParam {string} [Productos.Producto]
+ * @apiParam {string} [Productos.Estado]
+ * @apiParam {Object} Paginaciones
+ * @apiParam {int} [Paginaciones.Pagina]
+ * @apiParam {int} [Paginaciones.LongitudPagina]
+ * @apiParamExample {json} Request-Example:
 {
-	 "Productos": {}
- }
+	 "Productos": {},
+	 "Paginaciones":{
+		 "Pagina":1,
+		 "LongitudPagina":1
+	 }
+}
  * @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
-	"respuesta":[
-		{
-			"Precios":{
-				"IdPrecio": 21,
-				"Precio": 50,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": ""
-			},
-			"Productos":{
-				"IdProducto": 3,
-				"IdCategoriaProducto": 1,
-				"IdGrupoProducto": 5,
-				"IdTipoProducto": "P",
-				"Producto": "Silla de prueba 2",
-				"LongitudTela": 12,
-				"FechaAlta": "2020-07-05 21:37:18.000000",
-				"FechaBaja": "2020-07-05 22:28:58.000000",
-				"Observaciones": "",
-				"Estado": "A"
+	"respuesta":{
+		"resultado":[
+			{
+				"Precios":{
+					"IdPrecio": 21,
+					"Precio": 50
+				},
+				"Productos":{
+					"Estado": "A",
+					"FechaAlta": "2020-07-05 21:37:18.000000",
+					"FechaBaja": "2020-07-05 22:28:58.000000",
+					"IdCategoriaProducto": 1,
+					"IdGrupoProducto": 5,
+					"IdProducto": 3,
+					"IdTipoProducto": "P",
+					"LongitudTela": 12,
+					"Observaciones": null,
+					"Producto": "Silla de prueba 2"
+				}
 			}
-		},
-		{
-			"Precios":{
-				"IdPrecio": 22,
-				"Precio": 50,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": ""
-			},
-			"Productos":{
-				"IdProducto": 4,
-				"IdCategoriaProducto": 1,
-				"IdGrupoProducto": 5,
-				"IdTipoProducto": "P",
-				"Producto": "Silla de prueba 3",
-				"LongitudTela": 12,
-				"FechaAlta": "2020-07-05 22:51:27.000000",
-				"FechaBaja": "",
-				"Observaciones": "",
-				"Estado": "A"
-			}
+		],
+		"Paginaciones":{
+			"Pagina": 1,
+			"LongitudPagina": 1,
+			"CantidadTotal": 3
 		}
-	]
+	}
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -501,6 +489,7 @@ func (pc *ProductosController) DarBaja(c echo.Context) error {
 func (pc *ProductosController) Buscar(c echo.Context) error {
 
 	producto := structs.Productos{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -508,6 +497,7 @@ func (pc *ProductosController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Productos"], &producto)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -520,7 +510,7 @@ func (pc *ProductosController) Buscar(c echo.Context) error {
 		DbHandler: pc.DbHandler,
 	}
 
-	result, err := gestorProductos.Buscar(producto, *token)
+	result, err := gestorProductos.Buscar(producto, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)

@@ -94,7 +94,7 @@ func (gp *GestorProductos) Borrar(producto structs.Productos, token string) (*st
 	return nil, err
 }
 
-func (gp *GestorProductos) Buscar(producto structs.Productos, token string) ([]interface{}, error) {
+func (gp *GestorProductos) Buscar(producto structs.Productos, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -102,6 +102,7 @@ func (gp *GestorProductos) Buscar(producto structs.Productos, token string) ([]i
 	params := map[string]interface{}{
 		"Productos":       producto,
 		"UsuariosEjecuta": usuarioEjecuta,
+		"Paginaciones":    paginacion,
 	}
 
 	out, err := gp.DbHandler.CallSP("zsp_productos_buscar", params)
@@ -110,33 +111,45 @@ func (gp *GestorProductos) Buscar(producto structs.Productos, token string) ([]i
 		return nil, err
 	}
 
-	var response []map[string]interface{}
+	if out == nil {
+		return nil, nil
+	}
+	var respuestaBusqueda structs.RespuestaBusqueda
 
-	err = json.Unmarshal(*out, &response)
-	var respuesta []interface{}
-	if err == nil {
-		for _, el := range response {
-			if el["Productos"] != nil && el["Precios"] != nil {
-				var producto structs.Productos
-				err = mapstructure.Decode(el["Productos"], &producto)
-				if err != nil {
-					return nil, err
-				}
-				var precio structs.Precios
-				err = mapstructure.Decode(el["Precios"], &precio)
-				if err != nil {
-					return nil, err
-				}
-				objeto := map[string]interface{}{
-					"Productos": producto,
-					"Precios":   precio,
-				}
-				respuesta = append(respuesta, objeto)
-			}
-		}
-	} else {
+	err = json.Unmarshal(*out, &respuestaBusqueda)
+
+	if err != nil {
 		return nil, err
+
 	}
 
-	return respuesta, err
+	// var response []map[string]interface{}
+
+	// err = json.Unmarshal(*out, &response)
+	// var respuesta []interface{}
+	// if err == nil {
+	// 	for _, el := range response {
+	// 		if el["Productos"] != nil && el["Precios"] != nil {
+	// 			var producto structs.Productos
+	// 			err = mapstructure.Decode(el["Productos"], &producto)
+	// 			if err != nil {
+	// 				return nil, err
+	// 			}
+	// 			var precio structs.Precios
+	// 			err = mapstructure.Decode(el["Precios"], &precio)
+	// 			if err != nil {
+	// 				return nil, err
+	// 			}
+	// 			objeto := map[string]interface{}{
+	// 				"Productos": producto,
+	// 				"Precios":   precio,
+	// 			}
+	// 			respuesta = append(respuesta, objeto)
+	// 		}
+	// 	}
+	// } else {
+	// 	return nil, err
+	// }
+
+	return &respuestaBusqueda, nil
 }

@@ -559,38 +559,49 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
  * @apiGroup Telas
  * @apiHeader {String} Authorization
  * @apiParam {Object} Telas
- * @apiParam {string} Telas.Tela
- * @apiParam {string} Telas.Estado
+ * @apiParam {string} [Telas.Tela]
+ * @apiParam {string} [Telas.Estado]
+ * @apiParam {Object} Paginaciones
+ * @apiParam {int} [Paginaciones.Pagina]
+ * @apiParam {int} [Paginaciones.LongitudPagina]
 
   * @apiParamExample {json} Request-Example:
 {
     "Telas":{
 		"IdTela":1,
         "Tela": "Prueba13"
-    }
+	},
+	"Paginaciones":{
+		 "Pagina":1,
+		 "LongitudPagina":1
+	 }
 }
  * @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
-	"respuesta":[
-		{
-			"Precios":{
-				"IdPrecio": 29,
-				"Precio": 1.2,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": ""
-			},
-			"Telas":{
-				"IdTela": 5,
-				"Tela": "Prueba5",
-				"FechaAlta": "2020-07-03 19:57:18.000000",
-				"FechaBaja": "",
-				"Observaciones": "",
-				"Estado": "A"
+	"respuesta":{
+		"resultado":[
+			{
+				"Precios":{
+					"IdPrecio": 15,
+					"Precio": 1.2
+				},
+				"Telas":{
+					"Estado": "A",
+					"FechaAlta": "2020-07-03 19:57:36.000000",
+					"FechaBaja": null,
+					"IdTela": 6,
+					"Observaciones": null,
+					"Tela": "Eco Cuero Marron"
+				}
 			}
+		],
+		"Paginaciones":{
+			"Pagina": 1,
+			"LongitudPagina": 1,
+			"CantidadTotal": 2
 		}
-	]
+	}
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -605,6 +616,7 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
 func (tc *TelasController) Buscar(c echo.Context) error {
 
 	telas := structs.Telas{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -612,6 +624,7 @@ func (tc *TelasController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Telas"], &telas)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -623,7 +636,7 @@ func (tc *TelasController) Buscar(c echo.Context) error {
 	gestorTelas := gestores.GestorTelas{
 		DbHandler: tc.DbHandler,
 	}
-	result, err := gestorTelas.Buscar(telas, *token)
+	result, err := gestorTelas.Buscar(telas, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
