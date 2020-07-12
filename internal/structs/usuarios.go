@@ -11,7 +11,7 @@ type Usuarios struct {
 	EstadoCivil     string `json:"EstadoCivil,omitempty"`
 	Telefono        string `json:"Telefono,omitempty"`
 	Email           string `json:"Email,omitempty"`
-	CantidadHijos   int    `json:"CantidadHijos"`
+	CantidadHijos   int    `json:"CantidadHijos,omitempty"`
 	Usuario         string `json:"Usuario,omitempty"`
 	Password        string `json:"Password,omitempty"`
 	Token           string `json:"Token,omitempty"`
