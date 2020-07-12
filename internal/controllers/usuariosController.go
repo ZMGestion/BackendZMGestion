@@ -647,12 +647,19 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
  * @apiParam {string} [Usuarios.Telefono]
  * @apiParam {string} [Usuarios.Email]
  * @apiParam {string} [Usuarios.Usuario]
+ * @apiParam {Object} Paginaciones
+ * @apiParam {int} Paginaciones.Pagina
+ * @apiParam {int} Paginaciones.LongitudPagina
 
   * @apiParamExample {json} Request-Example:
 {
 	"Usuarios":{
-		"Usuario":"nbachs"
-	}
+	},
+    "Paginaciones":{
+      "Pagina":1,
+      "LongitudPagina":10
+    }
+
 }
  * @apiSuccessExample {json} Success-Response:
 {
