@@ -140,7 +140,7 @@ func (gu *GestorUsuarios) Borrar(usuario structs.Usuarios, token string) error {
 
 }
 
-func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, paginacion structs.Paginaciones, token string) ([]interface{}, error) {
+func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -158,46 +158,45 @@ func (gu *GestorUsuarios) Buscar(usuario structs.Usuarios, paginacion structs.Pa
 	if out == nil {
 		return nil, nil
 	}
+	var respuestaBusqueda structs.RespuestaBusqueda
 
-	var response []map[string]interface{}
-
-	err = json.Unmarshal(*out, &response)
+	err = json.Unmarshal(*out, &respuestaBusqueda)
 
 	if err != nil {
 		return nil, err
+
 	}
 
-	var respuesta []interface{}
+	// var respuesta []interface{}
 
-	for _, el := range response {
+	// for _, el := range respuestaBusqueda.Resultado {
 
-		if el["Usuarios"] != nil && el["Roles"] != nil && el["Ubicaciones"] != nil {
-			err = mapstructure.Decode(el["Usuarios"], &usuario)
-			if err != nil {
-				return nil, err
-			}
-			var roles structs.Roles
-			err = mapstructure.Decode(el["Roles"], &roles)
-			if err != nil {
-				return nil, err
-			}
-			var ubicaciones structs.Ubicaciones
-			err = mapstructure.Decode(el["Ubicaciones"], &ubicaciones)
-			if err != nil {
-				return nil, err
-			}
-			objetos := map[string]interface{}{
-				"Usuarios":    usuario,
-				"Roles":       roles,
-				"Ubicaciones": ubicaciones,
-			}
-			respuesta = append(respuesta, objetos)
-		} else {
-			return nil, nil
-		}
-	}
-
-	return respuesta, nil
+	// 	if el["Usuarios"] != nil && el["Roles"] != nil && el["Ubicaciones"] != nil {
+	// 		err = mapstructure.Decode(el["Usuarios"], &usuario)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 		var roles structs.Roles
+	// 		err = mapstructure.Decode(el["Roles"], &roles)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 		var ubicaciones structs.Ubicaciones
+	// 		err = mapstructure.Decode(el["Ubicaciones"], &ubicaciones)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 		objetos := map[string]interface{}{
+	// 			"Usuarios":    usuario,
+	// 			"Roles":       roles,
+	// 			"Ubicaciones": ubicaciones,
+	// 		}
+	// 		respuesta = append(respuesta, objetos)
+	// 	} else {
+	// 		return nil, nil
+	// 	}
+	// }
+	return &respuestaBusqueda, nil
 }
 
 func (gu *GestorUsuarios) ListarTiposDocumento() ([]*structs.TiposDocumento, error) {
