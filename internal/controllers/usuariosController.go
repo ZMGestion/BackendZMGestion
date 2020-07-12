@@ -647,12 +647,19 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
  * @apiParam {string} [Usuarios.Telefono]
  * @apiParam {string} [Usuarios.Email]
  * @apiParam {string} [Usuarios.Usuario]
+ * @apiParam {Object} Paginaciones
+ * @apiParam {int} Paginaciones.Pagina
+ * @apiParam {int} Paginaciones.LongitudPagina
 
   * @apiParamExample {json} Request-Example:
 {
 	"Usuarios":{
-		"Usuario":"nbachs"
-	}
+	},
+    "Paginaciones":{
+      "Pagina":1,
+      "LongitudPagina":10
+    }
+
 }
  * @apiSuccessExample {json} Success-Response:
 {
@@ -702,6 +709,7 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 func (uc *UsuariosController) Buscar(c echo.Context) error {
 
 	usuario := structs.Usuarios{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -709,6 +717,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Usuarios"], &usuario)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -720,7 +729,7 @@ func (uc *UsuariosController) Buscar(c echo.Context) error {
 	gestorUsuarios := gestores.GestorUsuarios{
 		DbHandler: uc.DbHandler,
 	}
-	result, err := gestorUsuarios.Buscar(usuario, *token)
+	result, err := gestorUsuarios.Buscar(usuario, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
