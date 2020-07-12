@@ -40,9 +40,6 @@ func (h *DbHandler) CallSP(sp string, objeto interface{}) (*[]byte, error) {
 
 	startTime := time.Now()
 
-	fmt.Println("INPUT:")
-	fmt.Println(string(input))
-
 	if objeto != nil {
 		query := fmt.Sprintf("CALL %s (?)", sp)
 		err = h.Conn.QueryRow(query, string(input)).Scan(&output)
