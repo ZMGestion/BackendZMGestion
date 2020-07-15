@@ -26,9 +26,9 @@ type ClientesController struct {
  * @apiParam {string} Clientes.IdPais
  * @apiParam {int} Clientes.IdTipoDocumento
  * @apiParam {string} Clientes.Documento
- * @apiParam {string} Clientes.Nombres
- * @apiParam {string} Clientes.Apellidos
- * @apiParam {string} Clientes.RazonSocial
+ * @apiParam {string} [Clientes.Nombres] Si Tipo = 'F', es Obligatorio
+ * @apiParam {string} [Clientes.Apellidos] Si Tipo = 'F', es Obligatorio
+ * @apiParam {string} [Clientes.RazonSocial] Si Tipo = 'J', es Obligatorio
  * @apiParam {string} Clientes.Tipo
  * @apiParam {string} Clientes.Email
  * @apiParam {string} Clientes.Telefono
@@ -139,9 +139,9 @@ func (cc *ClientesController) Crear(c echo.Context) error {
  * @apiParam {string} Clientes.IdPais
  * @apiParam {int} Clientes.IdTipoDocumento
  * @apiParam {string} Clientes.Documento
- * @apiParam {string} Clientes.Nombres
- * @apiParam {string} Clientes.Apellidos
- * @apiParam {string} Clientes.RazonSocial
+ * @apiParam {string} [Clientes.Nombres] Si Tipo = 'F', es Obligatorio
+ * @apiParam {string} [Clientes.Apellidos] Si Tipo = 'F', es Obligatorio
+ * @apiParam {string} [Clientes.RazonSocial] Si Tipo = 'J', es Obligatorio
  * @apiParam {string} Clientes.Tipo
  * @apiParam {string} Clientes.Email
  * @apiParam {string} Clientes.Telefono
@@ -407,24 +407,7 @@ func (cc *ClientesController) DarBaja(c echo.Context) error {
  * @apiSuccessExample {json} Success-Response:
 {
     "error": null,
-    "respuesta": {
-        "Clientes": {
-            "IdCliente": 3,
-            "IdPais": "AR",
-            "IdTipoDocumento": 1,
-            "Documento": "41144069",
-            "Tipo": "F",
-            "FechaNacimiento": "",
-            "Nombres": "Loik",
-            "Apellidos": "Choua",
-            "RazonSocial": "",
-            "Email": "loikchoua4@gmail.com",
-            "Telefono": "+543815483777",
-            "FechaAlta": "2020-06-24 15:32:47.000000",
-            "FechaBaja": "",
-            "Estado": "B"
-        }
-    }
+    "respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -565,7 +548,7 @@ func (cc *ClientesController) ListarDomicilios(c echo.Context) error {
  * @apiParam {int} Domicilios.IdPais
  * @apiParam {string} Domicilios.Domicilio
  * @apiParam {string} Domicilio.CodigoPostal
- * @apiParam {string} Domicilios.Observaciones
+ * @apiParam {string} [Domicilios.Observaciones]
  * @apiParam {Object} Clientes
  * @apiParam {int} Clientes.IdCliente
   * @apiParamExample {json} Request-Example:
@@ -721,14 +704,17 @@ func (cc *ClientesController) QuitarDomicilio(c echo.Context) error {
  * @apiGroup Clientes
  * @apiHeader {String} Authorization
  * @apiParam {Object} Clientes
- * @apiParam {string} Clientes.IdPais
- * @apiParam {string} Clientes.Documento
- * @apiParam {string} Clientes.Nombres
- * @apiParam {string} Clientes.Apellidos
- * @apiParam {string} Clientes.RazonSocial
- * @apiParam {string} Clientes.Tipo
- * @apiParam {string} Clientes.Email
- * @apiParam {string} Clientes.Telefono
+ * @apiParam {string} [Clientes.IdPais]
+ * @apiParam {string} [Clientes.Documento]
+ * @apiParam {string} [Clientes.Nombres]
+ * @apiParam {string} [Clientes.Apellidos]
+ * @apiParam {string} [Clientes.RazonSocial]
+ * @apiParam {string} [Clientes.Tipo]
+ * @apiParam {string} [Clientes.Email]
+ * @apiParam {string} [Clientes.Telefono]
+ * @apiParam {Object} Paginaciones
+ * @apiParam {int} [Paginaciones.Pagina]
+ * @apiParam {int} [Paginaciones.LongitudPagina]
  * @apiParamExample {json} Request-Example:
 {
     "Clientes":{
@@ -739,30 +725,41 @@ func (cc *ClientesController) QuitarDomicilio(c echo.Context) error {
         "Apellidos":"Choua",
         "Email":"loikchoua4@gmail.com",
         "Telefono":"3815483777"
+    },
+    "Paginaciones":{
+      "Pagina":1,
+      "LongitudPagina":1
     }
 }
  * @apiSuccessExample {json} Success-Response:
 {
     "error": null,
-    "respuesta": {
-        "Clientes": [
+    "respuesta":{
+        "resultado":[
             {
-                "IdCliente": 3,
-                "IdPais": "AR",
-                "IdTipoDocumento": 1,
-                "Documento": "41144069",
-                "Tipo": "F",
-                "FechaNacimiento": "1998-05-27",
-                "Nombres": "Loik",
-                "Apellidos": "Choua",
-                "RazonSocial": "",
-                "Email": "loikchoua4@gmail.com",
-                "Telefono": "+543815483777",
-                "FechaAlta": "2020-06-24 15:32:47.000000",
-                "FechaBaja": "",
-                "Estado": "A"
+                "Clientes":{
+                    "Apellidos": "Choua",
+                    "Documento": "41144069",
+                    "Email": "loikchoua4@gmail.com",
+                    "Estado": "A",
+                    "FechaAlta": "2020-06-24 15:32:47.000000",
+                    "FechaBaja": null,
+                    "FechaNacimiento": "1998-05-27",
+                    "IdCliente": 3,
+                    "IdPais": "AR",
+                    "IdTipoDocumento": 1,
+                    "Nombres": "Loik",
+                    "RazonSocial": null,
+                    "Telefono": "+543815483777",
+                    "Tipo": "F"
+                }
             }
-        ]
+        ],
+        "Paginaciones":{
+            "Pagina": 1,
+            "LongitudPagina": 1,
+            "CantidadTotal": 1
+        }
     }
 }
 * @apiErrorExample {json} Error-Response:
@@ -777,6 +774,7 @@ func (cc *ClientesController) QuitarDomicilio(c echo.Context) error {
 func (cc *ClientesController) Buscar(c echo.Context) error {
 
 	cliente := structs.Clientes{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -784,6 +782,7 @@ func (cc *ClientesController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Clientes"], &cliente)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -795,17 +794,15 @@ func (cc *ClientesController) Buscar(c echo.Context) error {
 	gestorCliente := gestores.GestorClientes{
 		DbHandler: cc.DbHanlder,
 	}
-	result, err := gestorCliente.Buscar(cliente, *token)
+	result, err := gestorCliente.Buscar(cliente, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
 	response := interfaces.Response{
-		Error: nil,
-	}
-	if result != nil {
-		response.AddModels(result)
+		Error:     nil,
+		Respuesta: result,
 	}
 
 	return c.JSON(http.StatusOK, response)

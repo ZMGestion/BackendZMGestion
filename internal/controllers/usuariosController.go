@@ -648,8 +648,8 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
  * @apiParam {string} [Usuarios.Email]
  * @apiParam {string} [Usuarios.Usuario]
  * @apiParam {Object} Paginaciones
- * @apiParam {int} Paginaciones.Pagina
- * @apiParam {int} Paginaciones.LongitudPagina
+ * @apiParam {int} [Paginaciones.Pagina]
+ * @apiParam {int} [Paginaciones.LongitudPagina]
 
   * @apiParamExample {json} Request-Example:
 {
@@ -663,38 +663,46 @@ func (uc *UsuariosController) DarBaja(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "error": null,
-    "respuesta": [
-        {
-            "Roles": {
-                "IdRol": 1,
-                "Rol": "Administradores"
-            },
-            "Ubicaciones": {
-                "IdUbicacion": 1,
-                "Ubicacion": "Casa Central Tucumán"
-            },
-            "Usuarios": {
-                "IdUsuario": 5,
-                "IdRol": 1,
-                "IdUbicacion": 1,
-                "IdTipoDocumento": 1,
-                "Documento": "39477073",
-                "Nombres": "Nicolas",
-                "Apellidos": "Bachs",
-                "EstadoCivil": "S",
-                "Telefono": "+543814491954",
-                "Email": "nicolas.bachs@gmail.com",
-                "CantidadHijos": 0,
-                "Usuario": "nbachs",
-                "FechaUltIntento": "2020-05-08 00:52:23.000000",
-                "FechaNacimiento": "1995-12-27",
-                "FechaInicio": "2019-11-22",
-                "FechaAlta": "2020-05-08 00:49:18.000000",
-                "Estado": "A"
-            }
-        }
-    ]
+	"error": null,
+	"respuesta":{
+		"resultado":[
+			{
+				"Roles":{
+					"IdRol": 1,
+					"Rol": "Administradores"
+				},
+				"Ubicaciones":{
+					"IdUbicacion": 1,
+					"Ubicacion": "Casa Central Tucumán"
+				},
+				"Usuarios":{
+					"Apellidos": "Bachs",
+					"CantidadHijos": 0,
+					"Documento": "39477073",
+					"Email": "nicolas.bachs@gmail.com",
+					"Estado": "A",
+					"EstadoCivil": "S",
+					"FechaAlta": "2020-06-13 13:52:18.000000",
+					"FechaBaja": null,
+					"FechaInicio": "2020-01-01",
+					"FechaNacimiento": "1995-12-27",
+					"FechaUltIntento": "2020-07-11 22:12:29.000000",
+					"IdRol": 1,
+					"IdTipoDocumento": 1,
+					"IdUbicacion": 1,
+					"IdUsuario": 2,
+					"Nombres": "Nicolás",
+					"Telefono": "+54 381 4491954",
+					"Usuario": "nbachs"
+				}
+			}
+		],
+		"Paginaciones":{
+			"Pagina": 1,
+			"LongitudPagina": 1,
+			"CantidadTotal": 21
+		}
+	}
 }
 * @apiErrorExample {json} Error-Response:
 {

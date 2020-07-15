@@ -94,57 +94,78 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.IdPais",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Documento",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Nombres",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Apellidos",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.RazonSocial",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Tipo",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Email",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Telefono",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
             "description": ""
           }
         ]
@@ -152,7 +173,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    }\n}",
+          "content": "{\n    \"Clientes\":{\n        \"IdPais\": \"AR\",\n        \"Documento\": \"41144069\",\n        \"Tipo\":\"F\",\n        \"Nombres\":\"Loik\",\n        \"Apellidos\":\"Choua\",\n        \"Email\":\"loikchoua4@gmail.com\",\n        \"Telefono\":\"3815483777\"\n    },\n    \"Paginaciones\":{\n      \"Pagina\":1,\n      \"LongitudPagina\":1\n    }\n}",
           "type": "json"
         }
       ]
@@ -161,7 +182,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": [\n            {\n                \"IdCliente\": 3,\n                \"IdPais\": \"AR\",\n                \"IdTipoDocumento\": 1,\n                \"Documento\": \"41144069\",\n                \"Tipo\": \"F\",\n                \"FechaNacimiento\": \"1998-05-27\",\n                \"Nombres\": \"Loik\",\n                \"Apellidos\": \"Choua\",\n                \"RazonSocial\": \"\",\n                \"Email\": \"loikchoua4@gmail.com\",\n                \"Telefono\": \"+543815483777\",\n                \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n                \"FechaBaja\": \"\",\n                \"Estado\": \"A\"\n            }\n        ]\n    }\n}",
+          "content": "{\n    \"error\": null,\n    \"respuesta\":{\n        \"resultado\":[\n            {\n                \"Clientes\":{\n                    \"Apellidos\": \"Choua\",\n                    \"Documento\": \"41144069\",\n                    \"Email\": \"loikchoua4@gmail.com\",\n                    \"Estado\": \"A\",\n                    \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n                    \"FechaBaja\": null,\n                    \"FechaNacimiento\": \"1998-05-27\",\n                    \"IdCliente\": 3,\n                    \"IdPais\": \"AR\",\n                    \"IdTipoDocumento\": 1,\n                    \"Nombres\": \"Loik\",\n                    \"RazonSocial\": null,\n                    \"Telefono\": \"+543815483777\",\n                    \"Tipo\": \"F\"\n                }\n            }\n        ],\n        \"Paginaciones\":{\n            \"Pagina\": 1,\n            \"LongitudPagina\": 1,\n            \"CantidadTotal\": 1\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -230,7 +251,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"B\"\n        }\n    }\n}",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": null\n}",
           "type": "json"
         }
       ]
@@ -302,23 +323,23 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Nombres",
-            "description": ""
+            "description": "<p>Si Tipo = 'F', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Apellidos",
-            "description": ""
+            "description": "<p>Si Tipo = 'F', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.RazonSocial",
-            "description": ""
+            "description": "<p>Si Tipo = 'J', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
@@ -684,7 +705,7 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.Observaciones",
             "description": ""
           },
@@ -871,23 +892,23 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Nombres",
-            "description": ""
+            "description": "<p>Si Tipo = 'F', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.Apellidos",
-            "description": ""
+            "description": "<p>Si Tipo = 'F', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Clientes.RazonSocial",
-            "description": ""
+            "description": "<p>Si Tipo = 'J', es Obligatorio</p>"
           },
           {
             "group": "Parameter",
@@ -1536,6 +1557,124 @@
   },
   {
     "type": "POST",
+    "url": "/productos",
+    "title": "Buscar Producto",
+    "description": "<p>Permite buscar un producto</p>",
+    "group": "Productos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Productos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Productos.IdCategoriaProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Productos.IdGrupoProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Productos.IdTipoProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Productos.Producto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Productos.Estado",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t \"Productos\": {},\n\t \"Paginaciones\":{\n\t\t \"Pagina\":1,\n\t\t \"LongitudPagina\":1\n\t }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"Precios\":{\n\t\t\t\t\t\"IdPrecio\": 21,\n\t\t\t\t\t\"Precio\": 50\n\t\t\t\t},\n\t\t\t\t\"Productos\":{\n\t\t\t\t\t\"Estado\": \"A\",\n\t\t\t\t\t\"FechaAlta\": \"2020-07-05 21:37:18.000000\",\n\t\t\t\t\t\"FechaBaja\": \"2020-07-05 22:28:58.000000\",\n\t\t\t\t\t\"IdCategoriaProducto\": 1,\n\t\t\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\t\t\"IdProducto\": 3,\n\t\t\t\t\t\"IdTipoProducto\": \"P\",\n\t\t\t\t\t\"LongitudTela\": 12,\n\t\t\t\t\t\"Observaciones\": null,\n\t\t\t\t\t\"Producto\": \"Silla de prueba 2\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 1,\n\t\t\t\"CantidadTotal\": 3\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/productosController.go",
+    "groupTitle": "Productos",
+    "name": "PostProductos"
+  },
+  {
+    "type": "POST",
     "url": "/productos/borrar",
     "title": "Borrar Producto",
     "description": "<p>Permite borrar un prodcuto</p>",
@@ -1903,103 +2042,6 @@
         {
           "title": "Success-Response:",
           "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Productos\":{\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"IdCategoriaProducto\": 1,\n\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\"IdTipoProducto\": \"P\",\n\t\t\t\"Producto\": \"Silla de prueba 4\",\n\t\t\t\"LongitudTela\": 12,\n\t\t\t\"FechaAlta\": \"2020-07-05 22:51:36.000000\",\n\t\t\t\"FechaBaja\": \"2020-07-06 21:22:39.000000\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\": \"B\"\n\t\t}\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/productosController.go",
-    "groupTitle": "Productos",
-    "name": "PostProductosDarbaja"
-  },
-  {
-    "type": "POST",
-    "url": "/productos/darBaja",
-    "title": "Dar baja Producto",
-    "description": "<p>Permite dar de baja un producto</p>",
-    "group": "Productos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "Productos",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Productos.IdCategoriaProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Productos.IdGrupoProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Productos.IdTipoProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Productos.Producto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "Productos.Estado",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n\t \"Productos\": {}\n }",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":[\n\t\t{\n\t\t\t\"Precios\":{\n\t\t\t\t\"IdPrecio\": 21,\n\t\t\t\t\"Precio\": 50,\n\t\t\t\t\"Tipo\": \"\",\n\t\t\t\t\"IdReferencia\": 0,\n\t\t\t\t\"FechaAlta\": \"\"\n\t\t\t},\n\t\t\t\"Productos\":{\n\t\t\t\t\"IdProducto\": 3,\n\t\t\t\t\"IdCategoriaProducto\": 1,\n\t\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\t\"IdTipoProducto\": \"P\",\n\t\t\t\t\"Producto\": \"Silla de prueba 2\",\n\t\t\t\t\"LongitudTela\": 12,\n\t\t\t\t\"FechaAlta\": \"2020-07-05 21:37:18.000000\",\n\t\t\t\t\"FechaBaja\": \"2020-07-05 22:28:58.000000\",\n\t\t\t\t\"Observaciones\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Precios\":{\n\t\t\t\t\"IdPrecio\": 22,\n\t\t\t\t\"Precio\": 50,\n\t\t\t\t\"Tipo\": \"\",\n\t\t\t\t\"IdReferencia\": 0,\n\t\t\t\t\"FechaAlta\": \"\"\n\t\t\t},\n\t\t\t\"Productos\":{\n\t\t\t\t\"IdProducto\": 4,\n\t\t\t\t\"IdCategoriaProducto\": 1,\n\t\t\t\t\"IdGrupoProducto\": 5,\n\t\t\t\t\"IdTipoProducto\": \"P\",\n\t\t\t\t\"Producto\": \"Silla de prueba 3\",\n\t\t\t\t\"LongitudTela\": 12,\n\t\t\t\t\"FechaAlta\": \"2020-07-05 22:51:27.000000\",\n\t\t\t\t\"FechaBaja\": \"\",\n\t\t\t\t\"Observaciones\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t}\n\t]\n}",
           "type": "json"
         }
       ]
@@ -2820,15 +2862,36 @@
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Telas.Tela",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Telas.Estado",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
             "description": ""
           }
         ]
@@ -2836,7 +2899,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n    }\n}",
+          "content": "{\n    \"Telas\":{\n\t\t\"IdTela\":1,\n        \"Tela\": \"Prueba13\"\n\t},\n\t\"Paginaciones\":{\n\t\t \"Pagina\":1,\n\t\t \"LongitudPagina\":1\n\t }\n}",
           "type": "json"
         }
       ]
@@ -2845,7 +2908,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":[\n\t\t{\n\t\t\t\"Precios\":{\n\t\t\t\t\"IdPrecio\": 29,\n\t\t\t\t\"Precio\": 1.2,\n\t\t\t\t\"Tipo\": \"\",\n\t\t\t\t\"IdReferencia\": 0,\n\t\t\t\t\"FechaAlta\": \"\"\n\t\t\t},\n\t\t\t\"Telas\":{\n\t\t\t\t\"IdTela\": 5,\n\t\t\t\t\"Tela\": \"Prueba5\",\n\t\t\t\t\"FechaAlta\": \"2020-07-03 19:57:18.000000\",\n\t\t\t\t\"FechaBaja\": \"\",\n\t\t\t\t\"Observaciones\": \"\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t}\n\t]\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"Precios\":{\n\t\t\t\t\t\"IdPrecio\": 15,\n\t\t\t\t\t\"Precio\": 1.2\n\t\t\t\t},\n\t\t\t\t\"Telas\":{\n\t\t\t\t\t\"Estado\": \"A\",\n\t\t\t\t\t\"FechaAlta\": \"2020-07-03 19:57:36.000000\",\n\t\t\t\t\t\"FechaBaja\": null,\n\t\t\t\t\t\"IdTela\": 6,\n\t\t\t\t\t\"Observaciones\": null,\n\t\t\t\t\t\"Tela\": \"Eco Cuero Marron\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 1,\n\t\t\t\"CantidadTotal\": 2\n\t\t}\n\t}\n}",
           "type": "json"
         }
       ]
@@ -4050,13 +4113,34 @@
             "optional": true,
             "field": "Usuarios.Usuario",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
+            "description": ""
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t\"Usuarios\":{\n\t\t\"Usuario\":\"nbachs\"\n\t}\n}",
+          "content": "{\n\t\"Usuarios\":{\n\t},\n    \"Paginaciones\":{\n      \"Pagina\":1,\n      \"LongitudPagina\":10\n    }\n\n}",
           "type": "json"
         }
       ]
@@ -4065,7 +4149,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"Roles\": {\n                \"IdRol\": 1,\n                \"Rol\": \"Administradores\"\n            },\n            \"Ubicaciones\": {\n                \"IdUbicacion\": 1,\n                \"Ubicacion\": \"Casa Central Tucumán\"\n            },\n            \"Usuarios\": {\n                \"IdUsuario\": 5,\n                \"IdRol\": 1,\n                \"IdUbicacion\": 1,\n                \"IdTipoDocumento\": 1,\n                \"Documento\": \"39477073\",\n                \"Nombres\": \"Nicolas\",\n                \"Apellidos\": \"Bachs\",\n                \"EstadoCivil\": \"S\",\n                \"Telefono\": \"+543814491954\",\n                \"Email\": \"nicolas.bachs@gmail.com\",\n                \"CantidadHijos\": 0,\n                \"Usuario\": \"nbachs\",\n                \"FechaUltIntento\": \"2020-05-08 00:52:23.000000\",\n                \"FechaNacimiento\": \"1995-12-27\",\n                \"FechaInicio\": \"2019-11-22\",\n                \"FechaAlta\": \"2020-05-08 00:49:18.000000\",\n                \"Estado\": \"A\"\n            }\n        }\n    ]\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"Roles\":{\n\t\t\t\t\t\"IdRol\": 1,\n\t\t\t\t\t\"Rol\": \"Administradores\"\n\t\t\t\t},\n\t\t\t\t\"Ubicaciones\":{\n\t\t\t\t\t\"IdUbicacion\": 1,\n\t\t\t\t\t\"Ubicacion\": \"Casa Central Tucumán\"\n\t\t\t\t},\n\t\t\t\t\"Usuarios\":{\n\t\t\t\t\t\"Apellidos\": \"Bachs\",\n\t\t\t\t\t\"CantidadHijos\": 0,\n\t\t\t\t\t\"Documento\": \"39477073\",\n\t\t\t\t\t\"Email\": \"nicolas.bachs@gmail.com\",\n\t\t\t\t\t\"Estado\": \"A\",\n\t\t\t\t\t\"EstadoCivil\": \"S\",\n\t\t\t\t\t\"FechaAlta\": \"2020-06-13 13:52:18.000000\",\n\t\t\t\t\t\"FechaBaja\": null,\n\t\t\t\t\t\"FechaInicio\": \"2020-01-01\",\n\t\t\t\t\t\"FechaNacimiento\": \"1995-12-27\",\n\t\t\t\t\t\"FechaUltIntento\": \"2020-07-11 22:12:29.000000\",\n\t\t\t\t\t\"IdRol\": 1,\n\t\t\t\t\t\"IdTipoDocumento\": 1,\n\t\t\t\t\t\"IdUbicacion\": 1,\n\t\t\t\t\t\"IdUsuario\": 2,\n\t\t\t\t\t\"Nombres\": \"Nicolás\",\n\t\t\t\t\t\"Telefono\": \"+54 381 4491954\",\n\t\t\t\t\t\"Usuario\": \"nbachs\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 1,\n\t\t\t\"CantidadTotal\": 21\n\t\t}\n\t}\n}",
           "type": "json"
         }
       ]
