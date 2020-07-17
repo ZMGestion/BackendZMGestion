@@ -129,3 +129,42 @@ func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
 
 	return domicilios, nil
 }
+
+func (cs *ClientesService) Dame(token string) (*structs.Clientes, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"Clientes":        cs.Cliente,
+	}
+
+	out, err := cs.DbHanlder.CallSP("zsp_cliente_dame", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, nil
+	}
+	var clientes structs.Clientes
+	if response["Clientes"] != nil {
+		err = mapstructure.Decode(response["Clientes"], &clientes)
+	} else {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, nil
+	}
+	return &clientes, nil
+}

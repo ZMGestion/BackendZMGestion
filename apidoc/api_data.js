@@ -372,42 +372,42 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "Object",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.Domicilio",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.CodigoPostal",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.IdPais",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.IdProvincia",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "Domicilios.IdCiudad",
             "description": ""
           }
@@ -443,6 +443,75 @@ define({ "api": [
     "filename": "internal/controllers/clientesController.go",
     "groupTitle": "Clientes",
     "name": "PostClientesCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/clientes/dame",
+    "title": "Dame Cliente",
+    "description": "<p>Permite instanciar un cliente a partir de su Id</p>",
+    "group": "Clientes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Clientes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Clientes.IdCliente",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Clientes\":{\n        \"IdCliente\": 3\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Clientes\": {\n            \"IdCliente\": 3,\n            \"IdPais\": \"AR\",\n            \"IdTipoDocumento\": 1,\n            \"Documento\": \"41144069\",\n            \"Tipo\": \"F\",\n            \"FechaNacimiento\": \"\",\n            \"Nombres\": \"Loik\",\n            \"Apellidos\": \"Choua\",\n            \"RazonSocial\": \"\",\n            \"Email\": \"loikchoua4@gmail.com\",\n            \"Telefono\": \"+543815483777\",\n            \"FechaAlta\": \"2020-06-24 15:32:47.000000\",\n            \"FechaBaja\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/clientesController.go",
+    "groupTitle": "Clientes",
+    "name": "PostClientesDame"
   },
   {
     "type": "POST",
