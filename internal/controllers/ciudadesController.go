@@ -75,9 +75,15 @@ func (cc *CiudadesController) Listar(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error:     nil,
-		Respuesta: result,
+		Error: nil,
 	}
+	var respuesta []map[string]interface{}
+	for _, el := range result {
+		objeto := make(map[string]interface{})
+		objeto["Ciudades"] = el
+		respuesta = append(respuesta, objeto)
+	}
+	response.Respuesta = respuesta
 
 	return c.JSON(http.StatusOK, response)
 }

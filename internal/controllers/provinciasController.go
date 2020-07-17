@@ -77,9 +77,15 @@ func (pc *ProvinciasController) Listar(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error:     nil,
-		Respuesta: result,
+		Error: nil,
 	}
+	var respuesta []map[string]interface{}
+	for _, el := range result {
+		objeto := make(map[string]interface{})
+		objeto["Provincias"] = el
+		respuesta = append(respuesta, objeto)
+	}
+	response.Respuesta = respuesta
 
 	return c.JSON(http.StatusOK, response)
 }

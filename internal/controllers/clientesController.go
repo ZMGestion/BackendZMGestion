@@ -18,6 +18,87 @@ type ClientesController struct {
 }
 
 /**
+ * @api {POST} /clientes/dame Dame Cliente
+ * @apiDescription Permite instanciar un cliente a partir de su Id
+ * @apiGroup Clientes
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Clientes
+ * @apiParam {int} Clientes.IdCliente
+ * @apiParamExample {json} Request-Example:
+{
+    "Clientes":{
+        "IdCliente": 3
+    }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+        "Clientes": {
+            "IdCliente": 3,
+            "IdPais": "AR",
+            "IdTipoDocumento": 1,
+            "Documento": "41144069",
+            "Tipo": "F",
+            "FechaNacimiento": "",
+            "Nombres": "Loik",
+            "Apellidos": "Choua",
+            "RazonSocial": "",
+            "Email": "loikchoua4@gmail.com",
+            "Telefono": "+543815483777",
+            "FechaAlta": "2020-06-24 15:32:47.000000",
+            "FechaBaja": "",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (cc *ClientesController) Dame(c echo.Context) error {
+
+	cliente := structs.Clientes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Clientes"], &cliente)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	clientesService := models.ClientesService{
+		DbHanlder: cc.DbHanlder,
+		Cliente:   &cliente,
+	}
+	result, err := clientesService.Dame(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error: nil,
+	}
+
+	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
  * @api {POST} /clientes/crear Crear Cliente
  * @apiDescription Permite crear un cliente
  * @apiGroup Clientes
@@ -33,12 +114,12 @@ type ClientesController struct {
  * @apiParam {string} Clientes.Email
  * @apiParam {string} Clientes.Telefono
  * @apiParam {string} Clientes.FechaNacimiento
- * @apiParam {Object} Domicilios
- * @apiParam {string} Domicilios.Domicilio
- * @apiParam {string} Domicilios.CodigoPostal
- * @apiParam {string} Domicilios.IdPais
- * @apiParam {int} Domicilios.IdProvincia
- * @apiParam {int} Domicilios.IdCiudad
+ * @apiParam {Object} [Domicilios]
+ * @apiParam {string} [Domicilios.Domicilio]
+ * @apiParam {string} [Domicilios.CodigoPostal]
+ * @apiParam {string} [Domicilios.IdPais]
+ * @apiParam {int} [Domicilios.IdProvincia]
+ * @apiParam {int} [Domicilios.IdCiudad]
  * @apiParamExample {json} Request-Example:
 {  "Clientes":{
         "IdPais": "AR",

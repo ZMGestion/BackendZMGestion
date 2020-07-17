@@ -7,12 +7,12 @@ type Clientes struct {
 	Documento       string `json:"Documento"`
 	Tipo            string `json:"Tipo"`
 	FechaNacimiento string `json:"FechaNacimiento"`
-	Nombres         string `json:"Nombres"`
-	Apellidos       string `json:"Apellidos"`
-	RazonSocial     string `json:"RazonSocial"`
+	Nombres         string `json:"Nombres,omitempty"`
+	Apellidos       string `json:"Apellidos,omitempty"`
+	RazonSocial     string `json:"RazonSocial,omitempty"`
 	Email           string `json:"Email"`
 	Telefono        string `json:"Telefono"`
 	FechaAlta       string `json:"FechaAlta"`
-	FechaBaja       string `json:"FechaBaja"`
+	FechaBaja       string `json:"FechaBaja,omitempty"`
 	Estado          string `json:"Estado"`
 }
