@@ -497,14 +497,13 @@ func (tc *TelasController) ModificarPrecio(c echo.Context) error {
  * @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
-	"respuesta":{
-		"Precios":[
-			{"IdPrecio": 14, "Precio": 1.2, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 19:57:18.000000"…},
-			{"IdPrecio": 16, "Precio": 1.21, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:15:10.000000"…},
-			{"IdPrecio": 17, "Precio": 1.22, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:19:15.000000"…},
-			{"IdPrecio": 18, "Precio": 1.23, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 22:29:53.000000"…}
-		]
-	}
+	"respuesta": [
+			{"Precios":{"IdPrecio": 14, "Precio": 1.2, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 19:57:18.000000"…}},
+			{"Precios":{"IdPrecio": 16, "Precio": 1.21, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:15:10.000000"…}},
+			{"Precios":{"IdPrecio": 17, "Precio": 1.22, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 20:19:15.000000"…}},
+			{"Precios":{"IdPrecio": 18, "Precio": 1.23, "Tipo": "", "IdReferencia": 0, "FechaAlta": "2020-07-03 22:29:53.000000"…}}
+	]
+
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -545,10 +544,9 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }
@@ -584,7 +582,8 @@ func (tc *TelasController) ListarPrecios(c echo.Context) error {
 			{
 				"Precios":{
 					"IdPrecio": 15,
-					"Precio": 1.2
+					"Precio": 400,
+					"FechaAlta": "2020-07-03 23:39:57.000000",
 				},
 				"Telas":{
 					"Estado": "A",
@@ -675,7 +674,11 @@ func (tc *TelasController) Buscar(c echo.Context) error {
             "FechaBaja": "",
             "Observaciones": "",
             "Estado": "A"
-        }
+		},
+		"Precios": {
+			"Precio": 1200,
+			"FechaAlta": "2020-06-30 23:39:57.000000",
+		}
     }
 }
 * @apiErrorExample {json} Error-Response:

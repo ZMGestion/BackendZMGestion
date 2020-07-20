@@ -5,5 +5,5 @@ type Precios struct {
 	Precio       float32 `json:"Precio"`
 	Tipo         string  `json:"Tipo"`
 	IdReferencia int     `json:"IdReferencia"`
-	FechaAlta    string  `json:"FechaAlta"`
+	FechaAlta    string  `json:"FechaAlta,omitempty"`
 }

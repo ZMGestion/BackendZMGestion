@@ -141,7 +141,7 @@ func (ts *TelasService) ModificarPrecio(precio structs.Precios, token string) (i
 	return &objetos, nil
 }
 
-func (ts *TelasService) ListarPrecios(token string) ([]*structs.Precios, error) {
+func (ts *TelasService) ListarPrecios(token string) ([]map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -169,22 +169,7 @@ func (ts *TelasService) ListarPrecios(token string) ([]*structs.Precios, error) 
 		return nil, nil
 	}
 
-	var precios []*structs.Precios
-	for _, el := range response {
-		var precio structs.Precios
-		if el["Precios"] != nil {
-			err = mapstructure.Decode(el["Precios"], &precio)
-			if err != nil {
-				return nil, err
-			}
-
-		} else {
-			return nil, nil
-		}
-		precios = append(precios, &precio)
-	}
-
-	return precios, nil
+	return response, nil
 }
 
 func (ts *TelasService) Dame() (interface{}, error) {
