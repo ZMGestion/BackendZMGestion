@@ -548,31 +548,90 @@ func (cc *ClientesController) Borrar(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-    "error": null,
-    "respuesta": {
-        "Domicilios": [
-            {
-                "IdDomicilio": 14,
-                "IdCiudad": 1,
-                "IdProvincia": 1,
-                "IdPais": "AR",
-                "Domicilio": "El Tipal Lote 13",
-                "CodigoPostal": "El Tipal Lote 13",
-                "FechaAlta": "2020-06-28 23:04:26.000000",
-                "Observaciones": ""
-            },
-            {
-                "IdDomicilio": 15,
-                "IdCiudad": 1,
-                "IdProvincia": 1,
-                "IdPais": "AR",
-                "Domicilio": "El Tipal Lote 14",
-                "CodigoPostal": "El Tipal Lote 14",
-                "FechaAlta": "2020-06-28 23:04:49.000000",
-                "Observaciones": ""
-            }
-        ]
-    }
+	"error": null,
+	"respuesta":[
+		{
+			"Ciudades":{
+				"IdCiudad": 2,
+				"IdProvincia": 2,
+				"IdPais": "AR",
+				"Ciudad": "Salta"
+			},
+			"Domicilios":{
+				"IdDomicilio": 19,
+				"IdCiudad": 2,
+				"IdProvincia": 2,
+				"IdPais": "AR",
+				"Domicilio": "España 101",
+				"CodigoPostal": "4201",
+				"FechaAlta": "2020-07-21 23:37:47.000000",
+				"Observaciones": ""
+			},
+			"Paises":{
+				"IdPais": "AR",
+				"Pais": "Argentina"
+			},
+			"Provincias":{
+				"IdPais": "AR",
+				"IdProvincia": 2,
+				"Provincia": "Salta"
+			}
+		},
+		{
+			"Ciudades":{
+			"IdCiudad": 1,
+			"IdProvincia": 1,
+			"IdPais": "AR",
+			"Ciudad": "San Miguel de Tucumán"
+			},
+			"Domicilios":{
+				"IdDomicilio": 17,
+				"IdCiudad": 1,
+				"IdProvincia": 1,
+				"IdPais": "AR",
+				"Domicilio": "Avenida Manuel Belgrano 1456",
+				"CodigoPostal": "4000",
+				"FechaAlta": "2020-07-21 20:28:14.000000",
+				"Observaciones": ""
+			},
+			"Paises":{
+				"IdPais": "AR",
+				"Pais": "Argentina"
+			},
+			"Provincias":{
+				"IdPais": "AR",
+				"IdProvincia": 1,
+				"Provincia": "Tucumán"
+			}
+		},
+		{
+			"Ciudades":{
+				"IdCiudad": 1,
+				"IdProvincia": 1,
+				"IdPais": "AR",
+				"Ciudad": "San Miguel de Tucumán"
+			},
+			"Domicilios":{
+				"IdDomicilio": 18,
+				"IdCiudad": 1,
+				"IdProvincia": 1,
+				"IdPais": "AR",
+				"Domicilio": "Muñecas 354",
+				"CodigoPostal": "4000",
+				"FechaAlta": "2020-07-21 23:34:55.000000",
+				"Observaciones": ""
+			},
+			"Paises":{
+				"IdPais": "AR",
+				"Pais": "Argentina"
+			},
+			"Provincias":{
+				"IdPais": "AR",
+				"IdProvincia": 1,
+				"Provincia": "Tucumán"
+			}
+		}
+	]
 }
 * @apiErrorExample {json} Error-Response:
 {
