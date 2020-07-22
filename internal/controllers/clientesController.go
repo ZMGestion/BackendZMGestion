@@ -605,15 +605,14 @@ func (cc *ClientesController) ListarDomicilios(c echo.Context) error {
 	}
 	result, err := clientesService.ListarDomicilios()
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }
