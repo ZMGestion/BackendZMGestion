@@ -254,47 +254,43 @@ func (uc *UbicacionesController) Modificar(c echo.Context) error {
  * @apiGroup Ubicaciones
  * @apiSuccessExample {json} Success-Response:
 {
-    "error": null,
-    "respuesta": [
-        {
-            "Domicilios": {
-                "IdDomicilio": 1,
-                "IdCiudad": 1,
-                "IdProvincia": 1,
-                "IdPais": "AR",
-                "Domicilio": "Av. Manuel Belgrano 1456",
-                "CodigoPostal": "4000",
-                "FechaAlta": "2020-06-13 13:52:16.000000",
-                "Observaciones": "Domicilio de la casa central"
-            },
-            "Ubicaciones": {
-                "IdUbicacion": 1,
-                "IdDomicilio": 1,
-                "Ubicacion": "Casa Central Tucumán",
-                "FechaAlta": "2020-06-13 13:52:17.000000",
-                "Estado": "A"
-            }
-        },
-        {
-            "Domicilios": {
-                "IdDomicilio": 2,
-                "IdCiudad": 1,
-                "IdProvincia": 1,
-                "IdPais": "AR",
-                "Domicilio": "Ildefonso de Muñecas 374",
-                "CodigoPostal": "4000",
-                "FechaAlta": "2020-06-13 13:52:16.000000",
-                "Observaciones": "Domicilio sucursal Muñecas"
-            },
-            "Ubicaciones": {
-                "IdUbicacion": 2,
-                "IdDomicilio": 2,
-                "Ubicacion": "Sucursal Muñecas",
-                "FechaAlta": "2020-06-13 13:52:17.000000",
-                "Estado": "A"
-            }
-        }
-    ]
+	"error": null,
+	"respuesta":[
+		{
+			"Ciudades":{
+				"IdCiudad": 2,
+				"IdProvincia": 2,
+				"IdPais": "AR",
+				"Ciudad": "Salta"
+			},
+				"Domicilios":{
+				"IdDomicilio": 3,
+				"IdCiudad": 2,
+				"IdProvincia": 2,
+				"IdPais": "AR",
+				"Domicilio": "España 109",
+				"CodigoPostal": "4400",
+				"FechaAlta": "2020-06-13 13:52:16.000000",
+				"Observaciones": "Domicilio sucursal Salta"
+			},
+			"Paises":{
+				"IdPais": "AR",
+				"Pais": "Argentina"
+			},
+			"Provincias":{
+				"IdPais": "AR",
+				"IdProvincia": 2,
+				"Provincia": "Salta"
+			},
+			"Ubicaciones":{
+				"IdUbicacion": 3,
+				"IdDomicilio": 3,
+				"Ubicacion": "Sucursal Salta",
+				"FechaAlta": "2020-06-13 13:52:17.000000",
+				"Estado": "A"
+			}
+		}
+	]
 }
 * @apiErrorExample {json} Error-Response:
  {
@@ -305,7 +301,6 @@ func (uc *UbicacionesController) Modificar(c echo.Context) error {
     "respuesta": null
 }
 */
-//Listar Lista los permisos para un rol
 func (uc *UbicacionesController) Listar(c echo.Context) error {
 
 	gestorUbicaciones := gestores.GestorUbicaciones{
@@ -398,6 +393,81 @@ func (uc *UbicacionesController) DarAlta(c echo.Context) error {
 	}
 
 	response.AddModels(result)
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ubicaciones/dame Dame Ubicación
+ * @apiDescription Permite instanciar una ubicación a partir de su Id
+ * @apiGroup Ubicaciones
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Ubicaciones
+ * @apiParam {int} Ubicaciones.IdUbicacion
+
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Ubicaciones":{
+        "IdUbicacion": 8
+    }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+        "Ubicaciones": {
+            "IdUbicacion": 8,
+            "IdDomicilio": 8,
+            "Ubicacion": "Modificar prueba",
+            "FechaAlta": "2020-06-13 15:43:20.000000",
+            "FechaBaja": "2020-06-13 15:42:10.000000",
+            "Estado": "A"
+        }
+    }
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_UBICACION_ESTA_ALTA",
+        "mensaje": "La ubicación no existe o ya está en estado de 'Alta'."
+    },
+    "respuesta": null
+}
+*/
+func (uc *UbicacionesController) Dame(c echo.Context) error {
+
+	ubicacion := structs.Ubicaciones{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Ubicaciones"], &ubicacion)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	ubicacionesService := models.UbicacionesService{
+		DbHandler:   uc.DbHandler,
+		Ubicaciones: &ubicacion,
+	}
+
+	result, err := ubicacionesService.Dame(*token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
 
 	return c.JSON(http.StatusOK, response)
 }

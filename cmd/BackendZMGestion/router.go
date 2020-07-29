@@ -55,6 +55,7 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 		DbHandler: h,
 	}
 	r.GET("/ubicaciones", controllerUbicaciones.Listar)
+	r.POST("/ubicaciones/dame", controllerUbicaciones.Dame)
 	r.POST("/ubicaciones/crear", controllerUbicaciones.Crear)
 	r.POST("/ubicaciones/borrar", controllerUbicaciones.Borrar)
 	r.POST("/ubicaciones/modificar", controllerUbicaciones.Modificar)
