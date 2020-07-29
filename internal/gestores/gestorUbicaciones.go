@@ -138,10 +138,34 @@ func (gu *GestorUbicaciones) Listar() ([]interface{}, error) {
 			if err != nil {
 				return nil, err
 			}
+			var ciudad structs.Ciudades
+			if el["Ciudades"] != nil {
+				err = mapstructure.Decode(el["Ciudades"], &ciudad)
+				if err != nil {
+					return nil, err
+				}
+			}
+			var provincia structs.Provincias
+			if el["Provincias"] != nil {
+				err = mapstructure.Decode(el["Provincias"], &provincia)
+				if err != nil {
+					return nil, err
+				}
+			}
+			var pais structs.Paises
+			if el["Paises"] != nil {
+				err = mapstructure.Decode(el["Paises"], &pais)
+				if err != nil {
+					return nil, err
+				}
+			}
 
 			objetos := map[string]interface{}{
 				"Ubicaciones": ubicacion,
 				"Domicilios":  domicilio,
+				"Ciudades":    ciudad,
+				"Provincias":  provincia,
+				"Paises":      pais,
 			}
 			respuesta = append(respuesta, objetos)
 		} else {

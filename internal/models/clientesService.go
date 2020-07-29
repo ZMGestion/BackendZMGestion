@@ -93,11 +93,11 @@ func (cs *ClientesService) DarBaja(token string) (*structs.Clientes, error) {
 	return &clientes, nil
 }
 
-func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
+func (cs *ClientesService) ListarDomicilios() ([]map[string]interface{}, error) {
 	out, err := cs.DbHanlder.CallSP("zsp_cliente_listar_domicilios", helpers.GenerateJSONFromModels(cs.Cliente))
 
 	if out == nil {
-		return nil, errors.New("Not found")
+		return nil, nil
 	}
 
 	if err != nil {
@@ -112,7 +112,7 @@ func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
 		return nil, err
 	}
 
-	var domicilios []*structs.Domicilios
+	var respuesta []map[string]interface{}
 	for _, el := range response {
 		var domicilio structs.Domicilios
 		if el["Domicilios"] != nil {
@@ -120,14 +120,38 @@ func (cs *ClientesService) ListarDomicilios() ([]*structs.Domicilios, error) {
 			if err != nil {
 				return nil, err
 			}
-
-		} else {
-			return nil, nil
 		}
-		domicilios = append(domicilios, &domicilio)
+		var ciudad structs.Ciudades
+		if el["Ciudades"] != nil {
+			err = mapstructure.Decode(el["Ciudades"], &ciudad)
+			if err != nil {
+				return nil, err
+			}
+		}
+		var provincia structs.Provincias
+		if el["Provincias"] != nil {
+			err = mapstructure.Decode(el["Provincias"], &provincia)
+			if err != nil {
+				return nil, err
+			}
+		}
+		var pais structs.Paises
+		if el["Paises"] != nil {
+			err = mapstructure.Decode(el["Paises"], &pais)
+			if err != nil {
+				return nil, err
+			}
+		}
+		objeto := map[string]interface{}{
+			"Domicilios": domicilio,
+			"Ciudades":   ciudad,
+			"Provincias": provincia,
+			"Paises":     pais,
+		}
+		respuesta = append(respuesta, objeto)
 	}
 
-	return domicilios, nil
+	return respuesta, nil
 }
 
 func (cs *ClientesService) Dame(token string) (*structs.Clientes, error) {

@@ -688,7 +688,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Domicilios\": [\n            {\n                \"IdDomicilio\": 14,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"El Tipal Lote 13\",\n                \"CodigoPostal\": \"El Tipal Lote 13\",\n                \"FechaAlta\": \"2020-06-28 23:04:26.000000\",\n                \"Observaciones\": \"\"\n            },\n            {\n                \"IdDomicilio\": 15,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"El Tipal Lote 14\",\n                \"CodigoPostal\": \"El Tipal Lote 14\",\n                \"FechaAlta\": \"2020-06-28 23:04:49.000000\",\n                \"Observaciones\": \"\"\n            }\n        ]\n    }\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":[\n\t\t{\n\t\t\t\"Ciudades\":{\n\t\t\t\t\"IdCiudad\": 2,\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Ciudad\": \"Salta\"\n\t\t\t},\n\t\t\t\"Domicilios\":{\n\t\t\t\t\"IdDomicilio\": 19,\n\t\t\t\t\"IdCiudad\": 2,\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Domicilio\": \"España 101\",\n\t\t\t\t\"CodigoPostal\": \"4201\",\n\t\t\t\t\"FechaAlta\": \"2020-07-21 23:37:47.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t},\n\t\t\t\"Paises\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Pais\": \"Argentina\"\n\t\t\t},\n\t\t\t\"Provincias\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"Provincia\": \"Salta\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Ciudades\":{\n\t\t\t\"IdCiudad\": 1,\n\t\t\t\"IdProvincia\": 1,\n\t\t\t\"IdPais\": \"AR\",\n\t\t\t\"Ciudad\": \"San Miguel de Tucumán\"\n\t\t\t},\n\t\t\t\"Domicilios\":{\n\t\t\t\t\"IdDomicilio\": 17,\n\t\t\t\t\"IdCiudad\": 1,\n\t\t\t\t\"IdProvincia\": 1,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Domicilio\": \"Avenida Manuel Belgrano 1456\",\n\t\t\t\t\"CodigoPostal\": \"4000\",\n\t\t\t\t\"FechaAlta\": \"2020-07-21 20:28:14.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t},\n\t\t\t\"Paises\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Pais\": \"Argentina\"\n\t\t\t},\n\t\t\t\"Provincias\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"IdProvincia\": 1,\n\t\t\t\t\"Provincia\": \"Tucumán\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"Ciudades\":{\n\t\t\t\t\"IdCiudad\": 1,\n\t\t\t\t\"IdProvincia\": 1,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Ciudad\": \"San Miguel de Tucumán\"\n\t\t\t},\n\t\t\t\"Domicilios\":{\n\t\t\t\t\"IdDomicilio\": 18,\n\t\t\t\t\"IdCiudad\": 1,\n\t\t\t\t\"IdProvincia\": 1,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Domicilio\": \"Muñecas 354\",\n\t\t\t\t\"CodigoPostal\": \"4000\",\n\t\t\t\t\"FechaAlta\": \"2020-07-21 23:34:55.000000\",\n\t\t\t\t\"Observaciones\": \"\"\n\t\t\t},\n\t\t\t\"Paises\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Pais\": \"Argentina\"\n\t\t\t},\n\t\t\t\"Provincias\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"IdProvincia\": 1,\n\t\t\t\t\"Provincia\": \"Tucumán\"\n\t\t\t}\n\t\t}\n\t]\n}",
           "type": "json"
         }
       ]
@@ -2977,7 +2977,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"Precios\":{\n\t\t\t\t\t\"IdPrecio\": 15,\n\t\t\t\t\t\"Precio\": 1.2\n\t\t\t\t},\n\t\t\t\t\"Telas\":{\n\t\t\t\t\t\"Estado\": \"A\",\n\t\t\t\t\t\"FechaAlta\": \"2020-07-03 19:57:36.000000\",\n\t\t\t\t\t\"FechaBaja\": null,\n\t\t\t\t\t\"IdTela\": 6,\n\t\t\t\t\t\"Observaciones\": null,\n\t\t\t\t\t\"Tela\": \"Eco Cuero Marron\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 1,\n\t\t\t\"CantidadTotal\": 2\n\t\t}\n\t}\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"Precios\":{\n\t\t\t\t\t\"IdPrecio\": 15,\n\t\t\t\t\t\"Precio\": 400,\n\t\t\t\t\t\"FechaAlta\": \"2020-07-03 23:39:57.000000\",\n\t\t\t\t},\n\t\t\t\t\"Telas\":{\n\t\t\t\t\t\"Estado\": \"A\",\n\t\t\t\t\t\"FechaAlta\": \"2020-07-03 19:57:36.000000\",\n\t\t\t\t\t\"FechaBaja\": null,\n\t\t\t\t\t\"IdTela\": 6,\n\t\t\t\t\t\"Observaciones\": null,\n\t\t\t\t\t\"Tela\": \"Eco Cuero Marron\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 1,\n\t\t\t\"CantidadTotal\": 2\n\t\t}\n\t}\n}",
           "type": "json"
         }
       ]
@@ -3205,7 +3205,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Telas\": {\n            \"IdTela\": 4,\n            \"Tela\": \"Prueba5\",\n            \"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n            \"FechaBaja\": \"\",\n            \"Observaciones\": \"\",\n            \"Estado\": \"A\"\n\t\t},\n\t\t\"Precios\": {\n\t\t\t\"Precio\": 1200,\n\t\t\t\"FechaAlta\": \"2020-06-30 23:39:57.000000\",\n\t\t}\n    }\n}",
           "type": "json"
         }
       ]
@@ -3495,7 +3495,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Precios\":[\n\t\t\t{\"IdPrecio\": 14, \"Precio\": 1.2, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 19:57:18.000000\"…},\n\t\t\t{\"IdPrecio\": 16, \"Precio\": 1.21, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:15:10.000000\"…},\n\t\t\t{\"IdPrecio\": 17, \"Precio\": 1.22, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:19:15.000000\"…},\n\t\t\t{\"IdPrecio\": 18, \"Precio\": 1.23, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 22:29:53.000000\"…}\n\t\t]\n\t}\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": [\n\t\t\t{\"Precios\":{\"IdPrecio\": 14, \"Precio\": 1.2, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 19:57:18.000000\"…}},\n\t\t\t{\"Precios\":{\"IdPrecio\": 16, \"Precio\": 1.21, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:15:10.000000\"…}},\n\t\t\t{\"Precios\":{\"IdPrecio\": 17, \"Precio\": 1.22, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 20:19:15.000000\"…}},\n\t\t\t{\"Precios\":{\"IdPrecio\": 18, \"Precio\": 1.23, \"Tipo\": \"\", \"IdReferencia\": 0, \"FechaAlta\": \"2020-07-03 22:29:53.000000\"…}}\n\t]\n\n}",
           "type": "json"
         }
       ]

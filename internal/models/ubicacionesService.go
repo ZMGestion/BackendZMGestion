@@ -91,3 +91,54 @@ func (us *UbicacionesService) DarBaja(token string) (*structs.Ubicaciones, error
 	}
 	return &ubicacion, nil
 }
+
+func (us *UbicacionesService) Dame(token string) (interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"Ubicaciones":     us.Ubicaciones,
+	}
+
+	out, err := us.DbHandler.CallSP("zsp_ubicacion_dame", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, nil
+	}
+	var ubicacion structs.Ubicaciones
+	var domicilio structs.Domicilios
+
+	if response["Ubicaciones"] != nil && response["Domicilios"] != nil {
+		err = mapstructure.Decode(response["Ubicaciones"], &ubicacion)
+		if err != nil {
+			return nil, nil
+		}
+		err = mapstructure.Decode(response["Domicilios"], &domicilio)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, nil
+	}
+
+	respuesta := map[string]interface{}{
+		"Ubicaciones": ubicacion,
+		"Domicilios":  domicilio,
+	}
+
+	return &respuesta, nil
+}
