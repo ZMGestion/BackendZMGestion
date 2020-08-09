@@ -1513,6 +1513,35 @@ define({ "api": [
   },
   {
     "type": "GET",
+    "url": "/permisos",
+    "title": "Listar Permisos",
+    "description": "<p>Devuelve la lista de permisos</p>",
+    "group": "Permisos",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"IdPais\": \"\",\n            \"IdProvincia\": 2,\n            \"Provincia\": \"Salta\"\n        },\n        {\n            \"IdPais\": \"\",\n            \"IdProvincia\": 1,\n            \"Provincia\": \"Tucumán\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/permisosController.go",
+    "groupTitle": "Permisos",
+    "name": "GetPermisos"
+  },
+  {
+    "type": "GET",
     "url": "/productosFinales/lustres",
     "title": "Listar Lustres",
     "description": "<p>Devuelve una lista de lustres</p>",
@@ -3608,7 +3637,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"error\": null,\n    \"respuesta\": [\n        {\n            \"Domicilios\": {\n                \"IdDomicilio\": 1,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"Av. Manuel Belgrano 1456\",\n                \"CodigoPostal\": \"4000\",\n                \"FechaAlta\": \"2020-06-13 13:52:16.000000\",\n                \"Observaciones\": \"Domicilio de la casa central\"\n            },\n            \"Ubicaciones\": {\n                \"IdUbicacion\": 1,\n                \"IdDomicilio\": 1,\n                \"Ubicacion\": \"Casa Central Tucumán\",\n                \"FechaAlta\": \"2020-06-13 13:52:17.000000\",\n                \"Estado\": \"A\"\n            }\n        },\n        {\n            \"Domicilios\": {\n                \"IdDomicilio\": 2,\n                \"IdCiudad\": 1,\n                \"IdProvincia\": 1,\n                \"IdPais\": \"AR\",\n                \"Domicilio\": \"Ildefonso de Muñecas 374\",\n                \"CodigoPostal\": \"4000\",\n                \"FechaAlta\": \"2020-06-13 13:52:16.000000\",\n                \"Observaciones\": \"Domicilio sucursal Muñecas\"\n            },\n            \"Ubicaciones\": {\n                \"IdUbicacion\": 2,\n                \"IdDomicilio\": 2,\n                \"Ubicacion\": \"Sucursal Muñecas\",\n                \"FechaAlta\": \"2020-06-13 13:52:17.000000\",\n                \"Estado\": \"A\"\n            }\n        }\n    ]\n}",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":[\n\t\t{\n\t\t\t\"Ciudades\":{\n\t\t\t\t\"IdCiudad\": 2,\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Ciudad\": \"Salta\"\n\t\t\t},\n\t\t\t\t\"Domicilios\":{\n\t\t\t\t\"IdDomicilio\": 3,\n\t\t\t\t\"IdCiudad\": 2,\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Domicilio\": \"España 109\",\n\t\t\t\t\"CodigoPostal\": \"4400\",\n\t\t\t\t\"FechaAlta\": \"2020-06-13 13:52:16.000000\",\n\t\t\t\t\"Observaciones\": \"Domicilio sucursal Salta\"\n\t\t\t},\n\t\t\t\"Paises\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"Pais\": \"Argentina\"\n\t\t\t},\n\t\t\t\"Provincias\":{\n\t\t\t\t\"IdPais\": \"AR\",\n\t\t\t\t\"IdProvincia\": 2,\n\t\t\t\t\"Provincia\": \"Salta\"\n\t\t\t},\n\t\t\t\"Ubicaciones\":{\n\t\t\t\t\"IdUbicacion\": 3,\n\t\t\t\t\"IdDomicilio\": 3,\n\t\t\t\t\"Ubicacion\": \"Sucursal Salta\",\n\t\t\t\t\"FechaAlta\": \"2020-06-13 13:52:17.000000\",\n\t\t\t\t\"Estado\": \"A\"\n\t\t\t}\n\t\t}\n\t]\n}",
           "type": "json"
         }
       ]
@@ -3812,6 +3841,75 @@ define({ "api": [
     "filename": "internal/controllers/ubicacionesController.go",
     "groupTitle": "Ubicaciones",
     "name": "PostUbicacionesCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/ubicaciones/dame",
+    "title": "Dame Ubicación",
+    "description": "<p>Permite instanciar una ubicación a partir de su Id</p>",
+    "group": "Ubicaciones",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Ubicaciones\":{\n        \"IdUbicacion\": 8\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n        \"Ubicaciones\": {\n            \"IdUbicacion\": 8,\n            \"IdDomicilio\": 8,\n            \"Ubicacion\": \"Modificar prueba\",\n            \"FechaAlta\": \"2020-06-13 15:43:20.000000\",\n            \"FechaBaja\": \"2020-06-13 15:42:10.000000\",\n            \"Estado\": \"A\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_UBICACION_ESTA_ALTA\",\n        \"mensaje\": \"La ubicación no existe o ya está en estado de 'Alta'.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ubicacionesController.go",
+    "groupTitle": "Ubicaciones",
+    "name": "PostUbicacionesDame"
   },
   {
     "type": "POST",

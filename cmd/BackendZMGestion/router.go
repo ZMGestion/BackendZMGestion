@@ -32,8 +32,12 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/roles/borrar", controllerRoles.Borrar)
 	r.POST("/roles/modificar", controllerRoles.Modificar)
 	r.POST("/roles/asignarPermisos", controllerRoles.AsignarPermisos)
-	r.POST("/roles/listarPermisos", controllerRoles.ListarPermisos)
+	r.POST("/roles/permisos", controllerRoles.ListarPermisos)
 
+	controllerPermisos := &controllers.PermisosController{
+		DbHanlder: h,
+	}
+	r.POST("/permisos", controllerPermisos.Listar)
 	controllerUsuarios := &controllers.UsuariosController{
 		DbHandler: h,
 	}

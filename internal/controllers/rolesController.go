@@ -7,6 +7,8 @@ import (
 	"BackendZMGestion/internal/interfaces"
 	"BackendZMGestion/internal/models"
 	"BackendZMGestion/internal/structs"
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -467,22 +469,29 @@ func (rc *RolesController) ListarPermisos(c echo.Context) error {
 }
 */
 func (rc *RolesController) AsignarPermisos(c echo.Context) error {
-
-	rol := structs.Roles{}
 	var permisos []structs.Permisos
+	var body Request
 
-	jsonMap, err := helpers.GenerateMapFromContext(c)
+	err := json.NewDecoder(c.Request().Body).Decode(&body)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 
-	mapstructure.Decode(jsonMap["Roles"], &rol)
-	mapstructure.Decode(jsonMap["Permisos"], &permisos)
+	fmt.Println(body.Roles)
+
+	for _, el := range body.Permisos {
+		var permiso structs.Permisos
+		err = mapstructure.Decode(el, &permiso)
+		if err != nil {
+			return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+		}
+		permisos = append(permisos, permiso)
+	}
 
 	rolesService := models.RolesService{
 		DbHandler: rc.DbHandler,
-		Rol:       &rol,
+		Rol:       body.Roles,
 	}
 
 	headerToken := c.Request().Header.Get("Authorization")
@@ -504,4 +513,9 @@ func (rc *RolesController) AsignarPermisos(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, response)
+}
+
+type Request struct {
+	Permisos []structs.Permisos `json:"Permisos"`
+	Roles    *structs.Roles     `json:"Roles"`
 }
