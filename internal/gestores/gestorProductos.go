@@ -44,13 +44,14 @@ func (gp *GestorProductos) Crear(producto structs.Productos, precio structs.Prec
 	return &producto, err
 }
 
-func (gp *GestorProductos) Modificar(producto structs.Productos, token string) (*structs.Productos, error) {
+func (gp *GestorProductos) Modificar(producto structs.Productos, precio structs.Precios, token string) (*map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
 	params := map[string]interface{}{
 		"Productos":       producto,
+		"Precios":         precio,
 		"UsuariosEjecuta": usuarioEjecuta,
 	}
 
@@ -64,18 +65,10 @@ func (gp *GestorProductos) Modificar(producto structs.Productos, token string) (
 
 	err = json.Unmarshal(*out, &response)
 
-	if err == nil {
-		if response["Productos"] != nil {
-			err = mapstructure.Decode(response["Productos"], &producto)
-		} else {
-			return nil, nil
-		}
-	}
-
-	return &producto, err
+	return &response, err
 }
 
-func (gp *GestorProductos) Borrar(producto structs.Productos, token string) (*structs.Productos, error) {
+func (gp *GestorProductos) Borrar(producto structs.Productos, token string) error {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -87,11 +80,7 @@ func (gp *GestorProductos) Borrar(producto structs.Productos, token string) (*st
 
 	_, err := gp.DbHandler.CallSP("zsp_producto_borrar", params)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return nil, err
+	return err
 }
 
 func (gp *GestorProductos) Buscar(producto structs.Productos, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {

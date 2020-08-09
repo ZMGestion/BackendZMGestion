@@ -44,13 +44,14 @@ func (gt *GestorTelas) Crear(tela structs.Telas, precio structs.Precios, token s
 	return &tela, err
 }
 
-func (gt *GestorTelas) Modificar(tela structs.Telas, token string) (*structs.Telas, error) {
+func (gt *GestorTelas) Modificar(tela structs.Telas, precio structs.Precios, token string) (*structs.Telas, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
 	params := map[string]interface{}{
 		"Telas":           tela,
+		"Precios":         precio,
 		"UsuariosEjecuta": usuarioEjecuta,
 	}
 

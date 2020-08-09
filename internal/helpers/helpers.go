@@ -67,6 +67,8 @@ func GetError(err error) (string, string) {
 			if _, ok := errorsMap[err.Error()]; ok {
 				errorCode = err.Error()
 				errorMsg = errorsMap[err.Error()]
+			} else {
+				fmt.Println(err.Error())
 			}
 		}
 	}

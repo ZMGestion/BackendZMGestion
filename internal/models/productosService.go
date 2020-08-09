@@ -123,7 +123,7 @@ func (ps *ProductosService) ModificarPrecio(precio structs.Precios, token string
 	return response, nil
 }
 
-func (ps *ProductosService) ListarPrecios(token string) ([]*structs.Precios, error) {
+func (ps *ProductosService) ListarPrecios(token string) ([]map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -149,23 +149,12 @@ func (ps *ProductosService) ListarPrecios(token string) ([]*structs.Precios, err
 	if err != nil {
 		return nil, err
 	}
-	var precios []*structs.Precios
-	for _, el := range response {
-		if el["Precios"] != nil {
-			var precio structs.Precios
-			err = mapstructure.Decode(el["Precios"], &precio)
-			if err != nil {
-				return nil, err
-			}
-			precios = append(precios, &precio)
-		}
-	}
 
-	return precios, nil
+	return response, nil
 
 }
 
-func (ps *ProductosService) Dame(token string) (interface{}, error) {
+func (ps *ProductosService) Dame(token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -192,30 +181,10 @@ func (ps *ProductosService) Dame(token string) (interface{}, error) {
 		return nil, err
 	}
 
-	var producto structs.Productos
-	var precio structs.Precios
-	if response["Productos"] != nil && response["Precios"] != nil {
-		err = mapstructure.Decode(response["Productos"], &producto)
-		if err != nil {
-			return nil, err
-		}
-		err = mapstructure.Decode(response["Precios"], &precio)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		return nil, errors.New("ERROR_DEFAULT")
-	}
-
-	respuesta := map[string]interface{}{
-		"Productos": producto,
-		"Precios":   precio,
-	}
-
-	return respuesta, nil
+	return response, nil
 }
 
-func (ps *ProductosService) ListarCategorias(token string) ([]*structs.CategoriasProducto, error) {
+func (ps *ProductosService) ListarCategorias(token string) ([]map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -233,6 +202,7 @@ func (ps *ProductosService) ListarCategorias(token string) ([]*structs.Categoria
 	if out == nil {
 		return nil, errors.New("ERROR_DEFAULT")
 	}
+
 	var response []map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)
@@ -240,21 +210,10 @@ func (ps *ProductosService) ListarCategorias(token string) ([]*structs.Categoria
 	if err != nil {
 		return nil, err
 	}
-	var categorias []*structs.CategoriasProducto
-	for _, el := range response {
-		if el["CategoriasProducto"] != nil {
-			var categoria structs.CategoriasProducto
-			err = mapstructure.Decode(el["CategoriasProducto"], &categoria)
-			if err != nil {
-				return nil, err
-			}
-			categorias = append(categorias, &categoria)
-		}
-	}
-	return categorias, nil
+	return response, nil
 }
 
-func (ps *ProductosService) ListarTiposProducto(token string) ([]*structs.TiposProducto, error) {
+func (ps *ProductosService) ListarTiposProducto(token string) ([]map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -279,16 +238,5 @@ func (ps *ProductosService) ListarTiposProducto(token string) ([]*structs.TiposP
 	if err != nil {
 		return nil, err
 	}
-	var tiposProducto []*structs.TiposProducto
-	for _, el := range response {
-		if el["TiposProducto"] != nil {
-			var tipoProducto structs.TiposProducto
-			err = mapstructure.Decode(el["TiposProducto"], &tipoProducto)
-			if err != nil {
-				return nil, err
-			}
-			tiposProducto = append(tiposProducto, &tipoProducto)
-		}
-	}
-	return tiposProducto, nil
+	return response, nil
 }

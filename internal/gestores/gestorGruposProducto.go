@@ -90,7 +90,7 @@ func (ggp *GestorGruposProducto) Borrar(grupoProducto structs.GruposProducto, to
 	return err
 }
 
-func (ggp *GestorGruposProducto) Buscar(grupoProducto structs.GruposProducto, token string) ([]*structs.GruposProducto, error) {
+func (ggp *GestorGruposProducto) Buscar(grupoProducto structs.GruposProducto, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -98,6 +98,7 @@ func (ggp *GestorGruposProducto) Buscar(grupoProducto structs.GruposProducto, to
 	params := map[string]interface{}{
 		"GruposProducto":  grupoProducto,
 		"UsuariosEjecuta": usuarioEjecuta,
+		"Paginaciones":    paginacion,
 	}
 
 	out, err := ggp.DbHandler.CallSP("zsp_gruposProducto_buscar", params)
@@ -110,26 +111,13 @@ func (ggp *GestorGruposProducto) Buscar(grupoProducto structs.GruposProducto, to
 		return nil, nil
 	}
 
-	var response []map[string]interface{}
+	var respuestaBusqueda structs.RespuestaBusqueda
 
-	err = json.Unmarshal(*out, &response)
+	err = json.Unmarshal(*out, &respuestaBusqueda)
 
 	if err != nil {
 		return nil, err
 	}
-	var gruposProducto []*structs.GruposProducto
-	for _, el := range response {
-		var grupoProducto structs.GruposProducto
-		if el["GruposProducto"] != nil {
-			err = mapstructure.Decode(el["GruposProducto"], &grupoProducto)
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			return nil, nil
-		}
-		gruposProducto = append(gruposProducto, &grupoProducto)
-	}
 
-	return gruposProducto, nil
+	return &respuestaBusqueda, nil
 }
