@@ -123,7 +123,6 @@ func (gc *GestorClientes) Buscar(cliente structs.Clientes, paginacion structs.Pa
 
 	if err != nil {
 		return nil, err
-
 	}
 
 	// var response []map[string]interface{}

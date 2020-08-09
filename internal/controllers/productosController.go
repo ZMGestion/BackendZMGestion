@@ -135,7 +135,10 @@ func (pc *ProductosController) Crear(c echo.Context) error {
 		"Producto": "Silla 2",
 		"LongitudTela":15.0,
 		"Observaciones":""
-    }
+	},
+	"Precios": {
+		"Precio": 1200
+	}
 }
  * @apiSuccessExample {json} Success-Response:
 {
@@ -152,6 +155,11 @@ func (pc *ProductosController) Crear(c echo.Context) error {
 			"FechaBaja": "",
 			"Observaciones": "",
 			"Estado": "A"
+		},
+		"Precios": {
+			"IdPrecio": 39,
+			"Precio": 1200,
+			"FechaAlta": "2020-07-06 20:58:48.000000"
 		}
 	}
 }
@@ -168,6 +176,7 @@ func (pc *ProductosController) Crear(c echo.Context) error {
 func (pc *ProductosController) Modificar(c echo.Context) error {
 
 	producto := structs.Productos{}
+	precios := structs.Precios{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -175,6 +184,7 @@ func (pc *ProductosController) Modificar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Productos"], &producto)
+	mapstructure.Decode(jsonMap["Precios"], &precios)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -186,17 +196,16 @@ func (pc *ProductosController) Modificar(c echo.Context) error {
 	gestorProductos := gestores.GestorProductos{
 		DbHandler: pc.DbHandler,
 	}
-	result, err := gestorProductos.Modificar(producto, *token)
+	result, err := gestorProductos.Modificar(producto, precios, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }
@@ -250,15 +259,14 @@ func (pc *ProductosController) Borrar(c echo.Context) error {
 	gestorProductos := gestores.GestorProductos{
 		DbHandler: pc.DbHandler,
 	}
-	result, err := gestorProductos.Borrar(producto, *token)
+	err = gestorProductos.Borrar(producto, *token)
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
 	response := interfaces.Response{
-		Error:     nil,
-		Respuesta: result,
+		Error: nil,
 	}
 
 	return c.JSON(http.StatusOK, response)
@@ -630,45 +638,43 @@ func (pc *ProductosController) ModificarPrecio(c echo.Context) error {
  * @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
-	"respuesta":{
-		"Precios":[
-			{
-				"IdPrecio": 23,
-				"Precio": 50,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": "2020-07-05 22:51:36.000000"
-			},
-			{
-				"IdPrecio": 25,
-				"Precio": 142.21,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": "2020-07-06 20:23:20.000000"
-			},
-			{
-				"IdPrecio": 26,
-				"Precio": 142.2,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": "2020-07-06 20:24:15.000000"
-			},
-			{
-				"IdPrecio": 27,
-				"Precio": 142.23,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": "2020-07-06 20:25:10.000000"
-			},
-			{
-				"IdPrecio": 30,
-				"Precio": 13,
-				"Tipo": "",
-				"IdReferencia": 0,
-				"FechaAlta": "2020-07-06 22:47:21.000000"
-			}
-		]
-	}
+	"respuesta": [
+		"Precios": {
+			"IdPrecio": 23,
+			"Precio": 50,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-05 22:51:36.000000"
+		},
+		"Precios": {
+			"IdPrecio": 25,
+			"Precio": 142.21,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-06 20:23:20.000000"
+		},
+		"Precios": {
+			"IdPrecio": 26,
+			"Precio": 142.2,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-06 20:24:15.000000"
+		},
+		"Precios": {
+			"IdPrecio": 27,
+			"Precio": 142.23,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-06 20:25:10.000000"
+		},
+		"Precios": {
+			"IdPrecio": 30,
+			"Precio": 13,
+			"Tipo": "",
+			"IdReferencia": 0,
+			"FechaAlta": "2020-07-06 22:47:21.000000"
+		}
+	]
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -711,9 +717,9 @@ func (pc *ProductosController) ListarPrecios(c echo.Context) error {
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }
@@ -747,7 +753,7 @@ func (pc *ProductosController) ListarPrecios(c echo.Context) error {
 		"Productos":{
 			"IdProducto": 5,
 			"IdCategoriaProducto": 1,
-			"IdGrupoProducto": 5,
+			"IdGrupoProducto": 2,
 			"IdTipoProducto": "P",
 			"Producto": "Silla de prueba 4",
 			"LongitudTela": 12,
@@ -755,7 +761,20 @@ func (pc *ProductosController) ListarPrecios(c echo.Context) error {
 			"FechaBaja": "2020-07-06 21:22:39.000000",
 			"Observaciones": "",
 			"Estado": "A"
-		}
+		},
+		"TiposProducto": {
+            "TipoProducto": "Productos fabricables",
+            "IdCategoriaProducto": "P"
+        },
+        "GruposProducto": {
+            "Grupo": "Grupo de prueba 2",
+            "Estado": "A",
+            "IdGrupoProducto": 2
+        },
+        "CategoriasProducto": {
+            "Categoria": "Sillas",
+            "IdCategoriaProducto": 1
+        }
 	}
 }
 * @apiErrorExample {json} Error-Response:

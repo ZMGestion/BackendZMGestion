@@ -18,6 +18,81 @@ type GruposProductoController struct {
 }
 
 /**
+ * @api {POST} /gruposProducto/dame Dame Grupo de producto
+ * @apiDescription Permite instanciar un grupo de producto a partir de su Id
+ * @apiGroup GruposProducto
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} GruposProducto
+ * @apiParam {int} GruposProducto.IdGrupoProducto
+
+
+  * @apiParamExample {json} Request-Example:
+{
+	 "GruposProducto": {
+            "IdGrupoProducto":6
+        }
+ }
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+        "GruposProducto": {
+			"IdGrupoProducto": 6,
+			"Grupo": "Grupo de prueba 2",
+			"FechaAlta": "2020-07-04 21:39:47.000000",
+			"FechaBaja": "",
+			"Descripcion": "",
+            "Estado": "A",
+        }
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (gpc *GruposProductoController) Dame(c echo.Context) error {
+
+	grupoProducto := structs.GruposProducto{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["GruposProducto"], &grupoProducto)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gruposProductoService := models.GruposProductoService{
+		GrupoProducto: &grupoProducto,
+		DbHandler:     gpc.DbHandler,
+	}
+
+	result, err := gruposProductoService.Dame(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
  * @api {POST} /gruposProducto/crear Crear Grupo de Producto
  * @apiDescription Permite crear un grupo de producto
  * @apiGroup GruposProducto
@@ -295,7 +370,7 @@ func (gpc *GruposProductoController) DarAlta(c echo.Context) error {
 	}
 
 	gruposProductoService := models.GruposProductoService{
-		DbHanlder:     gpc.DbHandler,
+		DbHandler:     gpc.DbHandler,
 		GrupoProducto: &grupoProducto,
 	}
 
@@ -371,7 +446,7 @@ func (gpc *GruposProductoController) DarBaja(c echo.Context) error {
 	}
 
 	gruposProductoService := models.GruposProductoService{
-		DbHanlder:     gpc.DbHandler,
+		DbHandler:     gpc.DbHandler,
 		GrupoProducto: &grupoProducto,
 	}
 
@@ -442,6 +517,7 @@ func (gpc *GruposProductoController) DarBaja(c echo.Context) error {
 func (gpc *GruposProductoController) Buscar(c echo.Context) error {
 
 	grupoProducto := structs.GruposProducto{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -449,6 +525,7 @@ func (gpc *GruposProductoController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["GruposProducto"], &grupoProducto)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -460,17 +537,16 @@ func (gpc *GruposProductoController) Buscar(c echo.Context) error {
 	gestorGruposProducto := gestores.GestorGruposProducto{
 		DbHandler: gpc.DbHandler,
 	}
-	result, err := gestorGruposProducto.Buscar(grupoProducto, *token)
+	result, err := gestorGruposProducto.Buscar(grupoProducto, paginacion, *token)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
 	response := interfaces.Response{
-		Error: nil,
+		Error:     nil,
+		Respuesta: result,
 	}
-
-	response.AddModels(result)
 
 	return c.JSON(http.StatusOK, response)
 }

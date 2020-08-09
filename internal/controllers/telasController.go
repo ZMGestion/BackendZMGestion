@@ -143,6 +143,7 @@ func (tc *TelasController) Crear(c echo.Context) error {
 func (tc *TelasController) Modificar(c echo.Context) error {
 
 	telas := structs.Telas{}
+	precios := structs.Precios{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -150,6 +151,7 @@ func (tc *TelasController) Modificar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Telas"], &telas)
+	mapstructure.Decode(jsonMap["Precios"], &precios)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -161,7 +163,7 @@ func (tc *TelasController) Modificar(c echo.Context) error {
 	gestorTelas := gestores.GestorTelas{
 		DbHandler: tc.DbHandler,
 	}
-	result, err := gestorTelas.Modificar(telas, *token)
+	result, err := gestorTelas.Modificar(telas, precios, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
