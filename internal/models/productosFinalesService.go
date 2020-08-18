@@ -4,6 +4,7 @@ import (
 	"BackendZMGestion/internal/db"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
+	"errors"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -13,7 +14,7 @@ type ProductosFinalesService struct {
 	ProductoFinal *structs.ProductosFinales
 }
 
-func (pfs *ProductosFinalesService) ListarLustres(token string) ([]*structs.Lustres, error) {
+func (pfs *ProductosFinalesService) ListarLustres(token string) ([]map[string]interface{}, error) {
 
 	usuariosEjecuta := structs.Usuarios{
 		Token: token,
@@ -37,24 +38,111 @@ func (pfs *ProductosFinalesService) ListarLustres(token string) ([]*structs.Lust
 
 	err = json.Unmarshal(*out, &response)
 
+	return response, err
+}
+
+func (pfs *ProductosFinalesService) Dame(token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":  usuarioEjecuta,
+		"ProductosFinales": pfs.ProductoFinal,
+	}
+
+	out, err := pfs.DbHandler.CallSP("zsp_productoFinal_dame", params)
+
 	if err != nil {
 		return nil, err
 	}
 
-	var lustres []*structs.Lustres
-	for _, el := range response {
-		if el["Lustres"] != nil {
-			var lustre structs.Lustres
-			err = mapstructure.Decode(el["Lustres"], &lustre)
-			if err != nil {
-				return nil, err
-			}
-			lustres = append(lustres, &lustre)
-		} else {
-			return nil, nil
-		}
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
 	}
 
-	return lustres, nil
+	var response map[string]interface{}
 
+	err = json.Unmarshal(*out, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (pfs *ProductosFinalesService) DarAlta(token string) (*structs.ProductosFinales, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":  usuarioEjecuta,
+		"ProductosFinales": pfs.ProductoFinal,
+	}
+
+	out, err := pfs.DbHandler.CallSP("zsp_productoFinal_dar_alta", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var productoFinal structs.ProductosFinales
+	if response["ProductosFinales"] != nil {
+		err = mapstructure.Decode(response["ProductosFinales"], &productoFinal)
+	} else {
+		return nil, nil
+	}
+
+	return &productoFinal, err
+}
+
+func (pfs *ProductosFinalesService) DarBaja(token string) (*structs.ProductosFinales, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":  usuarioEjecuta,
+		"ProductosFinales": pfs.ProductoFinal,
+	}
+
+	out, err := pfs.DbHandler.CallSP("zsp_productoFinal_dar_baja", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var productoFinal structs.ProductosFinales
+	if response["ProductosFinales"] != nil {
+		err = mapstructure.Decode(response["ProductosFinales"], &productoFinal)
+	} else {
+		return nil, nil
+	}
+
+	return &productoFinal, err
 }

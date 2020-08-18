@@ -143,25 +143,7 @@ func (pc *ProductosController) Crear(c echo.Context) error {
  * @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
-	"respuesta":{
-		"Productos":{
-			"IdProducto": 6,
-			"IdCategoriaProducto": 1,
-			"IdGrupoProducto": 2,
-			"IdTipoProducto": "P",
-			"Producto": "Silla 2'",
-			"LongitudTela": 15,
-			"FechaAlta": "2020-07-06 20:58:48.000000",
-			"FechaBaja": "",
-			"Observaciones": "",
-			"Estado": "A"
-		},
-		"Precios": {
-			"IdPrecio": 39,
-			"Precio": 1200,
-			"FechaAlta": "2020-07-06 20:58:48.000000"
-		}
-	}
+	"respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -364,26 +346,26 @@ func (pc *ProductosController) DarAlta(c echo.Context) error {
   * @apiParamExample {json} Request-Example:
 {
 	 "Productos": {
-            "IdProducto":6
+            "IdProducto": 16
         }
  }
  * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta":{
-		"Productos":{
-			"IdProducto": 5,
-			"IdCategoriaProducto": 1,
-			"IdGrupoProducto": 5,
-			"IdTipoProducto": "P",
-			"Producto": "Silla de prueba 4",
-			"LongitudTela": 12,
-			"FechaAlta": "2020-07-05 22:51:36.000000",
-			"FechaBaja": "2020-07-06 21:22:39.000000",
-			"Observaciones": "",
-			"Estado": "B"
-		}
-	}
+    "error": null,
+    "respuesta": {
+        "Productos": {
+            "IdProducto": 16,
+            "IdCategoriaProducto": 1,
+            "IdGrupoProducto": 5,
+            "IdTipoProducto": "P",
+            "Producto": "Braun",
+            "LongitudTela": 0,
+            "FechaAlta": "2020-08-07 05:04:46.000000",
+            "FechaBaja": "2020-08-16 21:25:54.000000",
+            "Observaciones": "",
+            "Estado": "B"
+        }
+    }
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -456,34 +438,80 @@ func (pc *ProductosController) DarBaja(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta":{
-		"resultado":[
-			{
-				"Precios":{
-					"IdPrecio": 21,
-					"Precio": 50
-				},
-				"Productos":{
-					"Estado": "A",
-					"FechaAlta": "2020-07-05 21:37:18.000000",
-					"FechaBaja": "2020-07-05 22:28:58.000000",
-					"IdCategoriaProducto": 1,
-					"IdGrupoProducto": 5,
-					"IdProducto": 3,
-					"IdTipoProducto": "P",
-					"LongitudTela": 12,
-					"Observaciones": null,
-					"Producto": "Silla de prueba 2"
-				}
-			}
-		],
-		"Paginaciones":{
-			"Pagina": 1,
-			"LongitudPagina": 1,
-			"CantidadTotal": 3
-		}
-	}
+    "error": null,
+    "respuesta": {
+        "resultado": [
+            {
+                "CategoriasProducto": {
+                    "Categoria": "Sillas",
+                    "IdCategoriaProducto": 1
+                },
+                "GruposProducto": {
+                    "Estado": "A",
+                    "Grupo": "Grupo1",
+                    "IdGrupoProducto": 5
+                },
+                "Precios": {
+                    "FechaAlta": "2020-08-08 01:22:27.000000",
+                    "IdPrecio": 102,
+                    "Precio": 2780
+                },
+                "Productos": {
+                    "Estado": "A",
+                    "FechaAlta": "2020-08-07 04:43:12.000000",
+                    "FechaBaja": null,
+                    "IdCategoriaProducto": 1,
+                    "IdGrupoProducto": 5,
+                    "IdProducto": 15,
+                    "IdTipoProducto": "P",
+                    "LongitudTela": 0,
+                    "Observaciones": null,
+                    "Producto": "Becker"
+                },
+                "TiposProducto": {
+                    "IdCategoriaProducto": "P",
+                    "TipoProducto": "Productos fabricables"
+                }
+            },
+            {
+                "CategoriasProducto": {
+                    "Categoria": "Sillas",
+                    "IdCategoriaProducto": 1
+                },
+                "GruposProducto": {
+                    "Estado": "A",
+                    "Grupo": "Grupo1",
+                    "IdGrupoProducto": 5
+                },
+                "Precios": {
+                    "FechaAlta": "2020-08-07 05:04:46.000000",
+                    "IdPrecio": 96,
+                    "Precio": 4500
+                },
+                "Productos": {
+                    "Estado": "A",
+                    "FechaAlta": "2020-08-07 05:04:46.000000",
+                    "FechaBaja": "2020-08-16 18:12:12.000000",
+                    "IdCategoriaProducto": 1,
+                    "IdGrupoProducto": 5,
+                    "IdProducto": 16,
+                    "IdTipoProducto": "P",
+                    "LongitudTela": 0,
+                    "Observaciones": null,
+                    "Producto": "Braun"
+                },
+                "TiposProducto": {
+                    "IdCategoriaProducto": "P",
+                    "TipoProducto": "Productos fabricables"
+                }
+            }
+        ],
+        "Paginaciones": {
+            "Pagina": 1,
+            "LongitudPagina": 2,
+            "CantidadTotal": 12
+        }
+    }
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -637,44 +665,30 @@ func (pc *ProductosController) ModificarPrecio(c echo.Context) error {
 }
  * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta": [
-		"Precios": {
-			"IdPrecio": 23,
-			"Precio": 50,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-05 22:51:36.000000"
-		},
-		"Precios": {
-			"IdPrecio": 25,
-			"Precio": 142.21,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 20:23:20.000000"
-		},
-		"Precios": {
-			"IdPrecio": 26,
-			"Precio": 142.2,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 20:24:15.000000"
-		},
-		"Precios": {
-			"IdPrecio": 27,
-			"Precio": 142.23,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 20:25:10.000000"
-		},
-		"Precios": {
-			"IdPrecio": 30,
-			"Precio": 13,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 22:47:21.000000"
-		}
-	]
+    "error": null,
+    "respuesta": [
+        {
+            "Precios": {
+                "FechaAlta": "2020-08-07 04:43:12.000000",
+                "IdPrecio": 94,
+                "Precio": 2350
+            }
+        },
+        {
+            "Precios": {
+                "FechaAlta": "2020-08-07 04:48:46.000000",
+                "IdPrecio": 95,
+                "Precio": 2490
+            }
+        },
+        {
+            "Precios": {
+                "FechaAlta": "2020-08-08 01:22:27.000000",
+                "IdPrecio": 102,
+                "Precio": 2780
+            }
+        }
+    ]
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -830,28 +844,23 @@ func (pc *ProductosController) Dame(c echo.Context) error {
  * @apiHeader {String} Authorization
  * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta":{
-		"Precios":{
-			"IdPrecio": 30,
-			"Precio": 13,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 22:47:21.000000"
+    "error": null,
+    "respuesta": [
+        {
+            "TiposProducto": {
+                "Descripcion": null,
+                "IdTipoProducto": "P",
+                "TipoProducto": "Productos fabricables"
+            }
 		},
-		"Productos":{
-			"IdProducto": 5,
-			"IdCategoriaProducto": 1,
-			"IdGrupoProducto": 5,
-			"IdTipoProducto": "P",
-			"Producto": "Silla de prueba 4",
-			"LongitudTela": 12,
-			"FechaAlta": "2020-07-05 22:51:36.000000",
-			"FechaBaja": "2020-07-06 21:22:39.000000",
-			"Observaciones": "",
-			"Estado": "A"
-		}
-	}
+		{
+            "TiposProducto": {
+                "Descripcion": null,
+                "IdTipoProducto": "N",
+                "TipoProducto": "Productos no fabricables"
+            }
+        }
+    ]
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -896,28 +905,23 @@ func (pc *ProductosController) ListarTiposProducto(c echo.Context) error {
  * @apiHeader {String} Authorization
  * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta":{
-		"Precios":{
-			"IdPrecio": 30,
-			"Precio": 13,
-			"Tipo": "",
-			"IdReferencia": 0,
-			"FechaAlta": "2020-07-06 22:47:21.000000"
+    "error": null,
+    "respuesta": [
+        {
+            "CategoriasProducto": {
+                "Categoria": "Sillas",
+                "Descripcion": "Categoria de Sillas",
+                "IdCategoriaProducto": 1
+            }
 		},
-		"Productos":{
-			"IdProducto": 5,
-			"IdCategoriaProducto": 1,
-			"IdGrupoProducto": 5,
-			"IdTipoProducto": "P",
-			"Producto": "Silla de prueba 4",
-			"LongitudTela": 12,
-			"FechaAlta": "2020-07-05 22:51:36.000000",
-			"FechaBaja": "2020-07-06 21:22:39.000000",
-			"Observaciones": "",
-			"Estado": "A"
-		}
-	}
+		{
+            "CategoriasProducto": {
+                "Categoria": "Sillones",
+                "Descripcion": "Categoria de Sillones",
+                "IdCategoriaProducto": 2
+            }
+        }
+    ]
 }
 * @apiErrorExample {json} Error-Response:
 {
