@@ -249,6 +249,71 @@ func (gpc *GruposProductoController) Modificar(c echo.Context) error {
 }
 
 /**
+ * @api {POST} /gruposProducto/modificarPrecios Modificar precios productos en Grupo de Producto
+ * @apiDescription Permite modificar los precios de los productos que pertenecen a un determinado grupo de producto
+ * @apiGroup GruposProducto
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} GruposProducto
+ * @apiParam {int} GruposProducto.IdGrupoProducto
+ * @apiParam {float} GruposProducto.Pocentaje
+
+ * @apiParamExample {json} Request-Example:
+{
+	"GruposProducto":{
+		"IdGrupoProducto":3,
+        "Porcentaje":1.15
+    }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//Crear
+
+func (gpc *GruposProductoController) ModificarPrecios(c echo.Context) error {
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorGruposProducto := gestores.GestorGruposProducto{
+		DbHandler: gpc.DbHandler,
+	}
+	result, err := gestorGruposProducto.ModificarPrecios(jsonMap, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
  * @api {POST} /gruposProducto/borrar Borrar Grupo de Producto
  * @apiDescription Permite borrar un grupo de producto
  * @apiGroup GruposProducto
