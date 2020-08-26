@@ -75,6 +75,29 @@ func (ggp *GestorGruposProducto) Modificar(grupoProducto structs.GruposProducto,
 	return &grupoProducto, err
 }
 
+func (ggp *GestorGruposProducto) ModificarPrecios(grupoProducto map[string]interface{}, token string) (*map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"GruposProducto":  grupoProducto,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := ggp.DbHandler.CallSP("zsp_grupoProducto_modificar_precios", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return &response, err
+}
+
 func (ggp *GestorGruposProducto) Borrar(grupoProducto structs.GruposProducto, token string) error {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
