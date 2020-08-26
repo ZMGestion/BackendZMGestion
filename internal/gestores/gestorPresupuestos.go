@@ -6,11 +6,12 @@ import (
 	"encoding/json"
 )
 
+//GestorPresupuestos GestorPresupuestos
 type GestorPresupuestos struct {
 	DbHandler *db.DbHandler
 }
 
-//Crear
+//Crear Crear
 func (gp *GestorPresupuestos) Crear(presupuesto structs.Presupuestos, token string) (*map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
@@ -34,7 +35,7 @@ func (gp *GestorPresupuestos) Crear(presupuesto structs.Presupuestos, token stri
 	return &response, err
 }
 
-//Buscar
+//Buscar Buscar
 func (gp *GestorPresupuestos) Buscar(presupuesto structs.Presupuestos, productoFinal structs.ProductosFinales, parametrosBusqueda structs.ParametrosBusqueda, paginaciones structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
@@ -66,7 +67,7 @@ func (gp *GestorPresupuestos) Buscar(presupuesto structs.Presupuestos, productoF
 	return &respuestaBusqueda, nil
 }
 
-//Modificar
+//Modificar Modificar
 func (gp *GestorPresupuestos) Modificar(presupuesto structs.Presupuestos, token string) (*map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
