@@ -943,3 +943,67 @@ func (pc *PresupuestosController) CrearLineaPresupuesto(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /presupuestos/borrar Borrar presupuesto
+ * @apiDescription Permite borrar un presupuesto
+ * @apiGroup Presupuestos
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Presupuestos
+ * @apiParam {int} Presupuestos.IdPresupuesto
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Presupuestos": {
+		"IdPresupuesto": 2
+	}
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//Borrar Borrar
+func (pc *PresupuestosController) Borrar(c echo.Context) error {
+
+	presupuesto := structs.Presupuestos{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Presupuestos"], &presupuesto)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorPresupuestos := gestores.GestorPresupuestos{
+		DbHandler: pc.DbHanlder,
+	}
+	err = gestorPresupuestos.Borrar(presupuesto, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
