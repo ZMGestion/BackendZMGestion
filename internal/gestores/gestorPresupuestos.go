@@ -90,3 +90,19 @@ func (gp *GestorPresupuestos) Modificar(presupuesto structs.Presupuestos, token 
 
 	return &response, err
 }
+
+//Borrar Borrar
+func (gp *GestorPresupuestos) Borrar(presupuesto structs.Presupuestos, token string) error {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Presupuestos":    presupuesto,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	_, err := gp.DbHandler.CallSP("zsp_presupuesto_borrar", params)
+
+	return err
+}
