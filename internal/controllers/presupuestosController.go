@@ -131,7 +131,7 @@ func (pc *PresupuestosController) Buscar(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Presupuestos"], &presupuesto)
-	mapstructure.Decode(jsonMap["ProductosFianles"], &productoFinal)
+	mapstructure.Decode(jsonMap["ProductosFinales"], &productoFinal)
 	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 	mapstructure.Decode(jsonMap["ParametrosBusqueda"], &parametrosBusqueda)
 
