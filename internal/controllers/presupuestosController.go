@@ -23,15 +23,19 @@ type PresupuestosController struct {
  * @apiDescription Permite buscar un presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
- * @apiParam {Object} Presupuestos
- * @apiParam {int} Presupuestos.IdCliente
- * @apiParam {int} Presupuestos.IdUbicacion
- * @apiParam {int} Presupuestos.IdUsuario
- * @apiParam {Object} ProductosFinales
- * @apiParam {int} ProductosFinales.IdProducto
- * @apiParam {int} ProductosFinales.IdTela
- * @apiParam {int} ProductosFinales.IdLustre
- * @apiParam {Object} Paginaciones
+ * @apiParam {Object} [Presupuestos]
+ * @apiParam {int} [Presupuestos.IdCliente]
+ * @apiParam {int} [Presupuestos.IdUbicacion]
+ * @apiParam {int} [Presupuestos.IdUsuario]
+ * @apiParam {string} [Presupuestos.Estado]
+ * @apiParam {Object} [ProductosFinales]
+ * @apiParam {int} [ProductosFinales.IdProducto]
+ * @apiParam {int} [ProductosFinales.IdTela]
+ * @apiParam {int} [ProductosFinales.IdLustre]
+ * @apiParam {object} [ParametrosBusqueda]
+ * @apiParam {string} [ParametrosBusqueda.FechaInicio]
+ * @apiParam {string} [ParametrosBusqueda.FechaFin]
+ * @apiParam {Object} [Paginaciones]
  * @apiParam {int} [Paginaciones.Pagina]
  * @apiParam {int} [Paginaciones.LongitudPagina]
 
@@ -239,7 +243,7 @@ func (pc *PresupuestosController) Crear(c echo.Context) error {
 }
 
 /**
- * @api {POST} /presupuestos/pasar-a-creado Confirmar la creación de un presupuesto
+ * @api {POST} /presupuestos/pasar-a-creado Confirmar Presupuesto
  * @apiDescription Permite confirmar la creación de un presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -315,7 +319,7 @@ func (pc *PresupuestosController) PasarACreado(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-/*
+/**
  * @api {POST} /presupuestos/modificar Modificar Presupuesto
  * @apiDescription Permite modificar un presupuesto
  * @apiGroup Presupuestos
@@ -325,8 +329,7 @@ func (pc *PresupuestosController) PasarACreado(c echo.Context) error {
  * @apiParam {int} Presupuestos.IdCliente
  * @apiParam {int} Presupuestos.IdUbicacion
  * @apiParam {string} [Presupuestos.Observaciones]
-
-  * @apiParamExample {json} Request-Example:
+ * @apiParamExample {json} Request-Example:
 {
     "Presupuestos": {
 		"IdPresupuesto":1,
@@ -500,7 +503,7 @@ func (pc *PresupuestosController) Dame(c echo.Context) error {
 }
 
 /**
- * @api {POST} /presupuestos/lineasPresupuestos/dame Dame linea de presupuesto
+ * @api {POST} /presupuestos/lineasPresupuesto/dame Dame Linea de Presupuesto
  * @apiDescription Permite instanciar una linea de presupuesto a partir de su Id
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -588,7 +591,7 @@ func (pc *PresupuestosController) DameLineaPresupuesto(c echo.Context) error {
 }
 
 /**
- * @api {POST} /presupuestos/lineasPresupuestos/borrar Borrar linea de presupuesto
+ * @api {POST} /presupuestos/lineasPresupuesto/borrar Borrar Linea de Presupuesto
  * @apiDescription Permite borrar una linea de presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -615,8 +618,8 @@ func (pc *PresupuestosController) DameLineaPresupuesto(c echo.Context) error {
     "respuesta": null
 }
 */
-//BorrarLineasPresupuestos BorrarLineasPresupuestos
-func (pc *PresupuestosController) BorrarLineasPresupuestos(c echo.Context) error {
+//BorrarLineaPresupuestos BorrarLineaPresupuestos
+func (pc *PresupuestosController) BorrarLineaPresupuestos(c echo.Context) error {
 
 	lineaPresupuesto := structs.LineasProducto{}
 
@@ -652,7 +655,7 @@ func (pc *PresupuestosController) BorrarLineasPresupuestos(c echo.Context) error
 }
 
 /**
- * @api {POST} /presupuestos/lineasPresupuestos/modificar Modificar linea de presupuesto
+ * @api {POST} /presupuestos/lineasPresupuesto/modificar Modificar Linea de Presupuesto
  * @apiDescription Permite modificar una linea de presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -663,8 +666,8 @@ func (pc *PresupuestosController) BorrarLineasPresupuestos(c echo.Context) error
  * @apiParam {int} LineasProducto.Cantidad
  * @apiParam {Object} ProductosFinales
  * @apiParam {int} ProductosFinales.IdProducto
- * @apiParam {int} ProductosFinales.IdTela
- * @apiParam {int} ProductosFinales.IdLuste
+ * @apiParam {int} [ProductosFinales.IdTela]
+ * @apiParam {int} [ProductosFinales.IdLuste]
 
   * @apiParamExample {json} Request-Example:
 {
@@ -748,111 +751,7 @@ func (pc *PresupuestosController) ModificarLineaPresupuesto(c echo.Context) erro
 }
 
 /**
- * @api {POST} /presupuestos/lineasPresupuestos Listar lineas de presupuesto
- * @apiDescription Permite listar las lineas de presupuesto de un presupuesto dado
- * @apiGroup Presupuestos
- * @apiHeader {String} Authorization
- * @apiParam {Object} Presupuestos
- * @apiParam {int} Presupuestos.IdPresupuesto
- * @apiParamExample {json} Request-Example:
-{
-    "Presupuestos": {
-		"IdPresupuestos": 1
-	}
-}
- * @apiSuccessExample {json} Success-Response:
-{
-	"error": null,
-	"respuesta":{
-		"LineasProducto":[
-			{
-				"Cantidad": 4,
-				"Estado": "P",
-				"FechaAlta": "2020-08-17 20:13:28.000000",
-				"FechaCancelacion": null,
-				"IdLineaProducto": 1,
-				"IdLineaProductoPadre": null,
-				"IdProductoFinal": 1,
-				"IdReferencia": 1,
-				"IdUbicacion": null,
-				"PrecioUnitario": 39000,
-				"Tipo": "P"
-			},
-			{
-				"Cantidad": 4,
-				"Estado": "P",
-				"FechaAlta": "2020-08-17 23:56:58.000000",
-				"FechaCancelacion": null,
-				"IdLineaProducto": 2,
-				"IdLineaProductoPadre": null,
-				"IdProductoFinal": 16,
-				"IdReferencia": 1,
-				"IdUbicacion": null,
-				"PrecioUnitario": 39000,
-				"Tipo": "P"
-			}
-		],
-		"Presupuestos":{
-			"Estado": "C",
-			"FechaAlta": "2020-08-17 18:51:47.000000",
-			"IdCliente": 3,
-			"IdPresupuesto": 1,
-			"IdUbicacion": 1,
-			"IdUsuario": 1,
-			"IdVenta": null,
-			"Observaciones": null,
-			"PeriodoValidez": 15
-		}
-	}
-}
-* @apiErrorExample {json} Error-Response:
-{
-    "error": {
-        "codigo": "ERROR_DEFAULT",
-        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
-    },
-    "respuesta": null
-}
-*/
-//ListarLineasPresupuesto ListarLineasPresupuesto
-func (pc *PresupuestosController) ListarLineasPresupuesto(c echo.Context) error {
-
-	presupuestos := structs.Presupuestos{}
-
-	jsonMap, err := helpers.GenerateMapFromContext(c)
-
-	if err != nil {
-		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
-	}
-	mapstructure.Decode(jsonMap["Presupuestos"], &presupuestos)
-
-	headerToken := c.Request().Header.Get("Authorization")
-	token, err := helpers.GetToken(headerToken)
-
-	if err != nil {
-		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
-	}
-
-	presupuestosService := models.PresupuestosService{
-		DbHanlder:    pc.DbHanlder,
-		Presupuestos: presupuestos,
-	}
-	result, err := presupuestosService.ListarLineasPresupuesto(*token)
-
-	if err != nil {
-		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
-	}
-
-	response := interfaces.Response{
-		Error:     nil,
-		Respuesta: result,
-	}
-
-	return c.JSON(http.StatusOK, response)
-}
-
-/**
- * @api {POST} /lineasPresupuestos/crear Crear linea de presupuesto
+ * @api {POST} /presupuestos/lineasPresupuesto/crear Crear Linea de Presupuesto
  * @apiDescription Permite crear una linea de presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -862,8 +761,8 @@ func (pc *PresupuestosController) ListarLineasPresupuesto(c echo.Context) error 
  * @apiParam {int} LineasProducto.Cantidad
  * @apiParam {Object} ProductosFinales
  * @apiParam {int} ProductosFinales.IdProducto
- * @apiParam {int} ProductosFinales.IdTela
- * @apiParam {int} ProductosFinales.IdLuste
+ * @apiParam {int} [ProductosFinales.IdTela]
+ * @apiParam {int} [ProductosFinales.IdLuste]
 
  * @apiParamExample {json} Request-Example:
 {
@@ -945,7 +844,7 @@ func (pc *PresupuestosController) CrearLineaPresupuesto(c echo.Context) error {
 }
 
 /**
- * @api {POST} /presupuestos/borrar Borrar presupuesto
+ * @api {POST} /presupuestos/borrar Borrar Presupuesto
  * @apiDescription Permite borrar un presupuesto
  * @apiGroup Presupuestos
  * @apiHeader {String} Authorization
@@ -1003,6 +902,74 @@ func (pc *PresupuestosController) Borrar(c echo.Context) error {
 	response := interfaces.Response{
 		Error:     nil,
 		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /presupuestos/transformarEnVenta Transformar presupuestos en venta
+ * @apiDescription Permite transformar presupuestos en ventas
+ * @apiGroup Presupuestos
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Ventas
+ * @apiParam {int} Ventas.IdDomicilio
+ * @apiParam {int} Ventas.IdUbicacion
+ * @apiParam {String} [Ventas.Observaciones]
+ * @apiParam {int[]} LineasProducto
+ * @apiParamExample {json} Request-Example:
+{
+  "Ventas":{
+    "IdDomicilio":1,
+    "IdUbicacion":1
+  },
+  "LineasProducto":[1, 2, 3]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (pc *PresupuestosController) TransformarEnVenta(c echo.Context) error {
+	venta := structs.Ventas{}
+	var lineasProducto []int
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Ventas"], &venta)
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineasProducto)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorPresupuestos := gestores.GestorPresupuestos{
+		DbHandler: pc.DbHanlder,
+	}
+	result, err := gestorPresupuestos.TransformarEnVenta(venta, lineasProducto, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
 	}
 
 	return c.JSON(http.StatusOK, response)

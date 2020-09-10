@@ -75,3 +75,35 @@ func (gv *GestorVentas) Borrar(venta structs.Ventas, token string) error {
 	return err
 
 }
+
+//Buscar Funcion para buscar una venta
+func (gv *GestorVentas) Buscar(venta structs.Ventas, productoFinal structs.ProductosFinales, parametrosBusqueda structs.ParametrosBusqueda, paginaciones structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":    usuarioEjecuta,
+		"Ventas":             venta,
+		"ProductosFinales":   productoFinal,
+		"ParametrosBusqueda": parametrosBusqueda,
+		"Paginaciones":       paginaciones,
+	}
+
+	out, err := gv.DbHandler.CallSP("zsp_ventas_buscar", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var respuestaBusqueda structs.RespuestaBusqueda
+
+	err = json.Unmarshal(*out, &respuestaBusqueda)
+
+	if err != nil {
+		return nil, err
+
+	}
+
+	return &respuestaBusqueda, nil
+}

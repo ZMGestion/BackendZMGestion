@@ -98,30 +98,6 @@ func (ps *PresupuestosService) CrearLineaPresupuesto(lineaProducto structs.Linea
 	return response, err
 }
 
-//ListarLineasPresupuesto ListarLineasPresupuesto
-func (ps *PresupuestosService) ListarLineasPresupuesto(token string) ([]map[string]interface{}, error) {
-	usuarioEjecuta := structs.Usuarios{
-		Token: token,
-	}
-
-	params := map[string]interface{}{
-		"UsuariosEjecuta": usuarioEjecuta,
-		"Presupuestos":    ps.Presupuestos,
-	}
-
-	out, err := ps.DbHanlder.CallSP("zsp_presupuesto_listar_lineasPresupuesto", params)
-
-	if err != nil {
-		return nil, err
-	}
-
-	var response []map[string]interface{}
-
-	err = json.Unmarshal(*out, &response)
-
-	return response, err
-}
-
 //ModificarLineaPresupuesto ModificarLineaPresupuesto
 func (ps *PresupuestosService) ModificarLineaPresupuesto(lineaProducto structs.LineasProducto, productoFinal structs.ProductosFinales, token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
