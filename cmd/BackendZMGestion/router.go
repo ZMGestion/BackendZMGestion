@@ -152,14 +152,32 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/presupuestos", controllerPresupuestos.Buscar)
 	r.POST("/presupuestos/crear", controllerPresupuestos.Crear)
 	r.POST("/presupuestos/dame", controllerPresupuestos.Dame)
-	r.POST("/presupuestos/pasarACreado", controllerPresupuestos.PasarACreado)
 	r.POST("/presupuestos/modificar", controllerPresupuestos.Modificar)
 	r.POST("/presupuestos/borrar", controllerPresupuestos.Borrar)
+	r.POST("/presupuestos/pasarACreado", controllerPresupuestos.PasarACreado)
+	r.POST("/presupuestos/transformarEnVenta", controllerPresupuestos.TransformarEnVenta)
 	//Lineas presupuesto
-	r.POST("/presupuestos/lineasPresupuesto", controllerPresupuestos.ListarLineasPresupuesto)
 	r.POST("/presupuestos/lineasPresupuesto/crear", controllerPresupuestos.CrearLineaPresupuesto)
 	r.POST("/presupuestos/lineasPresupuesto/dame", controllerPresupuestos.DameLineaPresupuesto)
 	r.POST("/presupuestos/lineasPresupuesto/modificar", controllerPresupuestos.ModificarLineaPresupuesto)
-	r.POST("/presupuestos/lineasPresupuesto/borrar", controllerPresupuestos.BorrarLineasPresupuestos)
+	r.POST("/presupuestos/lineasPresupuesto/borrar", controllerPresupuestos.BorrarLineaPresupuestos)
+
+	controllerVentas := &controllers.VentasController{
+		DbHandler: h,
+	}
+	r.POST("/ventas", controllerVentas.Buscar)
+	r.POST("/ventas/crear", controllerVentas.Crear)
+	r.POST("/ventas/dame", controllerVentas.Dame)
+	r.POST("/ventas/modificar", controllerVentas.Modificar)
+	r.POST("/ventas/borrar", controllerVentas.Borrar)
+	r.POST("/ventas/chequearPrecios", controllerVentas.ChequearPrecios)
+	r.POST("/ventas/revisar", controllerVentas.Revisar)
+	r.POST("/ventas/cancelar", controllerVentas.Cancelar)
+	//LineasVenta
+	r.POST("/ventas/lineasVenta/crear", controllerVentas.CrearLineaVenta)
+	r.POST("/ventas/lineasVenta/dame", controllerVentas.DameLineaVenta)
+	r.POST("/ventas/lineasVenta/modificar", controllerVentas.ModificarLineaVenta)
+	r.POST("/ventas/lineasVenta/borrar", controllerVentas.BorrarLineaVenta)
+	r.POST("/ventas/lineasVenta/cancelar", controllerVentas.CancelarLineaVenta)
 
 }
