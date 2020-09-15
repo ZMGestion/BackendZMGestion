@@ -916,14 +916,28 @@ func (pc *PresupuestosController) Borrar(c echo.Context) error {
  * @apiParam {int} Ventas.IdDomicilio
  * @apiParam {int} Ventas.IdUbicacion
  * @apiParam {String} [Ventas.Observaciones]
- * @apiParam {int[]} LineasProducto
+ * @apiParam {int[]} LineasPresupuesto
+ * @apiParam {Object[]} LineasVenta
  * @apiParamExample {json} Request-Example:
 {
   "Ventas":{
     "IdDomicilio":1,
     "IdUbicacion":1
   },
-  "LineasProducto":[1, 2, 3]
+  "LineasPresupuesto":[1, 2, 3],
+  "LineasVenta":[
+	  {
+		  "ProductosFinales":{
+			  "IdProducto":1,
+			  "IdTela":1,
+			  "IdLustre":1
+		  },
+		  "LineasProducto":{
+			  "Cantidad":1,
+			  "PrecioUnitario":100.00
+		  }
+	  }
+  ]
 }
 * @apiSuccessExample {json} Success-Response:
 {
@@ -941,15 +955,18 @@ func (pc *PresupuestosController) Borrar(c echo.Context) error {
 */
 func (pc *PresupuestosController) TransformarEnVenta(c echo.Context) error {
 	venta := structs.Ventas{}
-	var lineasProducto []int
+	var LineasPresupuesto []int
+	var lineasVenta []map[string]interface{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
+
 	mapstructure.Decode(jsonMap["Ventas"], &venta)
-	mapstructure.Decode(jsonMap["LineasProducto"], &lineasProducto)
+	mapstructure.Decode(jsonMap["LineasPresupuesto"], &LineasPresupuesto)
+	mapstructure.Decode(jsonMap["LineasVenta"], &lineasVenta)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -961,7 +978,7 @@ func (pc *PresupuestosController) TransformarEnVenta(c echo.Context) error {
 	gestorPresupuestos := gestores.GestorPresupuestos{
 		DbHandler: pc.DbHanlder,
 	}
-	result, err := gestorPresupuestos.TransformarEnVenta(venta, lineasProducto, *token)
+	result, err := gestorPresupuestos.TransformarEnVenta(venta, LineasPresupuesto, lineasVenta, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
