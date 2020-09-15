@@ -974,3 +974,63 @@ func (pc *PresupuestosController) TransformarEnVenta(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /presupuestos/dameMultiples Dame multiples presupuestos
+ * @apiDescription Permite instanciar mas de un presupuesto a partir de su Id
+ * @apiGroup Presupuestos
+ * @apiHeader {String} Authorization
+ * @apiParam {int[]} Presupuestos
+ * @apiParamExample {json} Request-Example:
+{
+  "Presupuestos":[1, 2, 3]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DamePresupuestos DamePresupuestos
+func (pc *PresupuestosController) DamePresupuestos(c echo.Context) error {
+	var presupuestos []int
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Presupuestos"], &presupuestos)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorPresupuestos := gestores.GestorPresupuestos{
+		DbHandler: pc.DbHanlder,
+	}
+	result, err := gestorPresupuestos.DamePresupuestos(presupuestos, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
+}

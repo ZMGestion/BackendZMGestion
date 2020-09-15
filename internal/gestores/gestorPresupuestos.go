@@ -131,3 +131,27 @@ func (gp *GestorPresupuestos) TransformarEnVenta(venta structs.Ventas, lineasPre
 
 	return &response, err
 }
+
+//DamePresupuestos DamePresupuestos
+func (gp *GestorPresupuestos) DamePresupuestos(presupuestos []int, token string) ([]map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Presupuestos":    presupuestos,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gp.DbHandler.CallSP("zsp_presupuestos_dame_multiple", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}
