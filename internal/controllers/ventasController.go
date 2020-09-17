@@ -1158,3 +1158,486 @@ func (vc *VentasController) Cancelar(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 
 }
+
+/**
+ * @api {POST} /comprobantes/crear Crear Comprobante
+ * @apiDescription Permite crear un comprobante
+ * @apiGroup Comprobantes
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdVenta
+ * @apiParam {string} Comprobantes.Tipo
+ * @apiParam {int} Comprobantes.NumeroComprobante
+ * @apiParam {double} Comprobantes.Monto
+ * @apiParam {string} [Comprobantes.Observaciones]
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdVenta": 12,
+		"Tipo": 13,
+		"NumeroComprobante": 12,
+		"Monto":"201.20"
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Comprobantes":{
+			"IdComprobante": 1,
+			"IdVenta": 1,
+			"IdUsuario": 2,
+			"Tipo": A,
+			"NumeroComprobante": 1,
+			"Monto": 201.20,
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"FechaBaja": null,
+			"Observaciones": "",
+			"Estado":"A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//CrearComprobante CrearComprobante
+func (vc *VentasController) CrearComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	ventasService := models.VentasService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := ventasService.CrearComprobante(comprobante, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/modificar Modificar Comprobante
+ * @apiDescription Permite modificar un comprobante
+ * @apiGroup Comprobantes
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdComprobante
+ * @apiParam {int} Comprobantes.IdVenta
+ * @apiParam {string} Comprobantes.Tipo
+ * @apiParam {int} Comprobantes.NumeroComprobante
+ * @apiParam {double} Comprobantes.Monto
+ * @apiParam {string} [Comprobantes.Observaciones]
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdComprobante":1,
+		"IdVenta": 12,
+		"Tipo": 13,
+		"NumeroComprobante": 12,
+		"Monto":"201.20"
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Comprobantes":{
+			"IdComprobante": 1,
+			"IdVenta": 1,
+			"IdUsuario": 2,
+			"Tipo": A,
+			"NumeroComprobante": 1,
+			"Monto": 201.20,
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"FechaBaja": null,
+			"Observaciones": "",
+			"Estado":"A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//ModificarComprobante ModificarComprobante
+func (vc *VentasController) ModificarComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	ventasService := models.VentasService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := ventasService.ModificarComprobante(comprobante, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/buscar Buscar Comprobante
+ * @apiDescription Permite buscar un comprobante
+ * @apiGroup Comprobantes
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} [Comprobantes.IdVenta]
+ * @apiParam {int} [Comprobantes.IdUsuario]
+ * @apiParam {string} [Comprobantes.Tipo]
+ * @apiParam {int} [Comprobantes.NumeroComprobante]
+
+  * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdUsuario": 1,
+		"IdVenta": 12,
+		"Tipo": 13,
+		"NumeroComprobante": 12,
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Presupuestos":{
+			"Estado": "E",
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"IdCliente": 3,
+			"IdPresupuesto": 2,
+			"IdUbicacion": 1,
+			"IdUsuario": 1,
+			"IdVenta": null,
+			"Observaciones": null,
+			"PeriodoValidez": 15
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//BuscarComprobante BuscarComprobante
+func (vc *VentasController) BuscarComprobantes(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	ventasService := models.VentasService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := ventasService.BuscarComprobantes(comprobante, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/dame Dame Comprobante
+ * @apiDescription Permite instanciar un comprobante a partir de su Id
+ * @apiGroup Comprobantes
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdComprobante
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdComprobante":1
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Comprobantes":{
+			"IdComprobante": 1,
+			"IdVenta": 1,
+			"IdUsuario": 2,
+			"Tipo": A,
+			"NumeroComprobante": 1,
+			"Monto": 201.20,
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"FechaBaja": null,
+			"Observaciones": "",
+			"Estado":"A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DameComprobante DameComprobante
+func (vc *VentasController) DameComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	comprobantesService := models.ComprobantesService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := comprobantesService.Dame(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/darAlta Dar alta Comprobante
+ * @apiDescription Permite dar de alta un comprobante a partir de su Id
+ * @apiGroup Comprobantes
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdComprobante
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdComprobante":1
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Comprobantes":{
+			"IdComprobante": 1,
+			"IdVenta": 1,
+			"IdUsuario": 2,
+			"Tipo": A,
+			"NumeroComprobante": 1,
+			"Monto": 201.20,
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"FechaBaja": null,
+			"Observaciones": "",
+			"Estado":"A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DarAlta DarAlta
+func (vc *VentasController) DarAltaComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	comprobantesService := models.ComprobantesService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := comprobantesService.DarAlta(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/darbaja Dar baja Comprobante
+ * @apiDescription Permite dar de baja un comprobante a partir de su Id
+ * @apiGroup Comprobantes
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdComprobante
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdComprobante":1
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Comprobantes":{
+			"IdComprobante": 1,
+			"IdVenta": 1,
+			"IdUsuario": 2,
+			"Tipo": B,
+			"NumeroComprobante": 1,
+			"Monto": 201.20,
+			"FechaAlta": "2020-08-22 20:02:10.000000",
+			"FechaBaja": "2020-08-22 21:02:10.000000",
+			"Observaciones": "",
+			"Estado":"A"
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DarBajaComprobante DarBajaComprobante
+func (vc *VentasController) DarBajaComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	comprobantesService := models.ComprobantesService{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := comprobantesService.DarBaja(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
