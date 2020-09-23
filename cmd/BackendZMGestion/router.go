@@ -157,6 +157,7 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/presupuestos/borrar", controllerPresupuestos.Borrar)
 	r.POST("/presupuestos/pasarACreado", controllerPresupuestos.PasarACreado)
 	r.POST("/presupuestos/transformarEnVenta", controllerPresupuestos.TransformarEnVenta)
+	r.POST("/presupuestos/enviar", controllerPresupuestos.EnviarEmail)
 	//Lineas presupuesto
 	r.POST("/presupuestos/lineasPresupuesto/crear", controllerPresupuestos.CrearLineaPresupuesto)
 	r.POST("/presupuestos/lineasPresupuesto/dame", controllerPresupuestos.DameLineaPresupuesto)

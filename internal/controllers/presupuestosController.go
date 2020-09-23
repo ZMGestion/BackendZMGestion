@@ -1051,3 +1051,39 @@ func (pc *PresupuestosController) DamePresupuestos(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 
 }
+
+//EnviarEmail EnviarEmail
+func (pc *PresupuestosController) EnviarEmail(c echo.Context) error {
+	cliente := structs.Clientes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Clientes"], &cliente)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	presupuesto, err := c.FormFile("file")
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	presupuestosService := models.PresupuestosService{
+		DbHanlder: pc.DbHanlder,
+	}
+
+	err = presupuestosService.EnviarEmail(cliente, *presupuesto, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	return c.JSON(http.StatusOK, nil)
+}

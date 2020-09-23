@@ -22,6 +22,10 @@ type config struct {
 		Mode string
 		Key  string
 	}
+	Email struct {
+		Email string
+		Pass  string
+	}
 }
 
 const configFile = "./config.toml"

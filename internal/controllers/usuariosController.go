@@ -8,7 +8,6 @@ import (
 	"BackendZMGestion/internal/models"
 	"BackendZMGestion/internal/structs"
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -806,7 +805,6 @@ func (uc *UsuariosController) RestablecerPassword(c echo.Context) error {
 	}
 
 	usuario.Password = *hash
-	fmt.Println(usuario.Password)
 
 	usuarioService := models.UsuariosService{
 		DbHandler: uc.DbHandler,
