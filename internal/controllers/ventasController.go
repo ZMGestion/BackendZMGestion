@@ -1160,7 +1160,7 @@ func (vc *VentasController) Cancelar(c echo.Context) error {
 }
 
 /**
- * @api {POST} /comprobantes/crear Crear Comprobante
+ * @api {POST} /ventas/comprobantes/crear Crear Comprobante
  * @apiDescription Permite crear un comprobante
  * @apiGroup Comprobantes
  * @apiHeader {String} Authorization
@@ -1349,21 +1349,24 @@ func (vc *VentasController) ModificarComprobante(c echo.Context) error {
 		"NumeroComprobante": 12,
 	}
 }
- * @apiSuccessExample {json} Success-Response:
+* @apiSuccessExample {json} Success-Response:
 {
 	"error": null,
 	"respuesta":{
-		"Presupuestos":{
-			"Estado": "E",
-			"FechaAlta": "2020-08-22 20:02:10.000000",
-			"IdCliente": 3,
-			"IdPresupuesto": 2,
-			"IdUbicacion": 1,
-			"IdUsuario": 1,
-			"IdVenta": null,
-			"Observaciones": null,
-			"PeriodoValidez": 15
-		}
+		"Comprobantes":[
+			{
+				"IdComprobante": 1,
+				"IdVenta": 1,
+				"IdUsuario": 2,
+				"Tipo": A,
+				"NumeroComprobante": 1,
+				"Monto": 201.20,
+				"FechaAlta": "2020-08-22 20:02:10.000000",
+				"FechaBaja": null,
+				"Observaciones": "",
+				"Estado":"A"
+			}
+		]
 	}
 }
 * @apiErrorExample {json} Error-Response:
@@ -1379,6 +1382,7 @@ func (vc *VentasController) ModificarComprobante(c echo.Context) error {
 func (vc *VentasController) BuscarComprobantes(c echo.Context) error {
 
 	comprobante := structs.Comprobantes{}
+	paginacion := structs.Paginaciones{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -1386,6 +1390,7 @@ func (vc *VentasController) BuscarComprobantes(c echo.Context) error {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
 	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+	mapstructure.Decode(jsonMap["Paginaciones"], &paginacion)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -1397,7 +1402,7 @@ func (vc *VentasController) BuscarComprobantes(c echo.Context) error {
 	ventasService := models.VentasService{
 		DbHandler: vc.DbHandler,
 	}
-	result, err := ventasService.BuscarComprobantes(comprobante, *token)
+	result, err := ventasService.BuscarComprobantes(comprobante, paginacion, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -1472,7 +1477,8 @@ func (vc *VentasController) DameComprobante(c echo.Context) error {
 	}
 
 	comprobantesService := models.ComprobantesService{
-		DbHandler: vc.DbHandler,
+		DbHandler:   vc.DbHandler,
+		Comprobante: &comprobante,
 	}
 	result, err := comprobantesService.Dame(*token)
 
@@ -1549,7 +1555,8 @@ func (vc *VentasController) DarAltaComprobante(c echo.Context) error {
 	}
 
 	comprobantesService := models.ComprobantesService{
-		DbHandler: vc.DbHandler,
+		DbHandler:   vc.DbHandler,
+		Comprobante: &comprobante,
 	}
 	result, err := comprobantesService.DarAlta(*token)
 
@@ -1626,7 +1633,8 @@ func (vc *VentasController) DarBajaComprobante(c echo.Context) error {
 	}
 
 	comprobantesService := models.ComprobantesService{
-		DbHandler: vc.DbHandler,
+		DbHandler:   vc.DbHandler,
+		Comprobante: &comprobante,
 	}
 	result, err := comprobantesService.DarBaja(*token)
 
@@ -1637,6 +1645,70 @@ func (vc *VentasController) DarBajaComprobante(c echo.Context) error {
 	response := interfaces.Response{
 		Error:     nil,
 		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/comprobantes/borrar Borrar Comprobante
+ * @apiDescription Permite modificar un comprobante
+ * @apiGroup Comprobantes
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Comprobantes
+ * @apiParam {int} Comprobantes.IdComprobante
+ * @apiParamExample {json} Request-Example:
+{
+    "Comprobantes": {
+		"IdComprobante":1
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//BorrarComprobante BorrarComprobante
+func (vc *VentasController) BorrarComprobante(c echo.Context) error {
+
+	comprobante := structs.Comprobantes{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Comprobantes"], &comprobante)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	ventasService := models.VentasService{
+		DbHandler: vc.DbHandler,
+	}
+	err = ventasService.BorrarComprobante(comprobante, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: nil,
 	}
 
 	return c.JSON(http.StatusOK, response)
