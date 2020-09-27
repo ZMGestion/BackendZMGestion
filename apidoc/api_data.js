@@ -1687,442 +1687,6 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "/lineasPresupuestos",
-    "title": "Listar lineas de presupuesto",
-    "description": "<p>Permite listar las lineas de presupuesto de un presupuesto dado</p>",
-    "group": "Presupuestos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "Presupuestos",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "Presupuestos.IdPresupuesto",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n    \"Presupuestos\": {\n\t\t\"IdPresupuestos\": 1\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":[\n\t\t\t{\n\t\t\t\t\"Cantidad\": 4,\n\t\t\t\t\"Estado\": \"P\",\n\t\t\t\t\"FechaAlta\": \"2020-08-17 20:13:28.000000\",\n\t\t\t\t\"FechaCancelacion\": null,\n\t\t\t\t\"IdLineaProducto\": 1,\n\t\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\t\"IdProductoFinal\": 1,\n\t\t\t\t\"IdReferencia\": 1,\n\t\t\t\t\"IdUbicacion\": null,\n\t\t\t\t\"PrecioUnitario\": 39000,\n\t\t\t\t\"Tipo\": \"P\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Cantidad\": 4,\n\t\t\t\t\"Estado\": \"P\",\n\t\t\t\t\"FechaAlta\": \"2020-08-17 23:56:58.000000\",\n\t\t\t\t\"FechaCancelacion\": null,\n\t\t\t\t\"IdLineaProducto\": 2,\n\t\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\t\"IdProductoFinal\": 16,\n\t\t\t\t\"IdReferencia\": 1,\n\t\t\t\t\"IdUbicacion\": null,\n\t\t\t\t\"PrecioUnitario\": 39000,\n\t\t\t\t\"Tipo\": \"P\"\n\t\t\t}\n\t\t],\n\t\t\"Presupuestos\":{\n\t\t\t\"Estado\": \"C\",\n\t\t\t\"FechaAlta\": \"2020-08-17 18:51:47.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdPresupuesto\": 1,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": null,\n\t\t\t\"Observaciones\": null,\n\t\t\t\"PeriodoValidez\": 15\n\t\t}\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/lineasPresupuestoController.go",
-    "groupTitle": "Presupuestos",
-    "name": "PostLineaspresupuestos"
-  },
-  {
-    "type": "POST",
-    "url": "/lineasPresupuestos/borrar",
-    "title": "Borrar linea de presupuesto",
-    "description": "<p>Permite borrar una linea de presupuesto</p>",
-    "group": "Presupuestos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "LineasProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.IdLineaProducto",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/lineasPresupuestoController.go",
-    "groupTitle": "Presupuestos",
-    "name": "PostLineaspresupuestosBorrar"
-  },
-  {
-    "type": "POST",
-    "url": "/lineasPresupuestos/crear",
-    "title": "Crear linea de presupuesto",
-    "description": "<p>Permite crear una linea de presupuesto</p>",
-    "group": "Presupuestos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "LineasProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.IdPresupuesto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "float",
-            "optional": false,
-            "field": "LineasProducto.PrecioUnitario",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.Cantidad",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "ProductosFinales",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdTela",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdLuste",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n  \"LineasProducto\":{\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":2\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/lineasPresupuestoController.go",
-    "groupTitle": "Presupuestos",
-    "name": "PostLineaspresupuestosCrear"
-  },
-  {
-    "type": "POST",
-    "url": "/lineasPresupuestos/dame",
-    "title": "Dame linea de presupuesto",
-    "description": "<p>Permite instanciar una linea de presupuesto a partir de su Id</p>",
-    "group": "Presupuestos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "LineasProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.IdLineaProducto",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 4,\n\t\t\t\"IdLineaProducto\": 1,\n\t\t\t\"IdProductoFinal\": 1,\n\t\t\t\"PrecioUnitario\": 39000\n\t\t},\n\t\t\"Lustres\": null,\n\t\t\t\"Productos\":{\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"Producto\": \"Silla comedor\"\n\t\t},\n\t\t\"ProductosFinales\":{\n\t\t\t\"FechaAlta\": \"2020-07-10 15:26:14.000000\",\n\t\t\t\"IdLustre\": null,\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"IdProductoFinal\": 1,\n\t\t\t\"IdTela\": 5\n\t\t},\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 5,\n\t\t\t\"Tela\": \"Cuero de cebra\"\n\t\t}\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/lineasPresupuestoController.go",
-    "groupTitle": "Presupuestos",
-    "name": "PostLineaspresupuestosDame"
-  },
-  {
-    "type": "POST",
-    "url": "/lineasPresupuestos/modificar",
-    "title": "Modificar linea de presupuesto",
-    "description": "<p>Permite modificar una linea de presupuesto</p>",
-    "group": "Presupuestos",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": ""
-          }
-        ]
-      }
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "LineasProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.IdLineaProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.IdPresupuesto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "float",
-            "optional": false,
-            "field": "LineasProducto.PrecioUnitario",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "LineasProducto.Cantidad",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "Object",
-            "optional": false,
-            "field": "ProductosFinales",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdProducto",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdTela",
-            "description": ""
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "ProductosFinales.IdLuste",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":1\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "internal/controllers/lineasPresupuestoController.go",
-    "groupTitle": "Presupuestos",
-    "name": "PostLineaspresupuestosModificar"
-  },
-  {
-    "type": "POST",
     "url": "/presupuestos",
     "title": "Buscar Presupuestos",
     "description": "<p>Permite buscar un presupuesto</p>",
@@ -2146,63 +1710,91 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "Object",
-            "optional": false,
+            "optional": true,
             "field": "Presupuestos",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "Presupuestos.IdCliente",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "Presupuestos.IdUbicacion",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "Presupuestos.IdUsuario",
             "description": ""
           },
           {
             "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Presupuestos.Estado",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
             "type": "Object",
-            "optional": false,
+            "optional": true,
             "field": "ProductosFinales",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "ProductosFinales.IdProducto",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "ProductosFinales.IdTela",
             "description": ""
           },
           {
             "group": "Parameter",
             "type": "int",
-            "optional": false,
+            "optional": true,
             "field": "ProductosFinales.IdLustre",
             "description": ""
           },
           {
             "group": "Parameter",
+            "type": "object",
+            "optional": true,
+            "field": "ParametrosBusqueda",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaInicio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaFin",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
             "type": "Object",
-            "optional": false,
+            "optional": true,
             "field": "Paginaciones",
             "description": ""
           },
@@ -2252,6 +1844,75 @@ define({ "api": [
     "filename": "internal/controllers/presupuestosController.go",
     "groupTitle": "Presupuestos",
     "name": "PostPresupuestos"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/borrar",
+    "title": "Borrar Presupuesto",
+    "description": "<p>Permite borrar un presupuesto</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Presupuestos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Presupuestos.IdPresupuesto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Presupuestos\": {\n\t\t\"IdPresupuesto\": 2\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosBorrar"
   },
   {
     "type": "POST",
@@ -2338,8 +1999,527 @@ define({ "api": [
   },
   {
     "type": "POST",
+    "url": "/presupuestos/dameMultiples",
+    "title": "Dame multiples presupuestos",
+    "description": "<p>Permite instanciar mas de un presupuesto a partir de su Id</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int[]",
+            "optional": false,
+            "field": "Presupuestos",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Presupuestos\":[1, 2, 3]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosDamemultiples"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/lineasPresupuesto/borrar",
+    "title": "Borrar Linea de Presupuesto",
+    "description": "<p>Permite borrar una linea de presupuesto</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosLineaspresupuestoBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/lineasPresupuesto/crear",
+    "title": "Crear Linea de Presupuesto",
+    "description": "<p>Permite crear una linea de presupuesto</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdPresupuesto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "LineasProducto.PrecioUnitario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":2\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosLineaspresupuestoCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/lineasPresupuesto/dame",
+    "title": "Dame Linea de Presupuesto",
+    "description": "<p>Permite instanciar una linea de presupuesto a partir de su Id</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 4,\n\t\t\t\"IdLineaProducto\": 1,\n\t\t\t\"IdProductoFinal\": 1,\n\t\t\t\"PrecioUnitario\": 39000\n\t\t},\n\t\t\"Lustres\": null,\n\t\t\t\"Productos\":{\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"Producto\": \"Silla comedor\"\n\t\t},\n\t\t\"ProductosFinales\":{\n\t\t\t\"FechaAlta\": \"2020-07-10 15:26:14.000000\",\n\t\t\t\"IdLustre\": null,\n\t\t\t\"IdProducto\": 5,\n\t\t\t\"IdProductoFinal\": 1,\n\t\t\t\"IdTela\": 5\n\t\t},\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 5,\n\t\t\t\"Tela\": \"Cuero de cebra\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosLineaspresupuestoDame"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/lineasPresupuesto/modificar",
+    "title": "Modificar Linea de Presupuesto",
+    "description": "<p>Permite modificar una linea de presupuesto</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdPresupuesto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "LineasProducto.PrecioUnitario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":1\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosLineaspresupuestoModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/modificar",
+    "title": "Modificar Presupuesto",
+    "description": "<p>Permite modificar un presupuesto</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Presupuestos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Presupuestos.IdPresupuesto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Presupuestos.IdCliente",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Presupuestos.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Presupuestos.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Presupuestos\": {\n\t\t\"IdPresupuesto\":1,\n\t\t\"IdCliente\": 12,\n\t\t\"IdUbicacion\": 13\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Presupuestos\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdPresupuesto\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": null,\n\t\t\t\"Observaciones\": null,\n\t\t\t\"PeriodoValidez\": 15\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosModificar"
+  },
+  {
+    "type": "POST",
     "url": "/presupuestos/pasar-a-creado",
-    "title": "Confirmar la creación de un presupuesto",
+    "title": "Confirmar Presupuesto",
     "description": "<p>Permite confirmar la creación de un presupuesto</p>",
     "group": "Presupuestos",
     "header": {
@@ -2404,6 +2584,96 @@ define({ "api": [
     "filename": "internal/controllers/presupuestosController.go",
     "groupTitle": "Presupuestos",
     "name": "PostPresupuestosPasarACreado"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/transformarEnVenta",
+    "title": "Transformar presupuestos en venta",
+    "description": "<p>Permite transformar presupuestos en ventas</p>",
+    "group": "Presupuestos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdDomicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "Ventas.Observaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int[]",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdDomicilio\":1,\n    \"IdUbicacion\":1\n  },\n  \"LineasProducto\":[1, 2, 3]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/presupuestosController.go",
+    "groupTitle": "Presupuestos",
+    "name": "PostPresupuestosTransformarenventa"
   },
   {
     "type": "GET",
@@ -6321,5 +6591,1064 @@ define({ "api": [
     "filename": "internal/controllers/usuariosController.go",
     "groupTitle": "Usuarios",
     "name": "PostUsuariosRestablecerpassword"
+  },
+  {
+    "type": "POST",
+    "url": "/presupuestos/lineasVenta/modificar",
+    "title": "Modificar linea de venta",
+    "description": "<p>Permite modificar una linea de venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdPresupuesto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "LineasProducto.PrecioUnitario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":1\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostPresupuestosLineasventaModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas",
+    "title": "Buscar Ventas",
+    "description": "<p>Permite buscar una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Ventas.IdCliente",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Ventas.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Ventas.IdUsuario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Ventas.Estado",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLustre",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "object",
+            "optional": true,
+            "field": "ParametrosBusqueda",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaInicio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaFin",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Ventas\": {\n\t\t\"IdCliente\": 12,\n\t\t\"IdUbicacion\": 13,\n\t\t\"IdUsuario\":1,\n\t},\n\t\"ProductosFinales\":{\n\t\t\"IdProducto\":1,\n\t\t\"IdTela\":0,\n\t\t\"IdLustre\"\n\t},\n\t\"Paginaciones\":{\n\t\t\"Pagina\":1,\n\t\t\"LongitudPagina\":10\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"LineasPresupuesto\":[\n\t\t\t\t\t{\n\t\t\t\t\t\t\"LineasProducto\":{\n\t\t\t\t\t\t\t\"Cantidad\": 3,\n\t\t\t\t\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\t\"PrecioUnitario\": 108.21\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Lustres\":{\n\t\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\t\"Lustre\": \"Lustre1\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Productos\":{\n\t\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\t\"Producto\": \"Wilkinson\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ProductosFinales\":{\n\t\t\t\t\t\t\t\"FechaAlta\": \"2020-08-24 00:15:46.000000\",\n\t\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\t\"IdTela\": 5\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Telas\":{\n\t\t\t\t\t\t\t\"IdTela\": 5,\n\t\t\t\t\t\t\t\"Tela\": \"Cuero de cebra\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"Presupuestos\":{\n\t\t\t\t\t\"Estado\": \"C\",\n\t\t\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\t\t\"IdCliente\": 3,\n\t\t\t\t\t\"IdPresupuesto\": 2,\n\t\t\t\t\t\"IdUbicacion\": 1,\n\t\t\t\t\t\"IdUsuario\": 1,\n\t\t\t\t\t\"IdVenta\": null,\n\t\t\t\t\t\"Observaciones\": null,\n\t\t\t\t\t\"PeriodoValidez\": 15,\n\t\t\t\t\t\"_PrecioTotal\": 324.63\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\"Pagina\": 1,\n\t\t\"LongitudPagina\": 10,\n\t\t\"CantidadTotal\": 1\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentas"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/borrar",
+    "title": "Borrar Venta",
+    "description": "<p>Permite borrar una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdVenta\":1\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/cancelar",
+    "title": "Cancelar Venta",
+    "description": "<p>Permite cancelar una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Vemtas\": {\n\t\t\"IdVenta\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-01 22:48:43.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 2,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasCancelar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/chequearPrecios",
+    "title": "Chequear Venta",
+    "description": "<p>Permite controlar si los precios de las lineas de ventas son los actuales</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Vemtas\": {\n\t\t\"IdVenta\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Clientes\":{\n\t\t\t\"Apellidos\": \"Choua\",\n\t\t\t\"Nombres\": \"Loik\",\n\t\t\t\"RazonSocial\": null\n\t\t},\n\t\t\"Domicilios\":{\n\t\t\t\"Domicilio\": \"El Tipal Lote 13\"\n\t\t},\n\t\t\"LineasVenta\":[],\n\t\t\"Ubicaciones\":{\n\t\t\t\"Ubicacion\": \"Casa Central Tucumán\"\n\t\t},\n\t\t\"Usuarios\":{\n\t\t\t\"Apellidos\": \"Super Admin\",\n\t\t\t\"Nombres\": \"Adam\"\n\t\t},\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-05 20:48:50.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 2,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasChequearprecios"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/crear",
+    "title": "Crear Venta",
+    "description": "<p>Permite crear una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdCliente",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Ventas.IdDomicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Ventas.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdCliente\":3,\n    \"IdDomicilio\":14,\n    \"IdUbicacion\":1,\n    \"Observaciones\":\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-01 22:48:43.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/lineasVenta/borrar",
+    "title": "Borrar linea de venta",
+    "description": "<p>Permite borrar una linea de venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasLineasventaBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/lineasVenta/cancelar",
+    "title": "Cancelar linea de venta",
+    "description": "<p>Permite cancelar una linea de venta.</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasLineasventaCancelar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/lineasVenta/dame",
+    "title": "Dame linea de venta",
+    "description": "<p>Permite instanciar una linea de venta a partir de su Id.</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\":3\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"IdLineaProducto\": 51,\n\t\t\t\"IdProductoFinal\": 16,\n\t\t\t\"PrecioUnitario\": 108.21\n\t\t},\n\t\t\"Lustres\":{\n\t\t\t\"IdLustre\": 2,\n\t\t\t\"Lustre\": \"Lustre2\"\n\t\t},\n\t\t\"Productos\":{\n\t\t\t\"IdProducto\": 15,\n\t\t\t\"Producto\": \"Becker\"\n\t\t},\n\t\t\"ProductosFinales\":{\n\t\t\t\"FechaAlta\": \"2020-08-17 21:11:41.000000\",\n\t\t\t\"IdLustre\": 2,\n\t\t\t\"IdProducto\": 15,\n\t\t\t\"IdProductoFinal\": 16,\n\t\t\t\"IdTela\": 28\n\t\t},\n\t\t\"Telas\":{\n\t\t\t\"IdTela\": 28,\n\t\t\t\"Tela\": \"Brownie\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasLineasventaDame"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/lineasVentas/crear",
+    "title": "Crear linea de venta",
+    "description": "<p>Permite crear una linea de venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdReferencia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "LineasProducto.PrecioUnitario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n    \"IdReferencia\":2,\n    \"Cantidad\":3,\n    \"PrecioUnitario\":108.21\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":2\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasLineasventasCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/modificar",
+    "title": "Modificar Venta",
+    "description": "<p>Permite modificar una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdCliente",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Ventas.IdDomicilio",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Ventas.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdVenta\":1,\n    \"IdCliente\":3,\n    \"IdDomicilio\":14,\n    \"IdUbicacion\":2,\n    \"Observaciones\":\"\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-01 22:48:43.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 2,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/revisar",
+    "title": "Revisar Venta",
+    "description": "<p>Permite aceptar una venta donde los precios de las lineas de ventas son diferente a los actuales</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Vemtas\": {\n\t\t\"IdVenta\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Clientes\":{\n\t\t\t\"Apellidos\": \"Choua\",\n\t\t\t\"Nombres\": \"Loik\",\n\t\t\t\"RazonSocial\": null\n\t\t},\n\t\t\"Domicilios\":{\n\t\t\t\"Domicilio\": \"El Tipal Lote 13\"\n\t\t},\n\t\t\"LineasVenta\":[],\n\t\t\"Ubicaciones\":{\n\t\t\t\"Ubicacion\": \"Casa Central Tucumán\"\n\t\t},\n\t\t\"Usuarios\":{\n\t\t\t\"Apellidos\": \"Super Admin\",\n\t\t\t\"Nombres\": \"Adam\"\n\t\t},\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-05 20:48:50.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 2,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasRevisar"
   }
 ] });

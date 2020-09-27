@@ -157,6 +157,7 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/presupuestos/borrar", controllerPresupuestos.Borrar)
 	r.POST("/presupuestos/pasarACreado", controllerPresupuestos.PasarACreado)
 	r.POST("/presupuestos/transformarEnVenta", controllerPresupuestos.TransformarEnVenta)
+	r.POST("/presupuestos/enviar", controllerPresupuestos.EnviarEmail)
 	//Lineas presupuesto
 	r.POST("/presupuestos/lineasPresupuesto/crear", controllerPresupuestos.CrearLineaPresupuesto)
 	r.POST("/presupuestos/lineasPresupuesto/dame", controllerPresupuestos.DameLineaPresupuesto)
@@ -180,5 +181,11 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas/lineasVenta/modificar", controllerVentas.ModificarLineaVenta)
 	r.POST("/ventas/lineasVenta/borrar", controllerVentas.BorrarLineaVenta)
 	r.POST("/ventas/lineasVenta/cancelar", controllerVentas.CancelarLineaVenta)
-
+	//Comprobantes
+	r.POST("/ventas/comprobantes", controllerVentas.BuscarComprobantes)
+	r.POST("/ventas/comprobantes/crear", controllerVentas.CrearComprobante)
+	r.POST("/ventas/comprobantes/modificar", controllerVentas.ModificarComprobante)
+	r.POST("/ventas/comprobantes/dame", controllerVentas.DameComprobante)
+	r.POST("/ventas/comprobantes/darAlta", controllerVentas.DarAltaComprobante)
+	r.POST("/ventas/comprobantes/darBaja", controllerVentas.DarBajaComprobante)
 }

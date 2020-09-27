@@ -15,6 +15,8 @@ func main() {
 	}
 
 	os.Setenv("app-key", conf.App.Key)
+	os.Setenv("email", conf.Email.Email)
+	os.Setenv("pass", conf.Email.Pass)
 
 	dbConfig := conf.Database
 

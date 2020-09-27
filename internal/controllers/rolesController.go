@@ -8,7 +8,6 @@ import (
 	"BackendZMGestion/internal/models"
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -477,8 +476,6 @@ func (rc *RolesController) AsignarPermisos(c echo.Context) error {
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
-
-	fmt.Println(body.Roles)
 
 	for _, el := range body.Permisos {
 		var permiso structs.Permisos

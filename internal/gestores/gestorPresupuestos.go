@@ -108,7 +108,7 @@ func (gp *GestorPresupuestos) Borrar(presupuesto structs.Presupuestos, token str
 }
 
 //TransformarEnVenta TransformarEnVenta
-func (gp *GestorPresupuestos) TransformarEnVenta(venta structs.Ventas, lineasPresupuesto []int, token string) (*map[string]interface{}, error) {
+func (gp *GestorPresupuestos) TransformarEnVenta(venta structs.Ventas, lineasPresupuesto []int, lineasVenta []map[string]interface{}, token string) (*map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -117,6 +117,7 @@ func (gp *GestorPresupuestos) TransformarEnVenta(venta structs.Ventas, lineasPre
 		"Ventas":            venta,
 		"LineasPresupuesto": lineasPresupuesto,
 		"UsuariosEjecuta":   usuarioEjecuta,
+		"LineasVenta":       lineasVenta,
 	}
 
 	out, err := gp.DbHandler.CallSP("zsp_presupuestos_transformar_venta", params)

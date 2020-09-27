@@ -5,6 +5,12 @@ import (
 	"BackendZMGestion/internal/structs"
 	"encoding/json"
 	"errors"
+	"io"
+	"mime/multipart"
+	"net/smtp"
+	"os"
+
+	"github.com/jordan-wright/email"
 )
 
 //PresupuestosService PresupuestosService
@@ -141,4 +147,33 @@ func (ps *PresupuestosService) BorrarLineaPresupuesto(lineaProducto structs.Line
 	_, err := ps.DbHanlder.CallSP("zsp_lineaPresupuesto_borrar", params)
 
 	return err
+}
+
+// EnviarEmail Funcion para enviar por mail un presupuesto
+func (ps *PresupuestosService) EnviarEmail(cliente structs.Clientes, presupuesto multipart.FileHeader, token string) error {
+
+	pdf, err := presupuesto.Open()
+	if err != nil {
+		return err
+	}
+	defer pdf.Close()
+
+	archivo, err := os.Create(presupuesto.Filename)
+	if err != nil {
+		return err
+	}
+	defer archivo.Close()
+
+	if _, err = io.Copy(archivo, pdf); err != nil {
+		return err
+	}
+
+	email := &email.Email{
+		From:    "Zimmerman Muebles" + "<" + os.Getenv("email") + ">",
+		To:      []string{cliente.Email},
+		Subject: "Presupuesto Zimmerman Muebles",
+	}
+	email.AttachFile(archivo.Name())
+	return email.Send("smtp.gmail.com:587", smtp.PlainAuth("", os.Getenv("email"), os.Getenv("pass"), "smtp.gmail.com"))
+
 }
