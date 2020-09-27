@@ -248,7 +248,7 @@ func (vs *VentasService) ModificarComprobante(comprobante structs.Comprobantes, 
 }
 
 //BuscarComprobante Funcion para buscar un comprobante
-func (vs *VentasService) BuscarComprobantes(comprobante structs.Comprobantes, token string) (*structs.RespuestaBusqueda, error) {
+func (vs *VentasService) BuscarComprobantes(comprobante structs.Comprobantes, paginacion structs.Paginaciones, token string) (*structs.RespuestaBusqueda, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -256,6 +256,7 @@ func (vs *VentasService) BuscarComprobantes(comprobante structs.Comprobantes, to
 	params := map[string]interface{}{
 		"Comprobantes":    comprobante,
 		"UsuariosEjecuta": usuarioEjecuta,
+		"Paginaciones":    paginacion,
 	}
 
 	out, err := vs.DbHandler.CallSP("zsp_comprobantes_buscar", params)
@@ -270,7 +271,22 @@ func (vs *VentasService) BuscarComprobantes(comprobante structs.Comprobantes, to
 
 	if err != nil {
 		return nil, err
-
 	}
 	return &respuestaBusqueda, nil
+}
+
+//BorrarComprobante Funcion para borrar un comprobante
+func (vs *VentasService) BorrarComprobante(comprobante structs.Comprobantes, token string) error {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Comprobantes":    comprobante,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	_, err := vs.DbHandler.CallSP("zsp_comprobante_borrar", params)
+
+	return err
 }

@@ -1042,6 +1042,504 @@
   },
   {
     "type": "POST",
+    "url": "/ventas/comprobantes/buscar",
+    "title": "Buscar Comprobante",
+    "description": "<p>Permite buscar un comprobante</p>",
+    "group": "Comprobantes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Comprobantes.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Comprobantes.IdUsuario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Comprobantes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Comprobantes.NumeroComprobante",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdUsuario\": 1,\n\t\t\"IdVenta\": 12,\n\t\t\"Tipo\": 13,\n\t\t\"NumeroComprobante\": 12,\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":[\n\t\t\t{\n\t\t\t\t\"IdComprobante\": 1,\n\t\t\t\t\"IdVenta\": 1,\n\t\t\t\t\"IdUsuario\": 2,\n\t\t\t\t\"Tipo\": A,\n\t\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\t\"Monto\": 201.20,\n\t\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\t\"FechaBaja\": null,\n\t\t\t\t\"Observaciones\": \"\",\n\t\t\t\t\"Estado\":\"A\"\n\t\t\t}\n\t\t]\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesBuscar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/comprobantes/crear",
+    "title": "Crear Comprobante",
+    "description": "<p>Permite crear un comprobante</p>",
+    "group": "Comprobantes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Comprobantes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.NumeroComprobante",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "Comprobantes.Monto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Comprobantes.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdVenta\": 12,\n\t\t\"Tipo\": 13,\n\t\t\"NumeroComprobante\": 12,\n\t\t\"Monto\":\"201.20\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":{\n\t\t\t\"IdComprobante\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"Tipo\": A,\n\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\"Monto\": 201.20,\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"FechaBaja\": null,\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\":\"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/comprobantes/dame",
+    "title": "Dame Comprobante",
+    "description": "<p>Permite instanciar un comprobante a partir de su Id</p>",
+    "group": "Comprobantes",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdComprobante",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdComprobante\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":{\n\t\t\t\"IdComprobante\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"Tipo\": A,\n\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\"Monto\": 201.20,\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"FechaBaja\": null,\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\":\"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesDame"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/comprobantes/darAlta",
+    "title": "Dar alta Comprobante",
+    "description": "<p>Permite dar de alta un comprobante a partir de su Id</p>",
+    "group": "Comprobantes",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdComprobante",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdComprobante\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":{\n\t\t\t\"IdComprobante\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"Tipo\": A,\n\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\"Monto\": 201.20,\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"FechaBaja\": null,\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\":\"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesDaralta"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/comprobantes/darbaja",
+    "title": "Dar baja Comprobante",
+    "description": "<p>Permite dar de baja un comprobante a partir de su Id</p>",
+    "group": "Comprobantes",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdComprobante",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdComprobante\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":{\n\t\t\t\"IdComprobante\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"Tipo\": B,\n\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\"Monto\": 201.20,\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"FechaBaja\": \"2020-08-22 21:02:10.000000\",\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\":\"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesDarbaja"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/comprobantes/modificar",
+    "title": "Modificar Comprobante",
+    "description": "<p>Permite modificar un comprobante</p>",
+    "group": "Comprobantes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdComprobante",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Comprobantes.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.NumeroComprobante",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "Comprobantes.Monto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Comprobantes.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdComprobante\":1,\n\t\t\"IdVenta\": 12,\n\t\t\"Tipo\": 13,\n\t\t\"NumeroComprobante\": 12,\n\t\t\"Monto\":\"201.20\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Comprobantes\":{\n\t\t\t\"IdComprobante\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"Tipo\": A,\n\t\t\t\"NumeroComprobante\": 1,\n\t\t\t\"Monto\": 201.20,\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"FechaBaja\": null,\n\t\t\t\"Observaciones\": \"\",\n\t\t\t\"Estado\":\"A\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesModificar"
+  },
+  {
+    "type": "POST",
     "url": "/gruposProducto",
     "title": "Buscar Grupos de Producto",
     "description": "<p>Permite buscar un grupo de producto</p>",
@@ -2639,7 +3137,14 @@
             "group": "Parameter",
             "type": "int[]",
             "optional": false,
-            "field": "LineasProducto",
+            "field": "LineasPresupuesto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object[]",
+            "optional": false,
+            "field": "LineasVenta",
             "description": ""
           }
         ]
@@ -2647,7 +3152,7 @@
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n  \"Ventas\":{\n    \"IdDomicilio\":1,\n    \"IdUbicacion\":1\n  },\n  \"LineasProducto\":[1, 2, 3]\n}",
+          "content": "{\n  \"Ventas\":{\n    \"IdDomicilio\":1,\n    \"IdUbicacion\":1\n  },\n  \"LineasPresupuesto\":[1, 2, 3],\n  \"LineasVenta\":[\n\t  {\n\t\t  \"ProductosFinales\":{\n\t\t\t  \"IdProducto\":1,\n\t\t\t  \"IdTela\":1,\n\t\t\t  \"IdLustre\":1\n\t\t  },\n\t\t  \"LineasProducto\":{\n\t\t\t  \"Cantidad\":1,\n\t\t\t  \"PrecioUnitario\":100.00\n\t\t  }\n\t  }\n  ]\n}",
           "type": "json"
         }
       ]
