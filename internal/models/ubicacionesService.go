@@ -119,26 +119,6 @@ func (us *UbicacionesService) Dame(token string) (interface{}, error) {
 	if err != nil {
 		return nil, nil
 	}
-	var ubicacion structs.Ubicaciones
-	var domicilio structs.Domicilios
 
-	if response["Ubicaciones"] != nil && response["Domicilios"] != nil {
-		err = mapstructure.Decode(response["Ubicaciones"], &ubicacion)
-		if err != nil {
-			return nil, nil
-		}
-		err = mapstructure.Decode(response["Domicilios"], &domicilio)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		return nil, nil
-	}
-
-	respuesta := map[string]interface{}{
-		"Ubicaciones": ubicacion,
-		"Domicilios":  domicilio,
-	}
-
-	return &respuesta, nil
+	return &response, nil
 }
