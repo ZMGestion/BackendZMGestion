@@ -190,4 +190,19 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas/comprobantes/dame", controllerVentas.DameComprobante)
 	r.POST("/ventas/comprobantes/darAlta", controllerVentas.DarAltaComprobante)
 	r.POST("/ventas/comprobantes/darBaja", controllerVentas.DarBajaComprobante)
+
+	controllerOrdenesProduccion := &controllers.OrdenesProduccionController{
+		DbHanlder: h,
+	}
+	r.POST("/ordenesProduccion", controllerOrdenesProduccion.Buscar)
+	r.POST("/ordenesProduccion/crear", controllerOrdenesProduccion.Crear)
+	r.POST("/ordenesProduccion/dame", controllerOrdenesProduccion.Dame)
+	r.POST("/ordenesProduccion/modificar", controllerOrdenesProduccion.Modificar)
+	r.POST("/ordenesProduccion/borrar", controllerOrdenesProduccion.Borrar)
+	r.POST("/ordenesProduccion/pasarAPendiente", controllerOrdenesProduccion.PasarAPendiente)
+	//Lineas orden de producción
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/crear", controllerOrdenesProduccion.CrearLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/dame", controllerOrdenesProduccion.DameLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/modificar", controllerOrdenesProduccion.ModificarLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/borrar", controllerOrdenesProduccion.BorrarLineaOrdenesProduccion)
 }
