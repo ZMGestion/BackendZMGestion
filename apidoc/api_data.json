@@ -1042,6 +1042,75 @@
   },
   {
     "type": "POST",
+    "url": "/ventas/comprobantes/borrar",
+    "title": "Borrar Comprobante",
+    "description": "<p>Permite modificar un comprobante</p>",
+    "group": "Comprobantes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Comprobantes",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Comprobantes.IdComprobante",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Comprobantes\": {\n\t\t\"IdComprobante\":1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Comprobantes",
+    "name": "PostVentasComprobantesBorrar"
+  },
+  {
+    "type": "POST",
     "url": "/ventas/comprobantes/buscar",
     "title": "Buscar Comprobante",
     "description": "<p>Permite buscar un comprobante</p>",
@@ -2124,6 +2193,304 @@
     "filename": "internal/controllers/gruposProductoController.go",
     "groupTitle": "GruposProducto",
     "name": "PostGruposproductoModificarprecios"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/lineasRemito/borrar",
+    "title": "Borrar Linea de Remito",
+    "description": "<p>Permite borrar una linea de remito</p>",
+    "group": "LineasRemito",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\": 4,\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "LineasRemito",
+    "name": "PostRemitosLineasremitoBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/lineasRemito/crear",
+    "title": "Crear Linea de Remito",
+    "description": "<p>Permite crear una linea de remito</p>",
+    "group": "LineasRemito",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdReferencia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "LineasProducto.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n    \"IdReferencia\":2,\n\t\"Cantidad\":3,\n\t\"IdUbicacion\": 1\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":2\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "LineasRemito",
+    "name": "PostRemitosLineasremitoCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/lineasRemito/modificar",
+    "title": "Modificar Linea de Remito",
+    "description": "<p>Permite modificar una linea de remito</p>",
+    "group": "LineasRemito",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "LineasProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdLineaProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.IdReferencia",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasProducto.Cantidad",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "LineasProducto.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLuste",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"LineasProducto\":{\n\t\"IdLineaProducto\": 4,\n    \"IdReferencia\":2,\n\t\"Cantidad\":3,\n\t\"IdUbicacion\": 1\n  },\n  \"ProductosFinales\":{\n    \"IdProducto\":15,\n    \"IdTela\":28,\n    \"IdLustre\":2\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"LineasProducto\":{\n\t\t\t\"Cantidad\": 3,\n\t\t\t\"Estado\": \"P\",\n\t\t\t\"FechaAlta\": \"2020-08-24 00:27:57.000000\",\n\t\t\t\"FechaCancelacion\": null,\n\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\"IdLineaProductoPadre\": null,\n\t\t\t\"IdProductoFinal\": 30,\n\t\t\t\"IdReferencia\": 2,\n\t\t\t\"IdUbicacion\": null,\n\t\t\t\"PrecioUnitario\": 1000,\n\t\t\t\"Tipo\": \"P\"\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "LineasRemito",
+    "name": "PostRemitosLineasremitoModificar"
   },
   {
     "type": "GET",
@@ -3452,6 +3819,89 @@
     "name": "PostProductosfinalesModificar"
   },
   {
+    "type": "POST",
+    "url": "/productosFinales/stock",
+    "title": "Stock de un producto final",
+    "description": "<p>Permite conocer el stock de un producto final en una ubicación determinada</p>",
+    "group": "ProductosFinales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "ProductosFinales.IdProductoFinal",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ubicaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ubicaciones.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"ProductosFinales\": {\n\t\t\"IdProductoFinal\": 32\n\t},\n\t\"Ubicaciones\": {\n\t\t\"IdUbicacion\": 6\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"error\": null,\n    \"respuesta\": {\n\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/productosFinalesController.go",
+    "groupTitle": "ProductosFinales",
+    "name": "PostProductosfinalesStock"
+  },
+  {
     "type": "GET",
     "url": "/productos/categoriasProducto",
     "title": "Listar Categorias de Producto",
@@ -4358,6 +4808,677 @@
     "filename": "internal/controllers/provinciasController.go",
     "groupTitle": "Provincias",
     "name": "PostProvincias"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos",
+    "title": "Buscar Remitos",
+    "description": "<p>Permite buscar un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Remitos.IdUsuario",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Remitos.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Presupuestos.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Presupuestos.Estado",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "ProductosFinales",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdProducto",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdTela",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "ProductosFinales.IdLustre",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "object",
+            "optional": true,
+            "field": "ParametrosBusqueda",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaEntregaDesde",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "ParametrosBusqueda.FechaEntregaHasta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": true,
+            "field": "Paginaciones",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.Pagina",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Paginaciones.LongitudPagina",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdUbicacion\": 13,\n\t\t\"IdUsuario\":1,\n\t\t\"Tipo\":\"E\",\n\t\t\"Estado\":\"T\"\n\t},\n\t\"ProductosFinales\":{\n\t\t\"IdProducto\":1,\n\t\t\"IdTela\":0,\n\t\t\"IdLustre\"\n\t},\n\t\"Paginaciones\":{\n\t\t\"Pagina\":1,\n\t\t\"LongitudPagina\":10\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":[\n\t\t\t{\n\t\t\t\t\"LineasPresupuesto\":[\n\t\t\t\t\t{\n\t\t\t\t\t\t\"LineasProducto\":{\n\t\t\t\t\t\t\t\"Cantidad\": 3,\n\t\t\t\t\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\t\"PrecioUnitario\": 108.21\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Lustres\":{\n\t\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\t\"Lustre\": \"Lustre1\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Productos\":{\n\t\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\t\"Producto\": \"Wilkinson\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ProductosFinales\":{\n\t\t\t\t\t\t\t\"FechaAlta\": \"2020-08-24 00:15:46.000000\",\n\t\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\t\"IdTela\": 5\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"Telas\":{\n\t\t\t\t\t\t\t\"IdTela\": 5,\n\t\t\t\t\t\t\t\"Tela\": \"Cuero de cebra\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"Remitos\":{\n\t\t\t\t\t\"IdRemito\": 2,\n\t\t\t\t\t\"IdUbicacion\": 1,\n\t\t\t\t\t\"IdDomicilio\": 2,\n\t\t\t\t\t\"IdUsuario\": 2,\n\t\t\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\t\t\"Estado\":\"C\",\n\t\t\t\t\t\"Observaciones\": null\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"Paginaciones\":{\n\t\t\"Pagina\": 1,\n\t\t\"LongitudPagina\": 10,\n\t\t\"CantidadTotal\": 1\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitos"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/borrar",
+    "title": "Borrar Remito",
+    "description": "<p>Permite borrar un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdRemito\": 1\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosBorrar"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/cancelar",
+    "title": "Cancelar Remito",
+    "description": "<p>Permite cancelar un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdRemito\": 2\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Remitos\":{\n\t\t\t\"IdRemito\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdDomicilio\": 2,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"Estado\":\"C\",\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosCancelar"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/crear",
+    "title": "Crear Remito",
+    "description": "<p>Permite crear un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": true,
+            "field": "Remitos.IdUbicacion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.Tipo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Remitos.Observaciones",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdDomicilio\": 12,\n\t\t\"IdUbicacion\": 13,\n\t\t\"Tipo\":\"E\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Remitos\":{\n\t\t\t\"IdRemito\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdDomicilio\": 2,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"Estado\":\"C\",\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosCrear"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/dame",
+    "title": "Dame Remitos",
+    "description": "<p>Permite instanciar un remito a partir de su Id</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"idRemito\": 13\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"resultado\":\n\t\t{\n\t\t\t\"LineasPresupuesto\":[\n\t\t\t\t{\n\t\t\t\t\t\"LineasProducto\":{\n\t\t\t\t\t\t\"Cantidad\": 3,\n\t\t\t\t\t\t\"IdLineaProducto\": 3,\n\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\"PrecioUnitario\": 108.21\n\t\t\t\t\t},\n\t\t\t\t\t\"Lustres\":{\n\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\"Lustre\": \"Lustre1\"\n\t\t\t\t\t},\n\t\t\t\t\t\"Productos\":{\n\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\"Producto\": \"Wilkinson\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ProductosFinales\":{\n\t\t\t\t\t\t\"FechaAlta\": \"2020-08-24 00:15:46.000000\",\n\t\t\t\t\t\t\"IdLustre\": 1,\n\t\t\t\t\t\t\"IdProducto\": 12,\n\t\t\t\t\t\t\"IdProductoFinal\": 28,\n\t\t\t\t\t\t\"IdTela\": 5\n\t\t\t\t\t},\n\t\t\t\t\t\"Telas\":{\n\t\t\t\t\t\t\"IdTela\": 5,\n\t\t\t\t\t\t\"Tela\": \"Cuero de cebra\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"Remitos\":{\n\t\t\t\t\"IdRemito\": 2,\n\t\t\t\t\"IdUbicacion\": 1,\n\t\t\t\t\"IdDomicilio\": 2,\n\t\t\t\t\"IdUsuario\": 2,\n\t\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\t\"Estado\":\"C\",\n\t\t\t\t\"Observaciones\": null\n\t\t\t}\n\t\t},\n\t\t\"Paginaciones\":{\n\t\t\t\"Pagina\": 1,\n\t\t\t\"LongitudPagina\": 10,\n\t\t\t\"CantidadTotal\": 1\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosDame"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/descancelar",
+    "title": "Descancelar Remito",
+    "description": "<p>Permite descancelar un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdRemito\": 2\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Remitos\":{\n\t\t\t\"IdRemito\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdDomicilio\": 2,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"Estado\":\"C\",\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosDescancelar"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/entregar",
+    "title": "Entregar Remito",
+    "description": "<p>Permite entregar un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "Remitos.FechaEntrega",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdRemito\": 2,\n\t\t\"FechaEntrega\":\"2020-09-22\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Remitos\":{\n\t\t\t\"IdRemito\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdDomicilio\": 2,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"Estado\":\"C\",\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosEntregar"
+  },
+  {
+    "type": "POST",
+    "url": "/remitos/pasarACreado",
+    "title": "Pasar Remito a creado",
+    "description": "<p>Permite pasar a creado un remito</p>",
+    "group": "Remitos",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Remitos",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Remitos.IdRemito",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "Remitos.FechaEntrega",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"Remitos\": {\n\t\t\"IdRemito\": 2\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Remitos\":{\n\t\t\t\"IdRemito\": 2,\n\t\t\t\"IdUbicacion\": 1,\n\t\t\t\"IdDomicilio\": 2,\n\t\t\t\"IdUsuario\": 2,\n\t\t\t\"FechaEntrega\": \"2020-09-22 20:02:10.000000\",\n\t\t\t\"FechaAlta\": \"2020-08-22 20:02:10.000000\",\n\t\t\t\"Estado\":\"C\",\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/remitosController.go",
+    "groupTitle": "Remitos",
+    "name": "PostRemitosPasaracreado"
   },
   {
     "type": "GET",
@@ -7674,6 +8795,96 @@
   },
   {
     "type": "POST",
+    "url": "/ventas/generarRemito",
+    "title": "Generar Remito de Venta",
+    "description": "<p>Permite generar un remito a partir de una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Object[]",
+            "optional": false,
+            "field": "LineasVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasVenta.IdLineaVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "LineasVenta.IdUbicacion",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdVenta\":1\n  },\n  \"LineasVenta\":[\n\t  {\n\t\t  \"IdLineaVenta\": 1,\n\t\t  \"IdUbicacion\": 2\n\t  }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasGenerarremito"
+  },
+  {
+    "type": "POST",
     "url": "/ventas/lineasVenta/borrar",
     "title": "Borrar linea de venta",
     "description": "<p>Permite borrar una linea de venta</p>",
@@ -8086,6 +9297,82 @@
     "filename": "internal/controllers/ventasController.go",
     "groupTitle": "Ventas",
     "name": "PostVentasModificar"
+  },
+  {
+    "type": "POST",
+    "url": "/ventas/modificarDomicilio",
+    "title": "Modificar Domicilio Venta",
+    "description": "<p>Permite modificar el domicilio de una venta</p>",
+    "group": "Ventas",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Ventas",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdVenta",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "Ventas.IdDomicilio",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"Ventas\":{\n    \"IdVenta\":1,\n    \"IdDomicilio\":14\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n\t\"error\": null,\n\t\"respuesta\":{\n\t\t\"Ventas\":{\n\t\t\t\"Estado\": \"E\",\n\t\t\t\"FechaAlta\": \"2020-09-01 22:48:43.000000\",\n\t\t\t\"IdCliente\": 3,\n\t\t\t\"IdDomicilio\": 14,\n\t\t\t\"IdUbicacion\": 2,\n\t\t\t\"IdUsuario\": 1,\n\t\t\t\"IdVenta\": 1,\n\t\t\t\"Observaciones\": null\n\t\t}\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n    \"error\": {\n        \"codigo\": \"ERROR_DEFAULT\",\n        \"mensaje\": \"Ha ocurrido un error mientras se procesaba su petición.\"\n    },\n    \"respuesta\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "internal/controllers/ventasController.go",
+    "groupTitle": "Ventas",
+    "name": "PostVentasModificardomicilio"
   },
   {
     "type": "POST",
