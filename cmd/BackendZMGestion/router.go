@@ -171,6 +171,8 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas", controllerVentas.Buscar)
 	r.POST("/ventas/crear", controllerVentas.Crear)
 	r.POST("/ventas/dame", controllerVentas.Dame)
+	r.POST("/ventas/dameMultiple", controllerVentas.DameVentas)
+	r.POST("/ventas/generarOrdenProduccion", controllerVentas.GenerarOrdenProduccion)
 	r.POST("/ventas/modificar", controllerVentas.Modificar)
 	r.POST("/ventas/borrar", controllerVentas.Borrar)
 	r.POST("/ventas/chequearPrecios", controllerVentas.ChequearPrecios)
