@@ -1713,3 +1713,145 @@ func (vc *VentasController) BorrarComprobante(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /ventas/dameMultiple Dame multiple ventas
+ * @apiDescription Permite instanciar mas de una venta a partir de su Id
+ * @apiGroup Ventas
+ * @apiHeader {String} Authorization
+ * @apiParam {int[]} Ventas
+ * @apiParamExample {json} Request-Example:
+{
+  "Ventas":[1, 2, 3]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DameVentas DameVentas
+func (vc *VentasController) DameVentas(c echo.Context) error {
+	var ventas []int
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Ventas"], &ventas)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorVentas := gestores.GestorVentas{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := gestorVentas.DameVentas(ventas, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
+}
+
+/**
+ * @api {POST} /ventas/generarOrdenProduccion Generar orden de producción para una o más ventas
+ * @apiDescription Permite genear una orden de producción a partir de una o más lineas de ventas pertenecientes a una o más ventas
+ * @apiGroup Ventas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} OrdenesProduccion
+ * @apiParam {String} [OrdenesProduccion.Observaciones]
+ * @apiParam {Object[]} LineasVenta
+ * @apiParam {int} LineasVenta.Cantidad
+ * @apiParam {int} LineasVenta.IdProductoFinal
+ * @apiParam {int[]} LineasVenta.IdLineasPadre
+ * @apiParam {Object[]} LineasOrdenProduccion
+ * @apiParamExample {json} Request-Example:
+{
+  "OrdenesProduccion":{
+    "Observaciones": "",
+  },
+  "LineasVenta":[
+	  {
+		  "Cantidad": 7,
+		  "IdProductoFinal": 59,
+		  "IdLineasPadre": [237,408,531]
+	  }
+  ],
+  "LineasOrdenProduccion":[
+	  {
+		  "ProductosFinales":{
+			  "IdProducto":1,
+			  "IdTela":1,
+			  "IdLustre":1
+		  },
+		  "LineasProducto":{
+			  "Cantidad":1
+		  }
+	  }
+  ]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (vc *VentasController) GenerarOrdenProduccion(c echo.Context) error {
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorVentas := gestores.GestorVentas{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := gestorVentas.GenerarOrdenProduccion(jsonMap, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
