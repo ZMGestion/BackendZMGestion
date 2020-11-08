@@ -146,6 +146,7 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/productosFinales/darBaja", controllerProductosFinales.DarBaja)
 	r.POST("/productosFinales/darAlta", controllerProductosFinales.DarAlta)
 	r.GET("/productosFinales/lustres", controllerProductosFinales.ListarLustres)
+	r.POST("/productosFinales/stock", controllerProductosFinales.Stock)
 
 	controllerPresupuestos := &controllers.PresupuestosController{
 		DbHanlder: h,
@@ -178,6 +179,8 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas/chequearPrecios", controllerVentas.ChequearPrecios)
 	r.POST("/ventas/revisar", controllerVentas.Revisar)
 	r.POST("/ventas/cancelar", controllerVentas.Cancelar)
+	r.POST("/ventas/generarRemito", controllerVentas.GenerarRemito)
+	r.POST("/ventas/modificarDomicilio", controllerVentas.ModificarDomicilio)
 	//LineasVenta
 	r.POST("/ventas/lineasVenta/crear", controllerVentas.CrearLineaVenta)
 	r.POST("/ventas/lineasVenta/dame", controllerVentas.DameLineaVenta)
@@ -207,4 +210,20 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/dame", controllerOrdenesProduccion.DameLineaOrdenProduccion)
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/modificar", controllerOrdenesProduccion.ModificarLineaOrdenProduccion)
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/borrar", controllerOrdenesProduccion.BorrarLineaOrdenesProduccion)
+	controllerRemitos := &controllers.RemitosController{
+		DbHandler: h,
+	}
+	r.POST("/remitos", controllerRemitos.Buscar)
+	r.POST("/remitos/dame", controllerRemitos.Dame)
+	r.POST("/remitos/crear", controllerRemitos.Crear)
+	r.POST("/remitos/borrar", controllerRemitos.Borrar)
+	r.POST("/remitos/pasarACreado", controllerRemitos.PasarACreado)
+	r.POST("/remitos/cancelar", controllerRemitos.Cancelar)
+	r.POST("/remitos/descancelar", controllerRemitos.Descancelar)
+	r.POST("/remitos/entregar", controllerRemitos.Entregar)
+
+	//LineasRemito
+	r.POST("/remitos/lineasRemito/crear", controllerRemitos.CrearLineaRemito)
+	r.POST("/remitos/lineasRemito/modificar", controllerRemitos.ModificarLineaRemito)
+	r.POST("/remitos/lineasRemito/borrar", controllerRemitos.BorrarLineaRemito)
 }

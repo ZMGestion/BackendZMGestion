@@ -1715,19 +1715,33 @@ func (vc *VentasController) BorrarComprobante(c echo.Context) error {
 }
 
 /**
- * @api {POST} /ventas/dameMultiple Dame multiple ventas
- * @apiDescription Permite instanciar mas de una venta a partir de su Id
+ * @api {POST} /ventas/generarRemito Generar Remito de Venta
+ * @apiDescription Permite generar un remito a partir de una venta
  * @apiGroup Ventas
  * @apiHeader {String} Authorization
- * @apiParam {int[]} Ventas
+ * @apiParam {Object} Ventas
+ * @apiParam {int} Ventas.IdVenta
+ * @apiParam {int} Ventas.IdDomicilio
+ * @apiParam {Object[]} LineasVenta
+ * @apiParam {int} LineasVenta.IdLineaVenta
+ * @apiParam  {int} LineasVenta.IdUbicacion
+ * @apiParam  {int} LineasVenta.Cantidad
  * @apiParamExample {json} Request-Example:
 {
-  "Ventas":[1, 2, 3]
+  "Ventas":{
+	"IdVenta":1,
+	"IdDomicilio": 2,
+  },
+  "LineasVenta":[
+	  {
+		  "IdLineaVenta": 1,
+		  "IdUbicacion": 2,
+		  "Cantidad": 3
+	  }
+  ]
 }
-* @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Success-Response:
 {
-	"error": null,
-	"respuesta": null
 }
 * @apiErrorExample {json} Error-Response:
 {
@@ -1738,16 +1752,19 @@ func (vc *VentasController) BorrarComprobante(c echo.Context) error {
     "respuesta": null
 }
 */
-//DameVentas DameVentas
-func (vc *VentasController) DameVentas(c echo.Context) error {
-	var ventas []int
+//GenerarRemito GenerarRemito
+func (vc *VentasController) GenerarRemito(c echo.Context) error {
+
+	venta := structs.Ventas{}
+	var lineasVenta []structs.LineasProducto
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
-	mapstructure.Decode(jsonMap["Ventas"], &ventas)
+	mapstructure.Decode(jsonMap["Ventas"], &venta)
+	mapstructure.Decode(jsonMap["LineasVenta"], &lineasVenta)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -1755,11 +1772,11 @@ func (vc *VentasController) DameVentas(c echo.Context) error {
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
-
-	gestorVentas := gestores.GestorVentas{
+	ventasService := models.VentasService{
 		DbHandler: vc.DbHandler,
+		Ventas:    venta,
 	}
-	result, err := gestorVentas.DameVentas(ventas, *token)
+	result, err := ventasService.GenerarRemito(lineasVenta, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
@@ -1771,7 +1788,83 @@ func (vc *VentasController) DameVentas(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, response)
+}
 
+/**
+ * @api {POST} /ventas/modificarDomicilio Modificar Domicilio Venta
+ * @apiDescription Permite modificar el domicilio de una venta
+ * @apiGroup Ventas
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Ventas
+ * @apiParam {int} Ventas.IdVenta
+ * @apiParam {int} Ventas.IdDomicilio
+
+  * @apiParamExample {json} Request-Example:
+{
+  "Ventas":{
+    "IdVenta":1,
+    "IdDomicilio":14
+  }
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta":{
+		"Ventas":{
+			"Estado": "E",
+			"FechaAlta": "2020-09-01 22:48:43.000000",
+			"IdCliente": 3,
+			"IdDomicilio": 14,
+			"IdUbicacion": 2,
+			"IdUsuario": 1,
+			"IdVenta": 1,
+			"Observaciones": null
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//ModificarDomicilio ModificarDomicilio
+func (vc *VentasController) ModificarDomicilio(c echo.Context) error {
+
+	venta := structs.Ventas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Ventas"], &venta)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorVentas := gestores.GestorVentas{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := gestorVentas.ModificarDomicilio(venta, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
 
 /**
@@ -1854,4 +1947,64 @@ func (vc *VentasController) GenerarOrdenProduccion(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ventas/dameMultiple Dame multiple ventas
+ * @apiDescription Permite instanciar mas de una venta a partir de su Id
+ * @apiGroup Ventas
+ * @apiHeader {String} Authorization
+ * @apiParam {int[]} Ventas
+ * @apiParamExample {json} Request-Example:
+{
+  "Ventas":[1, 2, 3]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DameVentas DameVentas
+func (vc *VentasController) DameVentas(c echo.Context) error {
+	var ventas []int
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Ventas"], &ventas)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorVentas := gestores.GestorVentas{
+		DbHandler: vc.DbHandler,
+	}
+	result, err := gestorVentas.DameVentas(ventas, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
 }

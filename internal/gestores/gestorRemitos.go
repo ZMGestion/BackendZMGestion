@@ -50,3 +50,31 @@ func (gr *GestorRemitos) Borrar(remito structs.Remitos, token string) error {
 
 	return err
 }
+
+//Buscar Funcion para buscar un remito
+func (gr *GestorRemitos) Buscar(remito structs.Remitos, productoFinal structs.ProductosFinales, parametrosBusqueda structs.ParametrosBusqueda, paginacion structs.Paginaciones, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Remitos":            remito,
+		"ProductosFinales":   productoFinal,
+		"ParametrosBusqueda": parametrosBusqueda,
+		"Paginaciones":       paginacion,
+		"UsuariosEjecuta":    usuarioEjecuta,
+	}
+
+	out, err := gr.DbHandler.CallSP("zsp_remitos_buscar", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+
+}

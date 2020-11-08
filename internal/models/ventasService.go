@@ -290,3 +290,28 @@ func (vs *VentasService) BorrarComprobante(comprobante structs.Comprobantes, tok
 
 	return err
 }
+
+//GenerarRemito Funcion para generar remito
+func (vs *VentasService) GenerarRemito(lineasVenta []structs.LineasProducto, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"LineasVenta":     lineasVenta,
+		"UsuariosEjecuta": usuarioEjecuta,
+		"Ventas":          vs.Ventas,
+	}
+
+	out, err := vs.DbHandler.CallSP("zsp_venta_generar_remito", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}

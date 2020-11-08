@@ -2,7 +2,6 @@ package structs
 
 type Remitos struct {
 	IdRemito      int    `json:"IdRemito,omitempty"`
-	IdDomicilio   int    `json:"IdDomicilio,omitempty"`
 	IdUbicacion   int    `json:"IdUbicacion,omitempty"`
 	IdUsuario     int    `json:"IdUsuario,omitempty"`
 	Tipo          string `json:"Tipo,omitempty"`

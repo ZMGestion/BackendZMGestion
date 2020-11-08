@@ -266,7 +266,7 @@ func (pfc *ProductosFinalesController) Modificar(c echo.Context) error {
     "respuesta": null
 }
 */
-//Borrar
+//Borrar Borrar
 func (pfc *ProductosFinalesController) Borrar(c echo.Context) error {
 
 	productoFinal := structs.ProductosFinales{}
@@ -301,7 +301,7 @@ func (pfc *ProductosFinalesController) Borrar(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-//DarAlta
+//DarAlta DarAlta
 func (pfc *ProductosFinalesController) DarAlta(c echo.Context) error {
 
 	productoFinal := structs.ProductosFinales{}
@@ -340,7 +340,7 @@ func (pfc *ProductosFinalesController) DarAlta(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-//DarBaja
+//DarBaja DarBaja
 func (pfc *ProductosFinalesController) DarBaja(c echo.Context) error {
 
 	productoFinal := structs.ProductosFinales{}
@@ -379,7 +379,7 @@ func (pfc *ProductosFinalesController) DarBaja(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-//Buscar
+//Buscar Buscar
 func (pfc *ProductosFinalesController) Buscar(c echo.Context) error {
 
 	productoFinal := structs.ProductosFinales{}
@@ -418,7 +418,7 @@ func (pfc *ProductosFinalesController) Buscar(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-//Dame
+//Dame Dame
 func (pfc *ProductosFinalesController) Dame(c echo.Context) error {
 
 	productoFinal := structs.ProductosFinales{}
@@ -443,6 +443,81 @@ func (pfc *ProductosFinalesController) Dame(c echo.Context) error {
 	}
 
 	result, err := productosFinalesService.Dame(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /productosFinales/stock Stock de un producto final
+ * @apiDescription Permite conocer el stock de un producto final en una ubicación determinada
+ * @apiGroup ProductosFinales
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} ProductosFinales
+ * @apiParam {int} ProductosFinales.IdProductoFinal
+ * @apiParam {Object} Ubicaciones
+ * @apiParam {int} Ubicaciones.IdUbicacion
+
+  * @apiParamExample {json} Request-Example:
+{
+    "ProductosFinales": {
+		"IdProductoFinal": 32
+	},
+	"Ubicaciones": {
+		"IdUbicacion": 6
+	}
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//Stock Stock
+func (pfc *ProductosFinalesController) Stock(c echo.Context) error {
+
+	productoFinal := structs.ProductosFinales{}
+	ubicacion := structs.Ubicaciones{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["ProductosFinales"], &productoFinal)
+	mapstructure.Decode(jsonMap["Ubicaciones"], &ubicacion)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	productosFinalesService := models.ProductosFinalesService{
+		ProductoFinal: &productoFinal,
+		DbHandler:     pfc.DbHandler,
+	}
+
+	result, err := productosFinalesService.Stock(ubicacion, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
