@@ -102,3 +102,29 @@ func (gpf *GestorProductosFinales) Buscar(productoFinal structs.ProductosFinales
 
 	return &respuestaBusqueda, nil
 }
+
+//Mover Permite mover un producto final de una ubicacion a otra
+func (gpf *GestorProductosFinales) Mover(lineaProducto structs.LineasProducto, ubicacionEntrada, ubicacionSalida structs.Ubicaciones, token string) (*map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"LineasProducto":     lineaProducto,
+		"UbicacionesEntrada": ubicacionEntrada,
+		"UbicacionesSalida":  ubicacionSalida,
+		"UsuariosEjecuta":    usuarioEjecuta,
+	}
+
+	out, err := gpf.DbHandler.CallSP("zsp_productoFinal_mover", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return &response, err
+}

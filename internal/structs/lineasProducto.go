@@ -2,6 +2,7 @@ package structs
 
 type LineasProducto struct {
 	IdLineaProducto      int     `json:"IdLineaProducto"`
+	IdProductoFinal      int     `json:"IdProductoFinal"`
 	IdLineaProductoPadre int     `json:"IdLineaProductoPadre"`
 	IdUbicacion          int     `json:"IdUbicacion"`
 	IdReferencia         int     `json:"IdReferencia"`
