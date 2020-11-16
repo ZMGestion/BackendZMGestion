@@ -142,3 +142,59 @@ func (ops *OrdenesProduccionService) BorrarLineaOrdenProduccion(lineaProducto st
 
 	return err
 }
+
+//CancelarLineaOrdenProduccion CancelarLineaOrdenProduccion
+func (ops *OrdenesProduccionService) CancelarLineaOrdenProduccion(lineaProducto structs.LineasProducto, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"LineasProducto":  lineaProducto,
+	}
+
+	out, err := ops.DbHanlder.CallSP("zsp_lineaOrdenProduccion_cancelar", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}
+
+//ReanudarLineaOrdenProduccion ReanudarLineaOrdenProduccion
+func (ops *OrdenesProduccionService) ReanudarLineaOrdenProduccion(lineaProducto structs.LineasProducto, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta": usuarioEjecuta,
+		"LineasProducto":  lineaProducto,
+	}
+
+	out, err := ops.DbHanlder.CallSP("zsp_lineaOrdenProduccion_reanudar", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}

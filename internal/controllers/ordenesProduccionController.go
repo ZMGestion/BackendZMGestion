@@ -558,7 +558,7 @@ func (pc *OrdenesProduccionController) DameLineaOrdenProduccion(c echo.Context) 
 }
 */
 //BorrarLineaOrdenesProduccion BorrarLineaOrdenesProduccion
-func (pc *OrdenesProduccionController) BorrarLineaOrdenesProduccion(c echo.Context) error {
+func (opc *OrdenesProduccionController) BorrarLineaOrdenesProduccion(c echo.Context) error {
 
 	lineaOrdenProduccion := structs.LineasProducto{}
 
@@ -577,7 +577,7 @@ func (pc *OrdenesProduccionController) BorrarLineaOrdenesProduccion(c echo.Conte
 	}
 
 	ordenesProduccionService := models.OrdenesProduccionService{
-		DbHanlder: pc.DbHanlder,
+		DbHanlder: opc.DbHanlder,
 	}
 	err = ordenesProduccionService.BorrarLineaOrdenProduccion(lineaOrdenProduccion, *token)
 
@@ -588,6 +588,136 @@ func (pc *OrdenesProduccionController) BorrarLineaOrdenesProduccion(c echo.Conte
 	response := interfaces.Response{
 		Error:     nil,
 		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/cancelar Cancelar linea de orden de producción
+ * @apiDescription Permite cancelar una linea de orden de producción
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} LineasProducto
+ * @apiParam {int} LineasProducto.IdLineaProducto
+ * @apiParamExample {json} Request-Example:
+{
+  "LineasProducto":{
+	"IdLineaProducto":3
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//CancelarLineaOrdenProduccion CancelarLineaOrdenProduccion
+func (opc *OrdenesProduccionController) CancelarLineaOrdenProduccion(c echo.Context) error {
+
+	lineaOrdenProduccion := structs.LineasProducto{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineaOrdenProduccion)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.OrdenesProduccionService{
+		DbHanlder: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.CancelarLineaOrdenProduccion(lineaOrdenProduccion, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/reanudar Reanudar linea de orden de producción
+ * @apiDescription Permite reanudar una linea de orden de producción
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} LineasProducto
+ * @apiParam {int} LineasProducto.IdLineaProducto
+ * @apiParamExample {json} Request-Example:
+{
+  "LineasProducto":{
+	"IdLineaProducto":3
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//ReanudarLineaOrdenProduccion ReanudarLineaOrdenProduccion
+func (opc *OrdenesProduccionController) ReanudarLineaOrdenProduccion(c echo.Context) error {
+
+	lineaOrdenProduccion := structs.LineasProducto{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineaOrdenProduccion)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.OrdenesProduccionService{
+		DbHanlder: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.ReanudarLineaOrdenProduccion(lineaOrdenProduccion, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
 	}
 
 	return c.JSON(http.StatusOK, response)
@@ -841,6 +971,708 @@ func (pc *OrdenesProduccionController) Borrar(c echo.Context) error {
 	response := interfaces.Response{
 		Error:     nil,
 		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas Listar tareas linea de orden de producción
+ * @apiDescription Permite listar las tareas de una linea de orden de producción
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} LineasProducto
+ * @apiParam {int} LineasProducto.IdLineaProducto
+ * @apiParamExample {json} Request-Example:
+{
+  "LineasProducto":{
+	"IdLineaProducto": 3
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": [
+		{
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	]
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionListarTareas LineaOrdenProduccionListarTareas
+func (opc *OrdenesProduccionController) LineaOrdenProduccionListarTareas(c echo.Context) error {
+
+	lineaOrdenProduccion := structs.LineasProducto{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineaOrdenProduccion)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.ListarTareas(lineaOrdenProduccion, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/crear Crear tarea linea de orden de producción
+ * @apiDescription Permite crear una tarea para una linea de orden de producción
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {String} Tareas.Tarea
+ * @apiParam {int} Tareas.IdTareaSiguiente
+ * @apiParam {int} Tareas.IdLineaProducto
+ * @apiParam {int} Tareas.IdUsuarioFabricante
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"Tarea": "Lustrar",
+	"IdTareaSiguiente": 132,
+	"IdLineaProducto": 198,
+	"IdUsuarioFabricante": 5,
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionCrearTarea LineaOrdenProduccionCrearTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionCrearTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.CrearTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/borrar Borrar tarea linea de orden de producción
+ * @apiDescription Permite borrar una tarea de una linea de orden de producción
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionBorrarTarea LineaOrdenProduccionBorrarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionBorrarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	err = ordenesProduccionService.BorrarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: nil,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/ejecutar Ejecutar tarea
+ * @apiDescription Permite iniciar la ejecución de una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionEjecutarTarea LineaOrdenProduccionEjecutarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionEjecutarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.EjecutarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/pausar Pausar tarea
+ * @apiDescription Permite pausar la ejecución de una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionPausarTarea LineaOrdenProduccionPausarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionPausarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.PausarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/reanudar Reanudar tarea
+ * @apiDescription Permite reanudar la ejecución de una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionReanudarTarea LineaOrdenProduccionReanudarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionReanudarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.ReanudarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/finalizar Finalizar tarea
+ * @apiDescription Permite finalizar la ejecución de una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionFinalizarTarea LineaOrdenProduccionFinalizarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionFinalizarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.FinalizarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/finalizar Verificar tarea
+ * @apiDescription Permite verificar una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionVerificarTarea LineaOrdenProduccionVerificarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionVerificarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.VerificarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/tareas/cancelar Cancelar tarea
+ * @apiDescription Permite cancelar una tarea
+ * @apiGroup OrdenesProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} Tareas
+ * @apiParam {int} Tareas.IdTarea
+ * @apiParamExample {json} Request-Example:
+{
+  "Tareas":{
+	"IdTarea": 32
+  }
+}
+
+ * @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": {
+		"Tareas": {
+			"IdTarea": 32,
+			"IdLineaProducto": 198,
+			"IdTareaSiguiente": 132,
+			"IdUsuarioFabricante": 5,
+			"Tarea": "Lustrar",
+			"FechaInicio": null,
+			"FechaPausa": null,
+			"FechaFinalizacion": null,
+			"FechaRevision": null,
+			"FechaAlta": "2020-01-01 23:30:00",
+			"FechaCancelacion": null,
+			"Observaciones": "",
+			"Estado": "P",
+		}
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//LineaOrdenProduccionCancelarTarea LineaOrdenProduccionCancelarTarea
+func (opc *OrdenesProduccionController) LineaOrdenProduccionCancelarTarea(c echo.Context) error {
+	tarea := structs.Tareas{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["Tareas"], &tarea)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.LineasOrdenProduccionService{
+		DbHandler: opc.DbHanlder,
+	}
+	respuesta, err := ordenesProduccionService.CancelarTarea(tarea, *token)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: respuesta,
 	}
 
 	return c.JSON(http.StatusOK, response)

@@ -211,6 +211,19 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/dame", controllerOrdenesProduccion.DameLineaOrdenProduccion)
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/modificar", controllerOrdenesProduccion.ModificarLineaOrdenProduccion)
 	r.POST("/ordenesProduccion/lineasOrdenProduccion/borrar", controllerOrdenesProduccion.BorrarLineaOrdenesProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/cancelar", controllerOrdenesProduccion.CancelarLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/reanudar", controllerOrdenesProduccion.ReanudarLineaOrdenProduccion)
+	//Tareas
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas", controllerOrdenesProduccion.LineaOrdenProduccionListarTareas)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/crear", controllerOrdenesProduccion.LineaOrdenProduccionCrearTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/borrar", controllerOrdenesProduccion.LineaOrdenProduccionBorrarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/reanudar", controllerOrdenesProduccion.LineaOrdenProduccionReanudarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/ejecutar", controllerOrdenesProduccion.LineaOrdenProduccionEjecutarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/pausar", controllerOrdenesProduccion.LineaOrdenProduccionPausarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/finalizar", controllerOrdenesProduccion.LineaOrdenProduccionFinalizarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/verificar", controllerOrdenesProduccion.LineaOrdenProduccionVerificarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/cancelar", controllerOrdenesProduccion.LineaOrdenProduccionCancelarTarea)
+
 	controllerRemitos := &controllers.RemitosController{
 		DbHandler: h,
 	}
