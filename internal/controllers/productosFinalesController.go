@@ -530,3 +530,87 @@ func (pfc *ProductosFinalesController) Stock(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /productosFinales/mover Mover producto final
+ * @apiDescription Permite mover un producto final de una ubicación a otra
+ * @apiGroup ProductosFinales
+ * @apiHeader {String} Authorization
+ * @apiParam {Object} ProductosFinales
+ * @apiParam {int} LineasProducto.IdProductoFinal
+ * @apiParam {int} LineasProducto.Cantidad
+ * @apiParam {Object} UbicacionesEntrada
+ * @apiParam {int} UbicacionesEntrada.IdUbicacion
+ * @apiParam {Object} UbicacionesSalida
+ * @apiParam {int} UbicacionesSalida.IdUbicacion
+
+  * @apiParamExample {json} Request-Example:
+{
+    "LineasProducto": {
+		"IdProductoFinal": 32,
+		"Cantidad": 3
+	},
+	"UbicacionesEntrada": {
+		"IdUbicacion": 6
+	},
+	"UbicacionesSalida": {
+		"IdUbicacion": 6
+	}
+
+}
+ * @apiSuccessExample {json} Success-Response:
+{
+    "error": null,
+    "respuesta": {
+
+	}
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//Mover Mover
+func (pfc *ProductosFinalesController) Mover(c echo.Context) error {
+
+	lineaProducto := structs.LineasProducto{}
+	ubicacionEntrada := structs.Ubicaciones{}
+	ubicacionSalida := structs.Ubicaciones{}
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineaProducto)
+	mapstructure.Decode(jsonMap["UbicacionesEntrada"], &ubicacionEntrada)
+	mapstructure.Decode(jsonMap["UbicacionesSalida"], &ubicacionSalida)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	gestorProductosFinales := gestores.GestorProductosFinales{
+		DbHandler: pfc.DbHandler,
+	}
+
+	result, err := gestorProductosFinales.Mover(lineaProducto, ubicacionEntrada, ubicacionSalida, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
