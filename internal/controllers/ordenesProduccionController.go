@@ -1677,3 +1677,63 @@ func (opc *OrdenesProduccionController) LineaOrdenProduccionCancelarTarea(c echo
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {POST} /ordenesProduccion/lineasOrdenProduccion/verificar Verificar lineas de órden de producción
+ * @apiDescription Permite verificar una o más lineas de una órden de producción
+ * @apiGroup OrdenProduccion
+ * @apiHeader {String} Authorization
+ * @apiParam {int[]} LineasProducto
+ * @apiParamExample {json} Request-Example:
+{
+  "LineasProducto":[1, 2, 3]
+}
+* @apiSuccessExample {json} Success-Response:
+{
+	"error": null,
+	"respuesta": null
+}
+* @apiErrorExample {json} Error-Response:
+{
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+//DamePresupuestos DamePresupuestos
+func (opc *OrdenesProduccionController) VerificarLineasOrdenProduccion(c echo.Context) error {
+	var lineasProducto []int
+
+	jsonMap, err := helpers.GenerateMapFromContext(c)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+	mapstructure.Decode(jsonMap["LineasProducto"], &lineasProducto)
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnauthorized)
+	}
+
+	ordenesProduccionService := models.OrdenesProduccionService{
+		DbHanlder: opc.DbHanlder,
+	}
+	result, err := ordenesProduccionService.VerificarLineasOrdenProduccion(lineasProducto, *token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
+}

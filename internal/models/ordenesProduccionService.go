@@ -198,3 +198,31 @@ func (ops *OrdenesProduccionService) ReanudarLineaOrdenProduccion(lineaProducto 
 
 	return response, err
 }
+
+//VerificarLineasOrdenProduccion VerificarLineasOrdenProduccion
+func (ops *OrdenesProduccionService) VerificarLineasOrdenProduccion(lineasProducto []int, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":       usuarioEjecuta,
+		"LineasOrdenProduccion": lineasProducto,
+	}
+
+	out, err := ops.DbHanlder.CallSP("zsp_lineasOrdenProduccion_verificar", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}
