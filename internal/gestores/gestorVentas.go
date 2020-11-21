@@ -107,3 +107,71 @@ func (gv *GestorVentas) Buscar(venta structs.Ventas, productoFinal structs.Produ
 
 	return &respuestaBusqueda, nil
 }
+
+//ModificarDomicilio Funcion para modificar el domicilio de una venta
+func (gv *GestorVentas) ModificarDomicilio(venta structs.Ventas, token string) (*map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Ventas":          venta,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gv.DbHandler.CallSP("zsp_venta_modificar_domicilio", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return &response, err
+}
+
+//DameVentas DameVentas
+func (gv *GestorVentas) DameVentas(ventas []int, token string) ([]map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"Ventas":          ventas,
+		"UsuariosEjecuta": usuarioEjecuta,
+	}
+
+	out, err := gv.DbHandler.CallSP("zsp_ventas_dame_multiple", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}
+
+//GenerarOrdenProduccion GenerarOrdenProduccion
+func (gv *GestorVentas) GenerarOrdenProduccion(params map[string]interface{}, token string) (*map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+	params["UsuariosEjecuta"] = usuarioEjecuta
+
+	out, err := gv.DbHandler.CallSP("zsp_venta_generarOrdenProduccion", params)
+
+	if err != nil || out == nil {
+		return nil, err
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return &response, err
+}

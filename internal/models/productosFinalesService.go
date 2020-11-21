@@ -146,3 +146,35 @@ func (pfs *ProductosFinalesService) DarBaja(token string) (*structs.ProductosFin
 
 	return &productoFinal, err
 }
+
+//Stock Stock
+func (pfs *ProductosFinalesService) Stock(ubicacion structs.Ubicaciones, token string) (map[string]interface{}, error) {
+	usuarioEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	params := map[string]interface{}{
+		"UsuariosEjecuta":  usuarioEjecuta,
+		"ProductosFinales": pfs.ProductoFinal,
+		"Ubicaciones":      ubicacion,
+	}
+
+	out, err := pfs.DbHandler.CallSP("zsp_productoFinal_stock", params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if out == nil {
+		return nil, errors.New("ERROR_DEFAULT")
+	}
+
+	var response map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}

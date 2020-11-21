@@ -146,6 +146,8 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/productosFinales/darBaja", controllerProductosFinales.DarBaja)
 	r.POST("/productosFinales/darAlta", controllerProductosFinales.DarAlta)
 	r.GET("/productosFinales/lustres", controllerProductosFinales.ListarLustres)
+	r.POST("/productosFinales/stock", controllerProductosFinales.Stock)
+	r.POST("/productosFinales/mover", controllerProductosFinales.Mover)
 
 	controllerPresupuestos := &controllers.PresupuestosController{
 		DbHanlder: h,
@@ -171,11 +173,15 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas", controllerVentas.Buscar)
 	r.POST("/ventas/crear", controllerVentas.Crear)
 	r.POST("/ventas/dame", controllerVentas.Dame)
+	r.POST("/ventas/dameMultiple", controllerVentas.DameVentas)
+	r.POST("/ventas/generarOrdenProduccion", controllerVentas.GenerarOrdenProduccion)
 	r.POST("/ventas/modificar", controllerVentas.Modificar)
 	r.POST("/ventas/borrar", controllerVentas.Borrar)
 	r.POST("/ventas/chequearPrecios", controllerVentas.ChequearPrecios)
 	r.POST("/ventas/revisar", controllerVentas.Revisar)
 	r.POST("/ventas/cancelar", controllerVentas.Cancelar)
+	r.POST("/ventas/generarRemito", controllerVentas.GenerarRemito)
+	r.POST("/ventas/modificarDomicilio", controllerVentas.ModificarDomicilio)
 	//LineasVenta
 	r.POST("/ventas/lineasVenta/crear", controllerVentas.CrearLineaVenta)
 	r.POST("/ventas/lineasVenta/dame", controllerVentas.DameLineaVenta)
@@ -190,4 +196,48 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/ventas/comprobantes/dame", controllerVentas.DameComprobante)
 	r.POST("/ventas/comprobantes/darAlta", controllerVentas.DarAltaComprobante)
 	r.POST("/ventas/comprobantes/darBaja", controllerVentas.DarBajaComprobante)
+	controllerOrdenesProduccion := &controllers.OrdenesProduccionController{
+		DbHanlder: h,
+	}
+	r.POST("/ordenesProduccion", controllerOrdenesProduccion.Buscar)
+	r.POST("/ordenesProduccion/crear", controllerOrdenesProduccion.Crear)
+	r.POST("/ordenesProduccion/dame", controllerOrdenesProduccion.Dame)
+	r.POST("/ordenesProduccion/modificar", controllerOrdenesProduccion.Modificar)
+	r.POST("/ordenesProduccion/borrar", controllerOrdenesProduccion.Borrar)
+	r.POST("/ordenesProduccion/pasarAPendiente", controllerOrdenesProduccion.PasarAPendiente)
+	//Lineas orden de producción
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/crear", controllerOrdenesProduccion.CrearLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/dame", controllerOrdenesProduccion.DameLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/modificar", controllerOrdenesProduccion.ModificarLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/borrar", controllerOrdenesProduccion.BorrarLineaOrdenesProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/cancelar", controllerOrdenesProduccion.CancelarLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/reanudar", controllerOrdenesProduccion.ReanudarLineaOrdenProduccion)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/verificar", controllerOrdenesProduccion.VerificarLineasOrdenProduccion)
+	//Tareas
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas", controllerOrdenesProduccion.LineaOrdenProduccionListarTareas)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/crear", controllerOrdenesProduccion.LineaOrdenProduccionCrearTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/borrar", controllerOrdenesProduccion.LineaOrdenProduccionBorrarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/reanudar", controllerOrdenesProduccion.LineaOrdenProduccionReanudarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/ejecutar", controllerOrdenesProduccion.LineaOrdenProduccionEjecutarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/pausar", controllerOrdenesProduccion.LineaOrdenProduccionPausarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/finalizar", controllerOrdenesProduccion.LineaOrdenProduccionFinalizarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/verificar", controllerOrdenesProduccion.LineaOrdenProduccionVerificarTarea)
+	r.POST("/ordenesProduccion/lineasOrdenProduccion/tareas/cancelar", controllerOrdenesProduccion.LineaOrdenProduccionCancelarTarea)
+
+	controllerRemitos := &controllers.RemitosController{
+		DbHandler: h,
+	}
+	r.POST("/remitos", controllerRemitos.Buscar)
+	r.POST("/remitos/dame", controllerRemitos.Dame)
+	r.POST("/remitos/crear", controllerRemitos.Crear)
+	r.POST("/remitos/borrar", controllerRemitos.Borrar)
+	r.POST("/remitos/pasarACreado", controllerRemitos.PasarACreado)
+	r.POST("/remitos/cancelar", controllerRemitos.Cancelar)
+	r.POST("/remitos/descancelar", controllerRemitos.Descancelar)
+	r.POST("/remitos/entregar", controllerRemitos.Entregar)
+
+	//LineasRemito
+	r.POST("/remitos/lineasRemito/crear", controllerRemitos.CrearLineaRemito)
+	r.POST("/remitos/lineasRemito/modificar", controllerRemitos.ModificarLineaRemito)
+	r.POST("/remitos/lineasRemito/borrar", controllerRemitos.BorrarLineaRemito)
 }
