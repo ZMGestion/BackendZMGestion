@@ -70,7 +70,7 @@ func (ops *OrdenesProduccionService) PasarAPendiente(token string) (map[string]i
 }
 
 //CrearLineaOrdenProduccion CrearLineaOrdenProduccion
-func (ops *OrdenesProduccionService) CrearLineaOrdenProduccion(lineaProducto structs.LineasProducto, productoFinal structs.ProductosFinales, token string) (map[string]interface{}, error) {
+func (ops *OrdenesProduccionService) CrearLineaOrdenProduccion(lineaProducto structs.LineasProducto, productoFinal structs.ProductosFinales, ubicaciones map[string]interface{}, token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -79,6 +79,7 @@ func (ops *OrdenesProduccionService) CrearLineaOrdenProduccion(lineaProducto str
 		"UsuariosEjecuta":  usuarioEjecuta,
 		"LineasProducto":   lineaProducto,
 		"ProductosFinales": productoFinal,
+		"Ubicaciones":      ubicaciones,
 	}
 
 	out, err := ops.DbHanlder.CallSP("zsp_lineaOrdenProduccion_crear", params)

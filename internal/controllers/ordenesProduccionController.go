@@ -831,7 +831,11 @@ func (pc *OrdenesProduccionController) ModificarLineaOrdenProduccion(c echo.Cont
  * @apiParam {Object} ProductosFinales
  * @apiParam {int} ProductosFinales.IdProducto
  * @apiParam {int} [ProductosFinales.IdTela]
- * @apiParam {int} [ProductosFinales.IdLuste]
+ * @apiParam {int} [ProductosFinales.IdLuste]s
+ * @apiParam {Object} [Ubicaciones]
+ * @apiParam {int} Ubicaciones.IdUbicacion
+ * @apiParam {int} Ubicaciones.Cantidad
+
 
  * @apiParamExample {json} Request-Example:
 {
@@ -844,7 +848,13 @@ func (pc *OrdenesProduccionController) ModificarLineaOrdenProduccion(c echo.Cont
     "IdProducto":15,
     "IdTela":28,
     "IdLustre":2
-  }
+  },
+  "Ubicaciones":[
+	  {
+		  IdUbicacion: 1,
+		  Cantidad: 2
+	  }
+  ]
 }
  * @apiSuccessExample {json} Success-Response:
 {
@@ -879,6 +889,7 @@ func (pc *OrdenesProduccionController) CrearLineaOrdenProduccion(c echo.Context)
 
 	lineaOrdenProduccion := structs.LineasProducto{}
 	productoFinal := structs.ProductosFinales{}
+	ubicaciones := make(map[string]interface{})
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -887,6 +898,7 @@ func (pc *OrdenesProduccionController) CrearLineaOrdenProduccion(c echo.Context)
 	}
 	mapstructure.Decode(jsonMap["LineasProducto"], &lineaOrdenProduccion)
 	mapstructure.Decode(jsonMap["ProductosFinales"], &productoFinal)
+	mapstructure.Decode(jsonMap["Ubicaciones"], &ubicaciones)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -898,7 +910,7 @@ func (pc *OrdenesProduccionController) CrearLineaOrdenProduccion(c echo.Context)
 	ordenesProduccionService := models.OrdenesProduccionService{
 		DbHanlder: pc.DbHanlder,
 	}
-	result, err := ordenesProduccionService.CrearLineaOrdenProduccion(lineaOrdenProduccion, productoFinal, *token)
+	result, err := ordenesProduccionService.CrearLineaOrdenProduccion(lineaOrdenProduccion, productoFinal, ubicaciones, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
