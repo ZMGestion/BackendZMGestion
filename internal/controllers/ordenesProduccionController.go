@@ -889,7 +889,7 @@ func (pc *OrdenesProduccionController) CrearLineaOrdenProduccion(c echo.Context)
 
 	lineaOrdenProduccion := structs.LineasProducto{}
 	productoFinal := structs.ProductosFinales{}
-	ubicaciones := make(map[string]interface{})
+	var ubicaciones []map[string]interface{}
 
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
@@ -1716,14 +1716,11 @@ func (opc *OrdenesProduccionController) LineaOrdenProduccionCancelarTarea(c echo
 */
 //DamePresupuestos DamePresupuestos
 func (opc *OrdenesProduccionController) VerificarLineasOrdenProduccion(c echo.Context) error {
-	var lineasProducto []int
-
 	jsonMap, err := helpers.GenerateMapFromContext(c)
 
 	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
 	}
-	mapstructure.Decode(jsonMap["LineasProducto"], &lineasProducto)
 
 	headerToken := c.Request().Header.Get("Authorization")
 	token, err := helpers.GetToken(headerToken)
@@ -1735,7 +1732,7 @@ func (opc *OrdenesProduccionController) VerificarLineasOrdenProduccion(c echo.Co
 	ordenesProduccionService := models.OrdenesProduccionService{
 		DbHanlder: opc.DbHanlder,
 	}
-	result, err := ordenesProduccionService.VerificarLineasOrdenProduccion(lineasProducto, *token)
+	result, err := ordenesProduccionService.VerificarLineasOrdenProduccion(jsonMap, *token)
 
 	if err != nil || result == nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
