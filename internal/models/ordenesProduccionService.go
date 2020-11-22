@@ -70,7 +70,7 @@ func (ops *OrdenesProduccionService) PasarAPendiente(token string) (map[string]i
 }
 
 //CrearLineaOrdenProduccion CrearLineaOrdenProduccion
-func (ops *OrdenesProduccionService) CrearLineaOrdenProduccion(lineaProducto structs.LineasProducto, productoFinal structs.ProductosFinales, ubicaciones map[string]interface{}, token string) (map[string]interface{}, error) {
+func (ops *OrdenesProduccionService) CrearLineaOrdenProduccion(lineaProducto structs.LineasProducto, productoFinal structs.ProductosFinales, ubicaciones []map[string]interface{}, token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -201,15 +201,12 @@ func (ops *OrdenesProduccionService) ReanudarLineaOrdenProduccion(lineaProducto 
 }
 
 //VerificarLineasOrdenProduccion VerificarLineasOrdenProduccion
-func (ops *OrdenesProduccionService) VerificarLineasOrdenProduccion(lineasProducto []int, token string) (map[string]interface{}, error) {
+func (ops *OrdenesProduccionService) VerificarLineasOrdenProduccion(params map[string]interface{}, token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
 
-	params := map[string]interface{}{
-		"UsuariosEjecuta":       usuarioEjecuta,
-		"LineasOrdenProduccion": lineasProducto,
-	}
+	params["UsuariosEjecuta"] = usuarioEjecuta
 
 	out, err := ops.DbHanlder.CallSP("zsp_lineasOrdenProduccion_verificar", params)
 
