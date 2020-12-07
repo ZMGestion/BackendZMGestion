@@ -172,7 +172,7 @@ func (ts *TelasService) ListarPrecios(token string) ([]map[string]interface{}, e
 	return response, nil
 }
 
-func (ts *TelasService) Dame() (interface{}, error) {
+func (ts *TelasService) Dame() (map[string]interface{}, error) {
 
 	params := map[string]interface{}{
 		"Telas": ts.Tela,
@@ -191,26 +191,9 @@ func (ts *TelasService) Dame() (interface{}, error) {
 	var response map[string]interface{}
 
 	err = json.Unmarshal(*out, &response)
-
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
-	var tela *structs.Telas
-	var precio *structs.Precios
-	var objetos map[string]interface{}
-	if response["Telas"] != nil && response["Precios"] != nil {
-		err = mapstructure.Decode(response["Telas"], &tela)
-		if err != nil {
-			return nil, err
-		}
-		err = mapstructure.Decode(response["Precios"], &precio)
-		if err != nil {
-			return nil, err
-		}
-		objetos = map[string]interface{}{
-			"Telas":   tela,
-			"Precios": precio,
-		}
-	}
-	return &objetos, nil
+
+	return response, nil
 }

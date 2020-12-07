@@ -100,7 +100,7 @@
   "ERROR_NOEXISTE_DOMICILIO": "No existe el domicilio",
   "ERROR_NOEXISTE_GRUPOPRODUCTO": "No existe el grupo de producto ingresado",
   "ERROR_NOEXISTE_LINEA_ORDEN_PRODUCCION": "La linea de orden de producción ingresada no existe",
-  "ERROR_NOEXISTE_LINEAORDENPRODUCCION": "No existe la línea de órden de producción ingresada",
+  "ERROR_NOEXISTE_LINEAORDENPRODUCCION": "No existe la línea de orden de producción ingresada",
   "ERROR_NOEXISTE_LINEAPRESUPUESTO": "La linea de presupuesto ingresada no existe",
   "ERROR_NOEXISTE_LINEAREMITO": "La linea de remito ingresada no existe",
   "ERROR_NOEXISTE_LINEAVENTA": "La linea de venta ingresada no existe",
@@ -166,5 +166,6 @@
   "ERROR_VENTA_EXISTE_PRODUCTOFINAL": "Ya existe una linea de venta con dicho producto final",
   "ERROR_VENTA_REMITO": "No se puede crear un remito a partir de la venta indicada",
   "ERROR_VENTA_SINDOMICILIO": "La venta no cuenta con un domicilio",
-  "ERROR_VERIFICAR_LINEAORDENPRODUCCION_ESTADO_LINEA": "No se puede verificar la linea ya que no se encuentra en producción"
+  "ERROR_VERIFICAR_LINEAORDENPRODUCCION_ESTADO_LINEA": "No se puede verificar la linea ya que no se encuentra en producción",
+  "ERROR_CREDITO_INSUFICIENTE": "No posee el saldo suficiente para retirar los productos"
 }
