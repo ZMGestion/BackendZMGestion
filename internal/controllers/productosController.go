@@ -726,7 +726,7 @@ func (pc *ProductosController) ListarPrecios(c echo.Context) error {
 	}
 	result, err := productoService.ListarPrecios(*token)
 
-	if err != nil || result == nil {
+	if err != nil {
 		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
 	}
 
