@@ -130,7 +130,7 @@ func (s *UsuariosService) DamePorToken(token string) (interface{}, error) {
 }
 
 //Dar alta
-func (s *UsuariosService) DarAlta(token string) (*structs.Usuarios, error) {
+func (s *UsuariosService) DarAlta(token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -155,22 +155,14 @@ func (s *UsuariosService) DarAlta(token string) (*structs.Usuarios, error) {
 	err = json.Unmarshal(*out, &response)
 
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
-	var usuario structs.Usuarios
-	if response["Usuarios"] != nil {
-		err = mapstructure.Decode(response["Usuarios"], &usuario)
-	} else {
-		return nil, nil
-	}
-	if err != nil {
-		return nil, nil
-	}
-	return &usuario, nil
+
+	return response, nil
 }
 
 //Dar alta
-func (s *UsuariosService) DarBaja(token string) (*structs.Usuarios, error) {
+func (s *UsuariosService) DarBaja(token string) (map[string]interface{}, error) {
 	usuarioEjecuta := structs.Usuarios{
 		Token: token,
 	}
@@ -195,18 +187,10 @@ func (s *UsuariosService) DarBaja(token string) (*structs.Usuarios, error) {
 	err = json.Unmarshal(*out, &response)
 
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
-	var usuario structs.Usuarios
-	if response["Usuarios"] != nil {
-		err = mapstructure.Decode(response["Usuarios"], &usuario)
-	} else {
-		return nil, nil
-	}
-	if err != nil {
-		return nil, nil
-	}
-	return &usuario, nil
+
+	return response, nil
 }
 
 func (s *UsuariosService) RestablecerPassword(token string) error {
