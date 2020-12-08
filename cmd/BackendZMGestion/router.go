@@ -240,4 +240,11 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	r.POST("/remitos/lineasRemito/crear", controllerRemitos.CrearLineaRemito)
 	r.POST("/remitos/lineasRemito/modificar", controllerRemitos.ModificarLineaRemito)
 	r.POST("/remitos/lineasRemito/borrar", controllerRemitos.BorrarLineaRemito)
+
+	controllerReportes := &controllers.ReportesController{
+		DbHandler: h,
+	}
+
+	//Reportes
+	r.GET("/reportes/stock", controllerReportes.Stock)
 }
