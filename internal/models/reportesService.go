@@ -56,3 +56,49 @@ func (rs *ReportesService) ListaPrecios(token string) ([]map[string]interface{},
 
 	return response, err
 }
+
+//ListaPreciosTelas Funcion que permite generar la lista de precios de telas
+func (rs *ReportesService) ListaPreciosTelas(token string) ([]map[string]interface{}, error) {
+	usuariosEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	param := map[string]interface{}{
+		"UsuariosEjecuta": usuariosEjecuta,
+	}
+
+	out, err := rs.DbHandler.CallSP("zsp_reportes_listaPreciosTelas", param)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}
+
+//ListaPreciosProductos Funcion que permite generar la lista de precios de productos
+func (rs *ReportesService) ListaPreciosProductos(token string) ([]map[string]interface{}, error) {
+	usuariosEjecuta := structs.Usuarios{
+		Token: token,
+	}
+
+	param := map[string]interface{}{
+		"UsuariosEjecuta": usuariosEjecuta,
+	}
+
+	out, err := rs.DbHandler.CallSP("zsp_reportes_listaPreciosProductos", param)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var response []map[string]interface{}
+
+	err = json.Unmarshal(*out, &response)
+
+	return response, err
+}

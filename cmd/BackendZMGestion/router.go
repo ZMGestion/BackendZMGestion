@@ -248,4 +248,6 @@ func initRoutes(r *echo.Echo, h *db.DbHandler) {
 	//Reportes
 	r.GET("/reportes/stock", controllerReportes.Stock)
 	r.GET("/reportes/listaPrecios", controllerReportes.ListaPrecios)
+	r.GET("/reportes/listaPreciosTelas", controllerReportes.ListaPreciosTelas)
+	r.GET("/reportes/listaPreciosProductos", controllerReportes.ListaPreciosProductos)
 }
