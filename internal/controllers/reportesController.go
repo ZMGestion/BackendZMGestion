@@ -176,3 +176,119 @@ func (rc *ReportesController) ListaPrecios(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 }
+
+/**
+ * @api {GET} /reportes/listaPreciosTelas Lista de precios telas
+ * @apiDescription Devuelve el listado de los telas con su precio
+ * @apiGroup Reportes
+ * @apiSuccessExample {json} Success-Response:
+ {
+    "error": null,
+    "respuesta": [
+		{
+    "error": null,
+    "respuesta": [
+        {
+            "Telas": {
+                "Tela": "Panne Beige",
+                "IdTela": 1
+            },
+            "Precios": {
+                "Precio": 3854.0
+            }
+        }
+    ]
+}
+* @apiErrorExample {json} Error-Response:
+ {
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (rc *ReportesController) ListaPreciosTelas(c echo.Context) error {
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	reportesService := models.ReportesService{
+		DbHandler: rc.DbHandler,
+	}
+
+	result, err := reportesService.ListaPreciosTelas(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+/**
+ * @api {GET} /reportes/listaPreciosProductos Lista de precios productos
+ * @apiDescription Devuelve el listado de los productos con su precio
+ * @apiGroup Reportes
+ * @apiSuccessExample {json} Success-Response:
+ {
+    "error": null,
+    "respuesta": [
+		{
+    "error": null,
+    "respuesta": [
+        {
+            "Productos": {
+                "Producto": "Silla 1",
+                "IdProducto": 1
+            },
+            "Precios": {
+                "Precio": 3854.0
+            }
+        }
+    ]
+}
+* @apiErrorExample {json} Error-Response:
+ {
+    "error": {
+        "codigo": "ERROR_DEFAULT",
+        "mensaje": "Ha ocurrido un error mientras se procesaba su petición."
+    },
+    "respuesta": null
+}
+*/
+func (rc *ReportesController) ListaPreciosProductos(c echo.Context) error {
+
+	headerToken := c.Request().Header.Get("Authorization")
+	token, err := helpers.GetToken(headerToken)
+
+	if err != nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusUnprocessableEntity)
+	}
+
+	reportesService := models.ReportesService{
+		DbHandler: rc.DbHandler,
+	}
+
+	result, err := reportesService.ListaPreciosProductos(*token)
+
+	if err != nil || result == nil {
+		return interfaces.GenerarRespuestaError(err, http.StatusBadRequest)
+	}
+
+	response := interfaces.Response{
+		Error:     nil,
+		Respuesta: result,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
